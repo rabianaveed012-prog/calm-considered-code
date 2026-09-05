@@ -532,10 +532,10 @@ function Services() {
         />
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service) => (
-            <div key={service.title} className="surface lift relative overflow-hidden p-6">
+            <div key={service.title} className="surface lift group relative overflow-hidden p-6">
               <div
                 aria-hidden
-                className="ambient-orb pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full opacity-0 transition-opacity duration-500 hover:opacity-100"
+                className="ambient-orb pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
               />
               <h3 className="text-lg font-semibold tracking-tight text-foreground">
                 {service.title}
