@@ -623,7 +623,7 @@ function Testimonials() {
               <div key={item.name} className="relative">
                 <div
                   aria-hidden
-                  className="absolute -inset-2.5 -z-10 rounded-2xl rotate-[-6deg]"
+                  className="absolute -inset-2.5 -z-10 rounded-2xl -rotate-6"
                   style={{ backgroundColor: item.accent }}
                 />
                 <figure className="surface lift relative pt-14 pb-8 px-7 text-center">
