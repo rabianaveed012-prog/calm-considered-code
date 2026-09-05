@@ -194,11 +194,13 @@ const TESTIMONIALS: {
   role: string;
   quote: string;
   photo?: string;
+  accent: string;
 }[] = [
   {
     name: "Goran Karanovic",
     photo: goranAsset.url,
     role: "Upwork Client • Strategy Specialist",
+    accent: "color-mix(in oklab, var(--brand) 55%, var(--card))",
     quote:
       "Rabia turned complex project requirements into a seamless design solution. Exceptional UX understanding and execution.",
   },
@@ -206,6 +208,7 @@ const TESTIMONIALS: {
     name: "Muhammad Hussnain",
     photo: hussnainAsset.url,
     role: "Senior UI/UX Designer & Mentor",
+    accent: "color-mix(in oklab, var(--brand) 75%, var(--card))",
     quote:
       "Demonstrates an exceptional understanding of user-centric design principles and visual hierarchy. Her ability to translate complex logic into intuitive interfaces makes her a standout designer.",
   },
@@ -213,6 +216,7 @@ const TESTIMONIALS: {
     name: "Ali Hassan",
     photo: aliAsset.url,
     role: "AI & Full-Stack Developer",
+    accent: "color-mix(in oklab, var(--brand) 40%, var(--card))",
     quote:
       "Working with Rabia on UI/UX integration was seamless. She delivers pixel-perfect designs, structured Figma components, and edge-case layouts.",
   },
@@ -220,6 +224,7 @@ const TESTIMONIALS: {
     name: "Kinza Shafique",
     photo: kinzaAsset.url,
     role: "Design Mentor",
+    accent: "color-mix(in oklab, var(--brand) 65%, var(--card))",
     quote:
       "Rabia has an exceptional creative drive and an impressive ability to turn complex design challenges into intuitive, user-friendly experiences.",
   },
@@ -607,43 +612,52 @@ function Testimonials() {
     <section className="px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Endorsements" title="What collaborators say." />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {TESTIMONIALS.map((item) => (
-            <figure key={item.name} className="surface lift p-7">
-              <Quote className="h-6 w-6 text-brand/50" />
-              <blockquote className="mt-4 text-base leading-relaxed text-foreground">
-                {item.quote}
-              </blockquote>
-              <figcaption className="mt-6 flex min-w-0 items-center gap-3">
-                {item.photo ? (
-                  <img
-                    src={item.photo}
-                    alt={item.name}
-                    width={44}
-                    height={44}
-                    loading="lazy"
-                    className="h-11 w-11 shrink-0 rounded-full border border-border object-cover"
-                  />
-                ) : (
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--brand)_12%,var(--secondary))] text-sm font-semibold text-brand">
-                    {item.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </span>
-                )}
-                <span className="min-w-0">
-                  <span className="block truncate text-sm font-semibold text-foreground">
-                    {item.name}
-                  </span>
-                  <span className="mt-1 inline-block rounded-full border border-border bg-secondary px-2.5 py-0.5 text-xs text-muted-foreground">
-                    {item.role}
-                  </span>
-                </span>
-              </figcaption>
-            </figure>
-          ))}
+        <div className="mt-16 grid gap-10 md:grid-cols-2">
+          {TESTIMONIALS.map((item) => {
+            const initials = item.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")
+              .slice(0, 2);
+            return (
+              <div key={item.name} className="relative">
+                <div
+                  aria-hidden
+                  className="absolute -inset-2.5 -z-10 rounded-2xl"
+                  style={{ backgroundColor: item.accent, transform: "rotate(-6deg)" }}
+                />
+                <figure className="surface lift relative pt-14 pb-8 px-7 text-center">
+                  <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+                    {item.photo ? (
+                      <img
+                        src={item.photo}
+                        alt={item.name}
+                        width={56}
+                        height={56}
+                        loading="lazy"
+                        className="h-14 w-14 rounded-full border-4 border-card object-cover shadow-md"
+                      />
+                    ) : (
+                      <span className="grid h-14 w-14 place-items-center rounded-full border-4 border-card bg-[color-mix(in_oklab,var(--brand)_12%,var(--secondary))] text-base font-semibold text-brand shadow-md">
+                        {initials}
+                      </span>
+                    )}
+                  </div>
+                  <figcaption className="mt-2">
+                    <p className="text-base font-semibold text-foreground">
+                      {item.name}
+                    </p>
+                    <p className="mt-1 text-xs italic text-muted-foreground">
+                      {item.role}
+                    </p>
+                  </figcaption>
+                  <blockquote className="mt-5 text-sm leading-relaxed text-foreground">
+                    {item.quote}
+                  </blockquote>
+                </figure>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
