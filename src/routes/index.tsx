@@ -194,11 +194,13 @@ const TESTIMONIALS: {
   role: string;
   quote: string;
   photo?: string;
+  accent: string;
 }[] = [
   {
     name: "Goran Karanovic",
     photo: goranAsset.url,
     role: "Upwork Client • Strategy Specialist",
+    accent: "color-mix(in oklab, var(--brand) 30%, transparent)",
     quote:
       "Rabia turned complex project requirements into a seamless design solution. Exceptional UX understanding and execution.",
   },
@@ -206,6 +208,7 @@ const TESTIMONIALS: {
     name: "Muhammad Hussnain",
     photo: hussnainAsset.url,
     role: "Senior UI/UX Designer & Mentor",
+    accent: "color-mix(in oklab, var(--brand) 42%, transparent)",
     quote:
       "Demonstrates an exceptional understanding of user-centric design principles and visual hierarchy. Her ability to translate complex logic into intuitive interfaces makes her a standout designer.",
   },
@@ -213,6 +216,7 @@ const TESTIMONIALS: {
     name: "Ali Hassan",
     photo: aliAsset.url,
     role: "AI & Full-Stack Developer",
+    accent: "color-mix(in oklab, var(--brand) 24%, transparent)",
     quote:
       "Working with Rabia on UI/UX integration was seamless. She delivers pixel-perfect designs, structured Figma components, and edge-case layouts.",
   },
@@ -220,6 +224,7 @@ const TESTIMONIALS: {
     name: "Kinza Shafique",
     photo: kinzaAsset.url,
     role: "Design Mentor",
+    accent: "color-mix(in oklab, var(--brand) 36%, transparent)",
     quote:
       "Rabia has an exceptional creative drive and an impressive ability to turn complex design challenges into intuitive, user-friendly experiences.",
   },
