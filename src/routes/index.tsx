@@ -11,8 +11,14 @@ import {
   Briefcase,
   Palette,
   Award,
+  GraduationCap,
+  BadgeCheck,
 } from "lucide-react";
-import portrait from "@/assets/portrait.jpg";
+import rabiaAsset from "@/assets/rabia.png.asset.json";
+import goranAsset from "@/assets/goran.png.asset.json";
+import hussnainAsset from "@/assets/hussnain.png.asset.json";
+import aliAsset from "@/assets/ali.png.asset.json";
+import kinzaAsset from "@/assets/kinza.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,7 +76,7 @@ const SKILLS = [
 ];
 
 const STATS = [
-  { value: "2+", label: "Years designing products" },
+  { value: "3+", label: "Years designing products" },
   { value: "20+", label: "Projects delivered" },
   { value: "8", label: "Professional certifications" },
 ];
@@ -183,40 +189,72 @@ const SERVICES = [
   },
 ];
 
-const TESTIMONIALS = [
+const TESTIMONIALS: {
+  name: string;
+  role: string;
+  quote: string;
+  photo?: string;
+}[] = [
   {
     name: "Goran Karanovic",
+    photo: goranAsset.url,
     role: "Upwork Client • Strategy Specialist",
     quote:
       "Rabia turned complex project requirements into a seamless design solution. Exceptional UX understanding and execution.",
   },
   {
     name: "Muhammad Hussnain",
+    photo: hussnainAsset.url,
     role: "Senior UI/UX Designer & Mentor",
     quote:
       "Demonstrates an exceptional understanding of user-centric design principles and visual hierarchy. Her ability to translate complex logic into intuitive interfaces makes her a standout designer.",
   },
   {
     name: "Ali Hassan",
+    photo: aliAsset.url,
     role: "AI & Full-Stack Developer",
     quote:
       "Working with Rabia on UI/UX integration was seamless. She delivers pixel-perfect designs, structured Figma components, and edge-case layouts.",
   },
   {
     name: "Kinza Shafique",
+    photo: kinzaAsset.url,
     role: "Design Mentor",
     quote:
       "Rabia has an exceptional creative drive and an impressive ability to turn complex design challenges into intuitive, user-friendly experiences.",
   },
 ];
 
-const CERTIFICATIONS = [
-  { title: "Foundations of User Experience (UX) Design", issuer: "Google (Coursera)" },
-  { title: "Start the UX Design Process", issuer: "Google (Coursera)" },
-  { title: "Graphic Design Certification", issuer: "DigiSkills" },
-  { title: "WordPress Development", issuer: "DigiSkills" },
-  { title: "Freelancing & Client Management", issuer: "DigiSkills" },
-  { title: "Active Listening & Communication", issuer: "Coursera / DigiSkills" },
+const CERT_STYLES = {
+  google: {
+    icon: GraduationCap,
+    wrap: "bg-[color-mix(in_oklab,var(--brand)_14%,transparent)] text-brand",
+  },
+  digiskills: {
+    icon: Award,
+    wrap: "bg-secondary text-foreground",
+  },
+  mixed: {
+    icon: BadgeCheck,
+    wrap: "bg-[color-mix(in_oklab,var(--brand)_8%,var(--secondary))] text-brand",
+  },
+} as const;
+
+const CERTIFICATIONS: {
+  title: string;
+  issuer: string;
+  kind: keyof typeof CERT_STYLES;
+}[] = [
+  {
+    title: "Foundations of User Experience (UX) Design",
+    issuer: "Google (Coursera)",
+    kind: "google",
+  },
+  { title: "Start the UX Design Process", issuer: "Google (Coursera)", kind: "google" },
+  { title: "Graphic Design Certification", issuer: "DigiSkills", kind: "digiskills" },
+  { title: "WordPress Development", issuer: "DigiSkills", kind: "digiskills" },
+  { title: "Freelancing & Client Management", issuer: "DigiSkills", kind: "digiskills" },
+  { title: "Active Listening & Communication", issuer: "Coursera / DigiSkills", kind: "mixed" },
 ];
 
 const EMAIL = "rabianaveed@email.com";
@@ -249,13 +287,21 @@ function SectionHeading({
       }
     >
       {eyebrow ? (
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
           {eyebrow}
         </p>
       ) : null}
       <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         {title}
       </h2>
+      <span
+        aria-hidden
+        className={
+          align === "center"
+            ? "mx-auto mt-4 block h-[3px] w-12 rounded-full bg-brand"
+            : "mt-4 block h-[3px] w-12 rounded-full bg-brand"
+        }
+      />
       {subtitle ? (
         <p className="mt-4 text-base leading-relaxed text-muted-foreground">{subtitle}</p>
       ) : null}
@@ -275,7 +321,7 @@ function Navbar() {
             <a
               key={item.label}
               href={item.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand"
             >
               {item.label}
             </a>
@@ -304,8 +350,8 @@ function Hero() {
       />
       <div className="relative mx-auto max-w-3xl text-center fade-up">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-card)]">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          Available for freelance projects • Gujranwala, Pakistan 🇵🇰
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+          Available for freelance • Gujranwala, PK
         </span>
         <h1 className="mt-8 text-[2.5rem] font-bold leading-[1.08] tracking-tight text-foreground sm:text-[3.25rem]">
           Principal UI/UX designer building calm, considered digital products.
@@ -321,9 +367,9 @@ function Hero() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="surface lift inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground"
+              className="surface lift group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground hover:text-brand"
             >
-              <Icon className="h-4 w-4 text-muted-foreground" />
+              <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-brand" />
               {label}
             </a>
           ))}
@@ -346,7 +392,7 @@ function Marquee() {
                 className="flex items-center gap-8 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground"
               >
                 {item}
-                <span className="h-1.5 w-1.5 rounded-full bg-border" />
+                <span className="h-1.5 w-1.5 rounded-full bg-brand/50" />
               </span>
             ))}
           </div>
@@ -364,17 +410,17 @@ function About() {
           <div className="lg:col-span-5">
             <div className="surface h-full overflow-hidden p-0">
               <img
-                src={portrait}
+                src={rabiaAsset.url}
                 alt="Portrait of Rabia Naveed, UI/UX and graphic designer"
-                width={912}
-                height={1200}
+                width={1000}
+                height={1250}
                 loading="lazy"
                 className="h-full min-h-[420px] w-full object-cover object-top"
               />
             </div>
           </div>
           <div className="lg:col-span-7">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
               About me
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -393,8 +439,8 @@ function About() {
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {SKILLS.map((skill) => (
                 <li key={skill} className="flex items-start gap-3">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary">
-                    <Check className="h-3 w-3 text-primary-foreground" />
+                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand">
+                    <Check className="h-3 w-3 text-brand-foreground" />
                   </span>
                   <span className="min-w-0 text-sm text-foreground">{skill}</span>
                 </li>
@@ -406,7 +452,7 @@ function About() {
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
           {STATS.map((stat) => (
             <div key={stat.label} className="surface lift px-6 py-7">
-              <p className="text-3xl font-bold tracking-tight text-foreground">{stat.value}</p>
+              <p className="text-3xl font-bold tracking-tight text-brand">{stat.value}</p>
               <p className="mt-2 text-sm text-muted-foreground">{stat.label}</p>
             </div>
           ))}
@@ -439,8 +485,8 @@ function Work() {
                 onClick={() => setActive(filter)}
                 className={
                   isActive
-                    ? "rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
-                    : "rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    ? "rounded-full bg-brand px-4 py-2 text-sm font-medium text-brand-foreground"
+                    : "rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-brand hover:text-brand"
                 }
               >
                 {filter}
@@ -465,7 +511,7 @@ function Work() {
                   <h3 className="min-w-0 text-lg font-semibold tracking-tight text-foreground">
                     {project.title}
                   </h3>
-                  <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" />
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">{project.year}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -564,18 +610,29 @@ function Testimonials() {
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {TESTIMONIALS.map((item) => (
             <figure key={item.name} className="surface lift p-7">
-              <Quote className="h-6 w-6 text-muted-foreground/40" />
+              <Quote className="h-6 w-6 text-brand/50" />
               <blockquote className="mt-4 text-base leading-relaxed text-foreground">
                 {item.quote}
               </blockquote>
               <figcaption className="mt-6 flex min-w-0 items-center gap-3">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-secondary text-sm font-semibold text-foreground">
-                  {item.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .slice(0, 2)}
-                </span>
+                {item.photo ? (
+                  <img
+                    src={item.photo}
+                    alt={item.name}
+                    width={44}
+                    height={44}
+                    loading="lazy"
+                    className="h-11 w-11 shrink-0 rounded-full border border-border object-cover"
+                  />
+                ) : (
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--brand)_12%,var(--secondary))] text-sm font-semibold text-brand">
+                    {item.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)}
+                  </span>
+                )}
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-semibold text-foreground">
                     {item.name}
@@ -599,17 +656,23 @@ function Certifications() {
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Credentials" title="Certifications & Recognition" />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
-          {CERTIFICATIONS.map((cert) => (
+          {CERTIFICATIONS.map((cert) => {
+            const style = CERT_STYLES[cert.kind];
+            const Icon = style.icon;
+            return (
             <div key={cert.title} className="surface lift flex items-start gap-4 p-6">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-secondary">
-                <Award className="h-4 w-4 text-foreground" />
+              <span
+                className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${style.wrap}`}
+              >
+                <Icon className="h-4 w-4" />
               </span>
               <div className="min-w-0">
                 <h3 className="text-sm font-semibold text-foreground">{cert.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{cert.issuer}</p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -624,7 +687,7 @@ function Contact() {
         className="ambient-orb pointer-events-none absolute left-1/2 top-10 h-[420px] w-[720px] -translate-x-1/2 rounded-full"
       />
       <div className="relative mx-auto max-w-4xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
           Contact
         </p>
         <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -632,13 +695,13 @@ function Contact() {
         </h2>
         <a
           href={`mailto:${EMAIL}`}
-          className="mt-8 inline-flex max-w-full items-center gap-3 text-2xl font-bold tracking-tight text-foreground underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground sm:text-4xl"
+          className="mt-8 inline-flex max-w-full items-center gap-3 text-2xl font-bold tracking-tight text-foreground underline decoration-brand/40 underline-offset-8 transition-colors hover:text-brand hover:decoration-brand sm:text-4xl"
         >
           <Mail className="hidden h-7 w-7 shrink-0 text-muted-foreground sm:block" />
           <span className="truncate">{EMAIL}</span>
         </a>
         <p className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground">
-          <MapPin className="h-4 w-4" />
+          <MapPin className="h-4 w-4 text-brand" />
           Gujranwala, Punjab, Pakistan
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -648,9 +711,9 @@ function Contact() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="surface lift inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground"
+              className="surface lift group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground hover:text-brand"
             >
-              <Icon className="h-4 w-4 text-muted-foreground" />
+              <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-brand" />
               {label}
             </a>
           ))}
