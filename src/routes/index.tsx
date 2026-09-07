@@ -525,29 +525,64 @@ function Navbar() {
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden px-6 pb-24 pt-40 sm:pt-48">
+      <div aria-hidden className="mesh-bg pointer-events-none absolute inset-0" />
+      <div aria-hidden className="grid-overlay pointer-events-none absolute inset-0" />
+
       <div
         aria-hidden
-        className="ambient-orb pointer-events-none absolute left-1/2 top-24 h-[520px] w-[820px] -translate-x-1/2 rounded-full"
-      />
+        className="float-slow pointer-events-none absolute left-6 top-40 hidden lg:block xl:left-24"
+      >
+        <span className="surface inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground">
+          🎨 Figma Specialist
+        </span>
+      </div>
+      <div
+        aria-hidden
+        className="pulse-soft pointer-events-none absolute right-6 top-56 hidden lg:block xl:right-24"
+      >
+        <span className="surface inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground">
+          ✨ 20+ Projects Delivered
+        </span>
+      </div>
+
       <div className="relative mx-auto max-w-3xl text-center fade-up">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-card)]">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-          Available for freelance • Gujranwala, PK
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          Available for Freelance &amp; Remote Roles
         </span>
         <h1 className="mt-8 text-[2.5rem] font-bold leading-[1.08] tracking-tight text-foreground sm:text-[3.25rem]">
           Principal UI/UX designer building calm, considered digital products.
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          I research, design, and systemise interfaces — from first user interview to a
-          documented component library.
+          Crafting intuitive web &amp; mobile experiences with a focus on visual precision
+          and user psychology.
         </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="#work"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
+          >
+            View My Work
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:text-brand"
+          >
+            Let&apos;s Talk
+          </a>
+        </div>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           {SOCIALS.map(({ label, href, icon: Icon }) => (
             <a
               key={label}
               href={href}
               target="_blank"
               rel="noreferrer"
+              aria-label={label}
               className="surface lift group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground hover:text-brand"
             >
               <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-brand" />
