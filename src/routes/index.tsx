@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -7,18 +7,27 @@ import {
   Linkedin,
   Mail,
   MapPin,
-  Quote,
   Briefcase,
   Palette,
   Award,
   GraduationCap,
   BadgeCheck,
+  X,
 } from "lucide-react";
 import rabiaAsset from "@/assets/rabia.png.asset.json";
 import goranAsset from "@/assets/goran.png.asset.json";
 import hussnainAsset from "@/assets/hussnain.png.asset.json";
 import aliAsset from "@/assets/ali.png.asset.json";
 import kinzaAsset from "@/assets/kinza.png.asset.json";
+import littleParadiseAsset from "@/assets/little_paradise.webp.asset.json";
+import marketeriaAsset from "@/assets/maketria_website_thumbnail.webp.asset.json";
+import spaAsset from "@/assets/Spa_landing_page.webp.asset.json";
+import parmalaAsset from "@/assets/parmala_website.webp.asset.json";
+import bridaAsset from "@/assets/bridasone_landing_page.webp.asset.json";
+import freelaAsset from "@/assets/Freela.webp.asset.json";
+import agriNovaAsset from "@/assets/agriNova.webp.asset.json";
+import artifyAsset from "@/assets/Artify.webp.asset.json";
+import consultEaseAsset from "@/assets/consulatease_app.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -76,9 +85,10 @@ const SKILLS = [
 ];
 
 const STATS = [
-  { value: "3+", label: "Years designing products" },
+  { value: "2+", label: "Years experience" },
   { value: "20+", label: "Projects delivered" },
-  { value: "8", label: "Professional certifications" },
+  { value: "8", label: "Certifications" },
+  { value: "3.78", label: "CGPA" },
 ];
 
 const FILTERS = [
@@ -90,42 +100,208 @@ const FILTERS = [
   "Graphics",
 ] as const;
 
-const PROJECTS = [
+type Project = {
+  title: string;
+  category: (typeof FILTERS)[number];
+  tags: string[];
+  year: string;
+  image: string;
+  context: string;
+  role: string;
+  goals: string[];
+  tools: string[];
+  metrics: { value: string; label: string }[];
+};
+
+const PROJECTS: Project[] = [
   {
-    title: "Finlytic — SaaS analytics dashboard",
+    title: "Little Paradise Budva — Responsive Stay Website",
     category: "Web Design",
-    tags: ["Product UX", "Dashboard", "Design System"],
+    tags: ["Landing Page", "Hospitality", "Montenegro Resort"],
     year: "2025",
+    image: littleParadiseAsset.url,
+    context:
+      "Coastal Mediterranean resort landing page with a scenic hero image and a multi-device preview.",
+    role: "End-to-end UI/UX design, responsive layout system, and developer handover.",
+    goals: [
+      "Make the seaside location the first thing a guest feels",
+      "Direct booking enquiries above the fold on every device",
+      "Room gallery that stays readable on small screens",
+    ],
+    tools: ["Figma Auto Layout", "Components & Variants", "Responsive Prototype"],
+    metrics: [
+      { value: "3", label: "Breakpoints designed" },
+      { value: "12", label: "Reusable components" },
+      { value: "1 wk", label: "Design turnaround" },
+    ],
   },
   {
-    title: "Nourish — habit & nutrition app",
+    title: "Marketeria Digital — B2B Growth Website",
+    category: "Web Design",
+    tags: ["Landing Page", "B2B", "Fractional Partner"],
+    year: "2026",
+    image: marketeriaAsset.url,
+    context:
+      "Modern dark navy theme with high-contrast amber buttons, warm desk setup, and checklist notes.",
+    role: "Positioning-led landing page design, visual identity direction, and CTA strategy.",
+    goals: [
+      "Communicate a fractional growth offer in one screen",
+      "High-contrast CTAs that survive dark backgrounds",
+      "A three-step process block that removes buying friction",
+    ],
+    tools: ["Figma", "Design Tokens", "Interactive Prototype"],
+    metrics: [
+      { value: "1", label: "Primary conversion path" },
+      { value: "6", label: "Sections designed" },
+      { value: "AA", label: "Contrast target" },
+    ],
+  },
+  {
+    title: "Bliss Haven Spa — Wellness Website",
+    category: "Web Design",
+    tags: ["Landing Page", "Wellness", "Luxury Spa"],
+    year: "2026",
+    image: spaAsset.url,
+    context:
+      "Soft warm beige aesthetic with elegant serif typography, category icons, and a cozy spa mood.",
+    role: "Brand-aligned web design, typographic system, and icon set direction.",
+    goals: [
+      "Translate a calm in-person experience into a screen",
+      "Make treatment categories scannable in one glance",
+      "Build trust with social proof near the booking CTA",
+    ],
+    tools: ["Figma", "Type Scale", "Icon Library"],
+    metrics: [
+      { value: "4", label: "Service categories" },
+      { value: "2", label: "Device layouts" },
+      { value: "500+", label: "Clients highlighted" },
+    ],
+  },
+  {
+    title: "Parmala — Event Venue Website",
+    category: "Web Design",
+    tags: ["Multi-page Website", "Event Venue", "Herajoki"],
+    year: "2026",
+    image: parmalaAsset.url,
+    context:
+      "Warm rustic-chic aesthetic across a full multi-page spread — Home, History, Location, Terms, Contact.",
+    role: "Multi-page information architecture, page templates, and content design.",
+    goals: [
+      "Give a heritage venue a warm, modern presence",
+      "Guide visitors from story to enquiry in three clicks",
+      "Keep long legal content readable and calm",
+    ],
+    tools: ["Figma", "Page Templates", "Content Grid"],
+    metrics: [
+      { value: "5", label: "Pages designed" },
+      { value: "1", label: "Shared layout system" },
+      { value: "100%", label: "Template reuse" },
+    ],
+  },
+  {
+    title: "Brida Stone Inc — Natural Stone E-commerce Website",
+    category: "Web Design",
+    tags: ["E-commerce", "Product Showcase", "Natural Stone"],
+    year: "2026",
+    image: bridaAsset.url,
+    context:
+      "Clean earth-tone aesthetic with olive green highlights, product categories, and a sleek desktop mockup.",
+    role: "E-commerce UX, category architecture, and product showcase design.",
+    goals: [
+      "Let material texture lead the shopping experience",
+      "Simplify browsing across a wide product catalogue",
+      "Surface value props right under the hero",
+    ],
+    tools: ["Figma", "Component Library", "E-commerce Patterns"],
+    metrics: [
+      { value: "4", label: "Value pillars" },
+      { value: "6", label: "Catalogue sections" },
+      { value: "2", label: "Checkout entry points" },
+    ],
+  },
+  {
+    title: "Freela — Freelance Client Management App",
     category: "App Design",
-    tags: ["iOS", "Prototyping", "Onboarding"],
-    year: "2025",
+    tags: ["Mobile App", "Dashboard", "Productivity"],
+    year: "2026",
+    image: freelaAsset.url,
+    context:
+      "Modern handheld iPhone mockup showing a Project Details dashboard with a vibrant blue gradient header.",
+    role: "Product UX, dashboard information design, and mobile design system.",
+    goals: [
+      "Show project health — budget, deadline, progress — at a glance",
+      "Keep milestones, files, and chat one tap apart",
+      "Design a system that scales past ten project types",
+    ],
+    tools: ["Figma", "Auto Layout", "Prototype Flows"],
+    metrics: [
+      { value: "4", label: "Core tabs" },
+      { value: "18", label: "Screens designed" },
+      { value: "1", label: "Token-based theme" },
+    ],
   },
   {
-    title: "Verda — organic skincare identity",
-    category: "Logo & Branding",
-    tags: ["Logo Mark", "Typography", "Guidelines"],
-    year: "2024",
+    title: "AgriNova — Smart Agriculture Mobile App",
+    category: "App Design",
+    tags: ["Mobile App", "AgriTech", "E-commerce"],
+    year: "2026",
+    image: agriNovaAsset.url,
+    context:
+      "Dual floating dark-frame smartphones featuring a rice seed marketplace with prices, specs, and green branding.",
+    role: "Marketplace UX, product detail design, and accessibility-minded typography.",
+    goals: [
+      "Make seed and tool buying simple for low-literacy users",
+      "Put stock, rating, and price in one confident block",
+      "Keep the consultation call-to-action always reachable",
+    ],
+    tools: ["Figma", "Design System", "Usability Testing"],
+    metrics: [
+      { value: "4", label: "Product categories" },
+      { value: "22", label: "Screens designed" },
+      { value: "16px", label: "Minimum body size" },
+    ],
   },
   {
-    title: "Atlas Studio — agency website",
-    category: "Web Design",
-    tags: ["Landing Page", "Motion", "Conversion"],
-    year: "2024",
+    title: "Artify — Art Discovery Mobile App",
+    category: "App Design",
+    tags: ["Mobile App", "Art & Culture", "Discovery"],
+    year: "2026",
+    image: artifyAsset.url,
+    context:
+      "Elegant dark burgundy/plum header UI showcasing famous artist cards — Vermeer, Raphael, Da Vinci.",
+    role: "Discovery UX, browsing taxonomy, and editorial visual language.",
+    goals: [
+      "Make exploring art feel like walking a gallery",
+      "Offer three ways in: style, medium, subject",
+      "Balance rich imagery with readable long-form text",
+    ],
+    tools: ["Figma", "Type Hierarchy", "Card Components"],
+    metrics: [
+      { value: "3", label: "Browse dimensions" },
+      { value: "15", label: "Screens designed" },
+      { value: "1", label: "Editorial card system" },
+    ],
   },
   {
-    title: "Bloom Coffee — campaign set",
-    category: "Social Media Posts",
-    tags: ["Content Design", "Templates", "Grid"],
-    year: "2024",
-  },
-  {
-    title: "Kinetic — illustration & icon suite",
-    category: "Graphics",
-    tags: ["Vector", "Iconography", "Print"],
-    year: "2023",
+    title: "ConsultEase — Doctor Consultation App",
+    category: "App Design",
+    tags: ["Healthcare", "Mobile App", "Booking UX"],
+    year: "2026",
+    image: consultEaseAsset.url,
+    context:
+      "Multi-screen mobile flow covering doctor profiles, chat, onboarding, and error states in deep teal and coral.",
+    role: "Booking flow UX, edge-case and error-state design, and handover documentation.",
+    goals: [
+      "Get a patient from search to booked in under a minute",
+      "Design honest, calm failure and retry states",
+      "Keep chat and appointment context together",
+    ],
+    tools: ["Figma", "Flow Mapping", "Component Variants"],
+    metrics: [
+      { value: "6", label: "Key flows" },
+      { value: "24", label: "Screens designed" },
+      { value: "5", label: "Error states covered" },
+    ],
   },
 ];
 
