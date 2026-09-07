@@ -665,7 +665,7 @@ function About() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((stat) => (
             <div key={stat.label} className="surface lift px-6 py-7">
               <p className="text-3xl font-bold tracking-tight text-brand">{stat.value}</p>
@@ -678,8 +678,111 @@ function About() {
   );
 }
 
+function CaseStudyModal({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-foreground/40 px-4 py-10 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-label={project.title}
+      onClick={onClose}
+    >
+      <div
+        className="surface relative w-full max-w-3xl overflow-hidden p-0"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close case study"
+          className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:text-brand"
+        >
+          <X className="h-4 w-4" />
+        </button>
+        <img
+          src={project.image}
+          alt={project.title}
+          loading="lazy"
+          className="aspect-[16/10] w-full border-b border-border object-cover"
+        />
+        <div className="p-7 sm:p-9">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+            {project.category} • {project.year}
+          </p>
+          <h3 className="mt-3 text-2xl font-bold tracking-tight text-foreground">
+            {project.title}
+          </h3>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            {project.context}
+          </p>
+
+          <div className="mt-7">
+            <h4 className="text-sm font-semibold text-foreground">My role</h4>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {project.role}
+            </p>
+          </div>
+
+          <div className="mt-7">
+            <h4 className="text-sm font-semibold text-foreground">Key design goals</h4>
+            <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+              {project.goals.map((goal) => (
+                <li key={goal} className="flex items-start gap-3">
+                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand">
+                    <Check className="h-3 w-3 text-brand-foreground" />
+                  </span>
+                  <span className="min-w-0 text-sm text-foreground">{goal}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-7">
+            <h4 className="text-sm font-semibold text-foreground">Figma & tools</h4>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {project.tools.map((tool) => (
+                <Pill key={tool}>{tool}</Pill>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-7 grid gap-4 sm:grid-cols-3">
+            {project.metrics.map((metric) => (
+              <div key={metric.label} className="rounded-xl border border-border bg-secondary px-5 py-4">
+                <p className="text-2xl font-bold tracking-tight text-brand">
+                  {metric.value}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">{metric.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Work() {
   const [active, setActive] = useState<(typeof FILTERS)[number]>("All");
+  const [selected, setSelected] = useState<Project | null>(null);
   const visible =
     active === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === active);
 
@@ -711,35 +814,56 @@ function Work() {
           })}
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {visible.map((project) => (
-            <article key={project.title} className="surface lift group overflow-hidden">
-              <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-secondary">
-                <div className="ambient-orb absolute inset-x-8 bottom-[-30%] top-1/3 rounded-full opacity-70" />
-                <div className="relative grid h-full place-items-center">
-                  <span className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                    {project.category}
-                  </span>
+        {visible.length === 0 ? (
+          <p className="mt-14 text-center text-sm text-muted-foreground">
+            New {active.toLowerCase()} case studies are coming soon.
+          </p>
+        ) : (
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            {visible.map((project) => (
+              <article
+                key={project.title}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelected(project)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelected(project);
+                  }
+                }}
+                className="surface lift group cursor-pointer overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-secondary">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} design mockup`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
                 </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="min-w-0 text-lg font-semibold tracking-tight text-foreground">
-                    {project.title}
-                  </h3>
-                  <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" />
+                <div className="p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="min-w-0 text-lg font-semibold tracking-tight text-foreground">
+                      {project.title}
+                    </h3>
+                    <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" />
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">{project.year}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <Pill key={tag}>{tag}</Pill>
+                    ))}
+                  </div>
                 </div>
-                <p className="mt-1 text-sm text-muted-foreground">{project.year}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <Pill key={tag}>{tag}</Pill>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
+      {selected ? (
+        <CaseStudyModal project={selected} onClose={() => setSelected(null)} />
+      ) : null}
     </section>
   );
 }
