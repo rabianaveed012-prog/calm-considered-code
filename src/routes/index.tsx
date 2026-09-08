@@ -978,6 +978,19 @@ function Testimonials() {
     <section className="px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Endorsements" title="What collaborators say." />
+        <div className="mt-12 grid gap-4 sm:grid-cols-2">
+          {[
+            { value: "100%", label: "Job success on client work" },
+            { value: "20+", label: "Products shipped end-to-end" },
+          ].map((metric) => (
+            <div key={metric.label} className="surface lift px-6 py-7">
+              <p className="text-3xl font-bold tracking-tight text-brand">
+                {metric.value}
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">{metric.label}</p>
+            </div>
+          ))}
+        </div>
         <div className="mt-16 grid gap-10 md:grid-cols-2">
           {TESTIMONIALS.map((item) => {
             const initials = item.name
@@ -1114,9 +1127,9 @@ function Index() {
       <main>
         <Hero />
         <Marquee />
-        <About />
         <Work />
         <Process />
+        <About />
         <Services />
         <Testimonials />
         <Certifications />
