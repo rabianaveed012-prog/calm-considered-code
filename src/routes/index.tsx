@@ -297,13 +297,13 @@ const PROJECTS: Project[] = [
 const PROCESS = [
   {
     no: "01",
-    title: "Discover & Research",
+    title: "Discover & Empathize",
     body: "Understanding user needs, competitor analysis, and mapping key product requirements before touching the canvas.",
     tags: ["User Research", "Competitive Audit", "User Journeys"],
   },
   {
     no: "02",
-    title: "Wireframing & Architecture",
+    title: "Architecture & Wireframing",
     body: "Structuring user flows, information architecture, and low-fidelity prototypes to validate core logic.",
     tags: ["Information Architecture", "Wireframes", "User Flows"],
   },
