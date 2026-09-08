@@ -712,12 +712,17 @@ function CaseStudyModal({
         >
           <X className="h-4 w-4" />
         </button>
-        <img
-          src={project.image}
-          alt={project.title}
-          loading="lazy"
-          className="aspect-[16/10] w-full border-b border-border object-cover"
-        />
+        <div
+          className={`w-full border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[16/11] p-6" : "aspect-[16/9]"}`}
+        >
+          <img
+            src={project.image}
+            alt={project.title}
+            loading="lazy"
+            className={`h-full w-full ${project.orientation === "mobile" ? "object-contain" : "object-cover"}`}
+          />
+        </div>
+
         <div className="p-7 sm:p-9">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
             {project.category} • {project.year}
@@ -829,12 +834,14 @@ function Work() {
                 }}
                 className="surface lift group cursor-pointer overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
               >
-                <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-secondary">
+                <div
+                  className={`relative overflow-hidden border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[4/3] p-6" : "aspect-[16/10]"}`}
+                >
                   <img
                     src={project.image}
                     alt={`${project.title} design mockup`}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.03] ${project.orientation === "mobile" ? "object-contain" : "object-cover"}`}
                   />
                 </div>
                 <div className="p-6">
@@ -864,6 +871,8 @@ function Work() {
 }
 
 function Process() {
+  const [active, setActive] = useState(0);
+  const step = PROCESS[active]!;
   return (
     <section className="px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
@@ -871,32 +880,59 @@ function Process() {
           eyebrow="My design process"
           title="How I turn complex ideas into seamless products."
         />
-        <div className="mt-12 space-y-4">
-          {PROCESS.map((step) => (
-            <div
-              key={step.no}
-              className="surface lift grid gap-5 p-6 sm:p-8 lg:grid-cols-12 lg:items-center"
-            >
-              <div className="lg:col-span-2">
-                <span className="text-4xl font-bold tracking-tight text-muted-foreground/40">
-                  {step.no}
-                </span>
-              </div>
-              <div className="lg:col-span-6">
-                <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {step.body}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 lg:col-span-4 lg:justify-end">
+        <div className="mt-12 grid gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="relative space-y-2 pl-6">
+              <span
+                aria-hidden
+                className="absolute left-[7px] top-3 bottom-3 w-px bg-border"
+              />
+              {PROCESS.map((item, i) => {
+                const isActive = i === active;
+                return (
+                  <button
+                    key={item.no}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    className={`relative flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors ${isActive ? "bg-card border border-border shadow-[var(--shadow-card)]" : "border border-transparent hover:bg-card/60"}`}
+                  >
+                    <span
+                      aria-hidden
+                      className={`absolute -left-6 h-3.5 w-3.5 rounded-full border-2 ${isActive ? "border-brand bg-brand" : "border-border bg-background"}`}
+                    />
+                    <span
+                      className={`text-sm font-semibold tabular-nums ${isActive ? "text-brand" : "text-muted-foreground"}`}
+                    >
+                      {item.no}
+                    </span>
+                    <span
+                      className={`min-w-0 text-sm font-medium ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                    >
+                      {item.title}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <div key={step.no} className="surface fade-up p-7 sm:p-9">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                Step {step.no}
+              </p>
+              <h3 className="mt-3 text-2xl font-bold tracking-tight text-foreground">
+                {step.title}
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                {step.body}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
                 {step.tags.map((tag) => (
                   <Pill key={tag}>{tag}</Pill>
                 ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
