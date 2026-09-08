@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
   Check,
+  Copy,
   Github,
   Linkedin,
   Mail,
@@ -15,18 +16,18 @@ import {
   X,
 } from "lucide-react";
 import rabiaAsset from "@/assets/rabia.png.asset.json";
+import rabiaCutoutAsset from "@/assets/rabia_cutout.png.asset.json";
 import goranAsset from "@/assets/goran.png.asset.json";
-import hussnainAsset from "@/assets/hussnain.png.asset.json";
+import damirAsset from "@/assets/hussnain.png.asset.json";
 import aliAsset from "@/assets/ali.png.asset.json";
 import kinzaAsset from "@/assets/kinza.png.asset.json";
-import littleParadiseAsset from "@/assets/little_paradise.webp.asset.json";
-import marketeriaAsset from "@/assets/maketria_website_thumbnail.webp.asset.json";
-import spaAsset from "@/assets/Spa_landing_page.webp.asset.json";
-import parmalaAsset from "@/assets/parmala_website.webp.asset.json";
-import bridaAsset from "@/assets/bridasone_landing_page.webp.asset.json";
-import freelaAsset from "@/assets/Freela.webp.asset.json";
-import agriNovaAsset from "@/assets/agriNova.webp.asset.json";
-import artifyAsset from "@/assets/Artify.webp.asset.json";
+import littleParadiseAsset from "@/assets/paradise_v2.png.asset.json";
+import marketeriaAsset from "@/assets/marketeria_v2.png.asset.json";
+import spaAsset from "@/assets/spa_v2.png.asset.json";
+import bridaAsset from "@/assets/brida_v2.png.asset.json";
+import freelaAsset from "@/assets/freela_v2.png.asset.json";
+import agriNovaAsset from "@/assets/agrinova_v2.png.asset.json";
+import artifyAsset from "@/assets/artify_v2.png.asset.json";
 import consultEaseAsset from "@/assets/consulatease_app.webp.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -106,6 +107,7 @@ type Project = {
   tags: string[];
   year: string;
   image: string;
+  orientation: "mobile" | "web";
   context: string;
   role: string;
   goals: string[];
@@ -120,6 +122,7 @@ const PROJECTS: Project[] = [
     tags: ["Landing Page", "Hospitality", "Montenegro Resort"],
     year: "2025",
     image: littleParadiseAsset.url,
+    orientation: "web",
     context:
       "Coastal Mediterranean resort landing page with a scenic hero image and a multi-device preview.",
     role: "End-to-end UI/UX design, responsive layout system, and developer handover.",
@@ -141,6 +144,7 @@ const PROJECTS: Project[] = [
     tags: ["Landing Page", "B2B", "Fractional Partner"],
     year: "2026",
     image: marketeriaAsset.url,
+    orientation: "web",
     context:
       "Modern dark navy theme with high-contrast amber buttons, warm desk setup, and checklist notes.",
     role: "Positioning-led landing page design, visual identity direction, and CTA strategy.",
@@ -162,6 +166,7 @@ const PROJECTS: Project[] = [
     tags: ["Landing Page", "Wellness", "Luxury Spa"],
     year: "2026",
     image: spaAsset.url,
+    orientation: "web",
     context:
       "Soft warm beige aesthetic with elegant serif typography, category icons, and a cozy spa mood.",
     role: "Brand-aligned web design, typographic system, and icon set direction.",
@@ -178,32 +183,12 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    title: "Parmala — Event Venue Website",
-    category: "Web Design",
-    tags: ["Multi-page Website", "Event Venue", "Herajoki"],
-    year: "2026",
-    image: parmalaAsset.url,
-    context:
-      "Warm rustic-chic aesthetic across a full multi-page spread — Home, History, Location, Terms, Contact.",
-    role: "Multi-page information architecture, page templates, and content design.",
-    goals: [
-      "Give a heritage venue a warm, modern presence",
-      "Guide visitors from story to enquiry in three clicks",
-      "Keep long legal content readable and calm",
-    ],
-    tools: ["Figma", "Page Templates", "Content Grid"],
-    metrics: [
-      { value: "5", label: "Pages designed" },
-      { value: "1", label: "Shared layout system" },
-      { value: "100%", label: "Template reuse" },
-    ],
-  },
-  {
     title: "Brida Stone Inc — Natural Stone E-commerce Website",
     category: "Web Design",
     tags: ["E-commerce", "Product Showcase", "Natural Stone"],
     year: "2026",
     image: bridaAsset.url,
+    orientation: "web",
     context:
       "Clean earth-tone aesthetic with olive green highlights, product categories, and a sleek desktop mockup.",
     role: "E-commerce UX, category architecture, and product showcase design.",
@@ -225,6 +210,7 @@ const PROJECTS: Project[] = [
     tags: ["Mobile App", "Dashboard", "Productivity"],
     year: "2026",
     image: freelaAsset.url,
+    orientation: "mobile",
     context:
       "Modern handheld iPhone mockup showing a Project Details dashboard with a vibrant blue gradient header.",
     role: "Product UX, dashboard information design, and mobile design system.",
@@ -246,6 +232,7 @@ const PROJECTS: Project[] = [
     tags: ["Mobile App", "AgriTech", "E-commerce"],
     year: "2026",
     image: agriNovaAsset.url,
+    orientation: "mobile",
     context:
       "Dual floating dark-frame smartphones featuring a rice seed marketplace with prices, specs, and green branding.",
     role: "Marketplace UX, product detail design, and accessibility-minded typography.",
@@ -267,6 +254,7 @@ const PROJECTS: Project[] = [
     tags: ["Mobile App", "Art & Culture", "Discovery"],
     year: "2026",
     image: artifyAsset.url,
+    orientation: "mobile",
     context:
       "Elegant dark burgundy/plum header UI showcasing famous artist cards — Vermeer, Raphael, Da Vinci.",
     role: "Discovery UX, browsing taxonomy, and editorial visual language.",
@@ -288,6 +276,7 @@ const PROJECTS: Project[] = [
     tags: ["Healthcare", "Mobile App", "Booking UX"],
     year: "2026",
     image: consultEaseAsset.url,
+    orientation: "mobile",
     context:
       "Multi-screen mobile flow covering doctor profiles, chat, onboarding, and error states in deep teal and coral.",
     role: "Booking flow UX, edge-case and error-state design, and handover documentation.",
@@ -308,13 +297,13 @@ const PROJECTS: Project[] = [
 const PROCESS = [
   {
     no: "01",
-    title: "Discover & Research",
+    title: "Discover & Empathize",
     body: "Understanding user needs, competitor analysis, and mapping key product requirements before touching the canvas.",
     tags: ["User Research", "Competitive Audit", "User Journeys"],
   },
   {
     no: "02",
-    title: "Wireframing & Architecture",
+    title: "Architecture & Wireframing",
     body: "Structuring user flows, information architecture, and low-fidelity prototypes to validate core logic.",
     tags: ["Information Architecture", "Wireframes", "User Flows"],
   },
@@ -381,9 +370,9 @@ const TESTIMONIALS: {
       "Rabia turned complex project requirements into a seamless design solution. Exceptional UX understanding and execution.",
   },
   {
-    name: "Muhammad Hussnain",
-    photo: hussnainAsset.url,
-    role: "Senior UI/UX Designer & Mentor",
+    name: "Damir Kovacevic",
+    photo: damirAsset.url,
+    role: "Product Lead • Long-term Client",
     accent: "color-mix(in oklab, var(--brand) 75%, var(--card))",
     quote:
       "Demonstrates an exceptional understanding of user-centric design principles and visual hierarchy. Her ability to translate complex logic into intuitive interfaces makes her a standout designer.",
@@ -434,8 +423,6 @@ const CERTIFICATIONS: {
   { title: "Start the UX Design Process", issuer: "Google (Coursera)", kind: "google" },
   { title: "Graphic Design Certification", issuer: "DigiSkills", kind: "digiskills" },
   { title: "WordPress Development", issuer: "DigiSkills", kind: "digiskills" },
-  { title: "Freelancing & Client Management", issuer: "DigiSkills", kind: "digiskills" },
-  { title: "Active Listening & Communication", issuer: "Coursera / DigiSkills", kind: "mixed" },
 ];
 
 const EMAIL = "rabianaveed@email.com";
@@ -524,71 +511,79 @@ function Navbar() {
 
 function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden px-6 pb-24 pt-40 sm:pt-48">
+    <section id="top" className="relative overflow-hidden px-6 pb-24 pt-36 sm:pt-44">
       <div aria-hidden className="mesh-bg pointer-events-none absolute inset-0" />
       <div aria-hidden className="grid-overlay pointer-events-none absolute inset-0" />
 
-      <div
-        aria-hidden
-        className="float-slow pointer-events-none absolute left-6 top-40 hidden lg:block xl:left-24"
-      >
-        <span className="surface inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground">
-          🎨 Figma Specialist
-        </span>
-      </div>
-      <div
-        aria-hidden
-        className="pulse-soft pointer-events-none absolute right-6 top-56 hidden lg:block xl:right-24"
-      >
-        <span className="surface inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground">
-          ✨ 20+ Projects Delivered
-        </span>
-      </div>
-
-      <div className="relative mx-auto max-w-3xl text-center fade-up">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-card)]">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-12">
+        <div className="fade-up lg:col-span-7">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-card)]">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            Available for Freelance &amp; Remote Roles
           </span>
-          Available for Freelance &amp; Remote Roles
-        </span>
-        <h1 className="mt-8 text-[2.5rem] font-bold leading-[1.08] tracking-tight text-foreground sm:text-[3.25rem]">
-          Principal UI/UX designer building calm, considered digital products.
-        </h1>
-        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Crafting intuitive web &amp; mobile experiences with a focus on visual precision
-          and user psychology.
-        </p>
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="#work"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
-          >
-            View My Work
-            <ArrowUpRight className="h-4 w-4" />
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:text-brand"
-          >
-            Let&apos;s Talk
-          </a>
-        </div>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          {SOCIALS.map(({ label, href, icon: Icon }) => (
+          <h1 className="mt-7 text-[2.35rem] font-bold leading-[1.06] tracking-tight text-foreground sm:text-[3.15rem]">
+            Principal UI/UX designer building{" "}
+            <span className="text-brand">calm, considered</span> digital products.
+          </h1>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            Crafting intuitive web &amp; mobile experiences with a focus on visual
+            precision and user psychology.
+          </p>
+          <div className="mt-9 flex flex-wrap items-center gap-3">
             <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={label}
-              className="surface lift group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground hover:text-brand"
+              href="#work"
+              className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
             >
-              <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-brand" />
-              {label}
+              View My Work
+              <ArrowUpRight className="h-4 w-4" />
             </a>
-          ))}
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:text-brand"
+            >
+              Let&apos;s Talk
+            </a>
+          </div>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            {SOCIALS.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="surface lift group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground hover:text-brand"
+              >
+                <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-brand" />
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative lg:col-span-5">
+          <div className="relative mx-auto flex max-w-sm items-end justify-center">
+            <div
+              aria-hidden
+              className="absolute inset-x-4 bottom-0 top-10 rounded-[2.5rem] bg-[color-mix(in_oklab,var(--brand)_10%,var(--card))] border border-border"
+            />
+            <img
+              src={rabiaCutoutAsset.url}
+              alt="Rabia Naveed, UI/UX and graphic designer"
+              width={392}
+              height={1253}
+              className="relative z-10 h-[440px] w-auto object-contain object-bottom sm:h-[520px]"
+            />
+            <span className="float-slow absolute -left-2 top-16 z-20 surface px-3 py-2 text-xs font-medium text-foreground sm:text-sm">
+              🎨 Figma Specialist
+            </span>
+            <span className="pulse-soft absolute -right-2 bottom-16 z-20 surface px-3 py-2 text-xs font-medium text-foreground sm:text-sm">
+              ✨ 20+ Projects Delivered
+            </span>
+          </div>
         </div>
       </div>
     </section>
@@ -717,12 +712,17 @@ function CaseStudyModal({
         >
           <X className="h-4 w-4" />
         </button>
-        <img
-          src={project.image}
-          alt={project.title}
-          loading="lazy"
-          className="aspect-[16/10] w-full border-b border-border object-cover"
-        />
+        <div
+          className={`w-full border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[16/11] p-6" : "aspect-[16/9]"}`}
+        >
+          <img
+            src={project.image}
+            alt={project.title}
+            loading="lazy"
+            className={`h-full w-full ${project.orientation === "mobile" ? "object-contain" : "object-cover"}`}
+          />
+        </div>
+
         <div className="p-7 sm:p-9">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
             {project.category} • {project.year}
@@ -834,12 +834,14 @@ function Work() {
                 }}
                 className="surface lift group cursor-pointer overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
               >
-                <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-secondary">
+                <div
+                  className={`relative overflow-hidden border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[4/3] p-6" : "aspect-[16/10]"}`}
+                >
                   <img
                     src={project.image}
                     alt={`${project.title} design mockup`}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.03] ${project.orientation === "mobile" ? "object-contain" : "object-cover"}`}
                   />
                 </div>
                 <div className="p-6">
@@ -869,6 +871,8 @@ function Work() {
 }
 
 function Process() {
+  const [active, setActive] = useState(0);
+  const step = PROCESS[active]!;
   return (
     <section className="px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
@@ -876,32 +880,59 @@ function Process() {
           eyebrow="My design process"
           title="How I turn complex ideas into seamless products."
         />
-        <div className="mt-12 space-y-4">
-          {PROCESS.map((step) => (
-            <div
-              key={step.no}
-              className="surface lift grid gap-5 p-6 sm:p-8 lg:grid-cols-12 lg:items-center"
-            >
-              <div className="lg:col-span-2">
-                <span className="text-4xl font-bold tracking-tight text-muted-foreground/40">
-                  {step.no}
-                </span>
-              </div>
-              <div className="lg:col-span-6">
-                <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {step.body}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 lg:col-span-4 lg:justify-end">
+        <div className="mt-12 grid gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="relative space-y-2 pl-6">
+              <span
+                aria-hidden
+                className="absolute left-[7px] top-3 bottom-3 w-px bg-border"
+              />
+              {PROCESS.map((item, i) => {
+                const isActive = i === active;
+                return (
+                  <button
+                    key={item.no}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    className={`relative flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors ${isActive ? "bg-card border border-border shadow-[var(--shadow-card)]" : "border border-transparent hover:bg-card/60"}`}
+                  >
+                    <span
+                      aria-hidden
+                      className={`absolute -left-6 h-3.5 w-3.5 rounded-full border-2 ${isActive ? "border-brand bg-brand" : "border-border bg-background"}`}
+                    />
+                    <span
+                      className={`text-sm font-semibold tabular-nums ${isActive ? "text-brand" : "text-muted-foreground"}`}
+                    >
+                      {item.no}
+                    </span>
+                    <span
+                      className={`min-w-0 text-sm font-medium ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                    >
+                      {item.title}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <div key={step.no} className="surface fade-up p-7 sm:p-9">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                Step {step.no}
+              </p>
+              <h3 className="mt-3 text-2xl font-bold tracking-tight text-foreground">
+                {step.title}
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                {step.body}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
                 {step.tags.map((tag) => (
                   <Pill key={tag}>{tag}</Pill>
                 ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
@@ -947,6 +978,19 @@ function Testimonials() {
     <section className="px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Endorsements" title="What collaborators say." />
+        <div className="mt-12 grid gap-4 sm:grid-cols-2">
+          {[
+            { value: "100%", label: "Job success on client work" },
+            { value: "20+", label: "Products shipped end-to-end" },
+          ].map((metric) => (
+            <div key={metric.label} className="surface lift px-6 py-7">
+              <p className="text-3xl font-bold tracking-tight text-brand">
+                {metric.value}
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">{metric.label}</p>
+            </div>
+          ))}
+        </div>
         <div className="mt-16 grid gap-10 md:grid-cols-2">
           {TESTIMONIALS.map((item) => {
             const initials = item.name
@@ -1083,9 +1127,9 @@ function Index() {
       <main>
         <Hero />
         <Marquee />
-        <About />
         <Work />
         <Process />
+        <About />
         <Services />
         <Testimonials />
         <Certifications />
