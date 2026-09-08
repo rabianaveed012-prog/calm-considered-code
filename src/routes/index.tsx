@@ -122,6 +122,7 @@ const PROJECTS: Project[] = [
     tags: ["Landing Page", "Hospitality", "Montenegro Resort"],
     year: "2025",
     image: littleParadiseAsset.url,
+    orientation: "web",
     context:
       "Coastal Mediterranean resort landing page with a scenic hero image and a multi-device preview.",
     role: "End-to-end UI/UX design, responsive layout system, and developer handover.",
@@ -143,6 +144,7 @@ const PROJECTS: Project[] = [
     tags: ["Landing Page", "B2B", "Fractional Partner"],
     year: "2026",
     image: marketeriaAsset.url,
+    orientation: "web",
     context:
       "Modern dark navy theme with high-contrast amber buttons, warm desk setup, and checklist notes.",
     role: "Positioning-led landing page design, visual identity direction, and CTA strategy.",
@@ -164,6 +166,7 @@ const PROJECTS: Project[] = [
     tags: ["Landing Page", "Wellness", "Luxury Spa"],
     year: "2026",
     image: spaAsset.url,
+    orientation: "web",
     context:
       "Soft warm beige aesthetic with elegant serif typography, category icons, and a cozy spa mood.",
     role: "Brand-aligned web design, typographic system, and icon set direction.",
@@ -185,6 +188,7 @@ const PROJECTS: Project[] = [
     tags: ["E-commerce", "Product Showcase", "Natural Stone"],
     year: "2026",
     image: bridaAsset.url,
+    orientation: "web",
     context:
       "Clean earth-tone aesthetic with olive green highlights, product categories, and a sleek desktop mockup.",
     role: "E-commerce UX, category architecture, and product showcase design.",
@@ -206,6 +210,7 @@ const PROJECTS: Project[] = [
     tags: ["Mobile App", "Dashboard", "Productivity"],
     year: "2026",
     image: freelaAsset.url,
+    orientation: "mobile",
     context:
       "Modern handheld iPhone mockup showing a Project Details dashboard with a vibrant blue gradient header.",
     role: "Product UX, dashboard information design, and mobile design system.",
@@ -227,6 +232,7 @@ const PROJECTS: Project[] = [
     tags: ["Mobile App", "AgriTech", "E-commerce"],
     year: "2026",
     image: agriNovaAsset.url,
+    orientation: "mobile",
     context:
       "Dual floating dark-frame smartphones featuring a rice seed marketplace with prices, specs, and green branding.",
     role: "Marketplace UX, product detail design, and accessibility-minded typography.",
@@ -248,6 +254,7 @@ const PROJECTS: Project[] = [
     tags: ["Mobile App", "Art & Culture", "Discovery"],
     year: "2026",
     image: artifyAsset.url,
+    orientation: "mobile",
     context:
       "Elegant dark burgundy/plum header UI showcasing famous artist cards — Vermeer, Raphael, Da Vinci.",
     role: "Discovery UX, browsing taxonomy, and editorial visual language.",
@@ -269,6 +276,7 @@ const PROJECTS: Project[] = [
     tags: ["Healthcare", "Mobile App", "Booking UX"],
     year: "2026",
     image: consultEaseAsset.url,
+    orientation: "mobile",
     context:
       "Multi-screen mobile flow covering doctor profiles, chat, onboarding, and error states in deep teal and coral.",
     role: "Booking flow UX, edge-case and error-state design, and handover documentation.",
@@ -362,8 +370,8 @@ const TESTIMONIALS: {
       "Rabia turned complex project requirements into a seamless design solution. Exceptional UX understanding and execution.",
   },
   {
-    name: "Muhammad Hussnain",
-    photo: hussnainAsset.url,
+    name: "Damir Kovacevic",
+    photo: damirAsset.url,
     role: "Senior UI/UX Designer & Mentor",
     accent: "color-mix(in oklab, var(--brand) 75%, var(--card))",
     quote:
