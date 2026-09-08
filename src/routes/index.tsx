@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
   Check,
+  Copy,
   Github,
   Linkedin,
   Mail,
@@ -15,18 +16,18 @@ import {
   X,
 } from "lucide-react";
 import rabiaAsset from "@/assets/rabia.png.asset.json";
+import rabiaCutoutAsset from "@/assets/rabia_cutout.png.asset.json";
 import goranAsset from "@/assets/goran.png.asset.json";
-import hussnainAsset from "@/assets/hussnain.png.asset.json";
+import damirAsset from "@/assets/hussnain.png.asset.json";
 import aliAsset from "@/assets/ali.png.asset.json";
 import kinzaAsset from "@/assets/kinza.png.asset.json";
-import littleParadiseAsset from "@/assets/little_paradise.webp.asset.json";
-import marketeriaAsset from "@/assets/maketria_website_thumbnail.webp.asset.json";
-import spaAsset from "@/assets/Spa_landing_page.webp.asset.json";
-import parmalaAsset from "@/assets/parmala_website.webp.asset.json";
-import bridaAsset from "@/assets/bridasone_landing_page.webp.asset.json";
-import freelaAsset from "@/assets/Freela.webp.asset.json";
-import agriNovaAsset from "@/assets/agriNova.webp.asset.json";
-import artifyAsset from "@/assets/Artify.webp.asset.json";
+import littleParadiseAsset from "@/assets/paradise_v2.png.asset.json";
+import marketeriaAsset from "@/assets/marketeria_v2.png.asset.json";
+import spaAsset from "@/assets/spa_v2.png.asset.json";
+import bridaAsset from "@/assets/brida_v2.png.asset.json";
+import freelaAsset from "@/assets/freela_v2.png.asset.json";
+import agriNovaAsset from "@/assets/agrinova_v2.png.asset.json";
+import artifyAsset from "@/assets/artify_v2.png.asset.json";
 import consultEaseAsset from "@/assets/consulatease_app.webp.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -106,6 +107,7 @@ type Project = {
   tags: string[];
   year: string;
   image: string;
+  orientation: "mobile" | "web";
   context: string;
   role: string;
   goals: string[];
@@ -175,27 +177,6 @@ const PROJECTS: Project[] = [
       { value: "4", label: "Service categories" },
       { value: "2", label: "Device layouts" },
       { value: "500+", label: "Clients highlighted" },
-    ],
-  },
-  {
-    title: "Parmala — Event Venue Website",
-    category: "Web Design",
-    tags: ["Multi-page Website", "Event Venue", "Herajoki"],
-    year: "2026",
-    image: parmalaAsset.url,
-    context:
-      "Warm rustic-chic aesthetic across a full multi-page spread — Home, History, Location, Terms, Contact.",
-    role: "Multi-page information architecture, page templates, and content design.",
-    goals: [
-      "Give a heritage venue a warm, modern presence",
-      "Guide visitors from story to enquiry in three clicks",
-      "Keep long legal content readable and calm",
-    ],
-    tools: ["Figma", "Page Templates", "Content Grid"],
-    metrics: [
-      { value: "5", label: "Pages designed" },
-      { value: "1", label: "Shared layout system" },
-      { value: "100%", label: "Template reuse" },
     ],
   },
   {
