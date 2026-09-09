@@ -15,7 +15,6 @@ import {
   BadgeCheck,
   X,
 } from "lucide-react";
-import rabiaAsset from "@/assets/rabia.png.asset.json";
 import rabiaCutoutAsset from "@/assets/rabia_cutout.png.asset.json";
 import goranAsset from "@/assets/goran.png.asset.json";
 import damirAsset from "@/assets/hussnain.png.asset.json";
@@ -77,17 +76,15 @@ const MARQUEE = [
 ];
 
 const SKILLS = [
-  "User research & interviews",
-  "Wireframing & Information architecture",
-  "Interface & Interaction design",
-  "Design systems & tokens",
-  "Interactive prototyping",
-  "Accessibility & responsive design",
+  "Design Systems",
+  "Micro-interactions",
+  "Usability Testing",
+  "Mobile First Design",
 ];
 
 const STATS = [
-  { value: "2+", label: "Years experience" },
-  { value: "20+", label: "Projects delivered" },
+  { value: "2+", label: "Years Experience" },
+  { value: "20+", label: "Projects Delivered" },
   { value: "8", label: "Certifications" },
   { value: "3.78", label: "CGPA" },
 ];
@@ -565,17 +562,17 @@ function Hero() {
         </div>
 
         <div className="relative lg:col-span-5">
-          <div className="relative mx-auto flex max-w-sm items-end justify-center">
+          <div className="relative mx-auto h-[430px] max-w-sm overflow-hidden rounded-[2.5rem] sm:h-[500px]">
             <div
               aria-hidden
-              className="absolute inset-x-4 bottom-0 top-10 rounded-[2.5rem] bg-[color-mix(in_oklab,var(--brand)_10%,var(--card))] border border-border"
+              className="absolute inset-0 rounded-[2.5rem] border border-border bg-[color-mix(in_oklab,var(--brand)_10%,var(--card))]"
             />
             <img
               src={rabiaCutoutAsset.url}
               alt="Rabia Naveed, UI/UX and graphic designer"
               width={392}
               height={1253}
-              className="relative z-10 h-[440px] w-auto object-contain object-bottom sm:h-[520px]"
+              className="absolute inset-x-0 top-0 z-10 h-auto w-full object-contain object-top"
             />
             <span className="float-slow absolute -left-2 top-16 z-20 surface px-3 py-2 text-xs font-medium text-foreground sm:text-sm">
               🎨 Figma Specialist
@@ -617,25 +614,13 @@ function About() {
   return (
     <section id="about" className="px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
-        <div className="grid items-stretch gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <div className="surface h-full overflow-hidden p-0">
-              <img
-                src={rabiaAsset.url}
-                alt="Portrait of Rabia Naveed, UI/UX and graphic designer"
-                width={1000}
-                height={1250}
-                loading="lazy"
-                className="h-full min-h-[420px] w-full object-cover object-top"
-              />
-            </div>
-          </div>
-          <div className="lg:col-span-7">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="lg:pr-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
               About me
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Design that earns its place on the screen.
+              Design that earns its place on the screen
             </h2>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
               I&apos;m a UI/UX and graphic designer working with founders and product teams
@@ -647,26 +632,29 @@ function About() {
               The work ships as a system, not a set of screens: tokenised type and colour,
               documented components, and handovers engineers can build from without guessing.
             </p>
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+          </div>
+
+          <div>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {STATS.map((stat) => (
+                <div key={stat.label} className="surface lift min-h-32 px-5 py-6 sm:px-6">
+                  <p className="text-3xl font-bold tracking-tight text-brand">{stat.value}</p>
+                  <p className="mt-2 text-sm leading-snug text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {SKILLS.map((skill) => (
-                <li key={skill} className="flex items-start gap-3">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand">
+                <li key={skill} className="flex min-h-12 items-center gap-3 rounded-xl border border-border bg-card px-4 py-3">
+                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand">
                     <Check className="h-3 w-3 text-brand-foreground" />
                   </span>
-                  <span className="min-w-0 text-sm text-foreground">{skill}</span>
+                  <span className="min-w-0 text-sm font-medium text-foreground">{skill}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="surface lift px-6 py-7">
-              <p className="text-3xl font-bold tracking-tight text-brand">{stat.value}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{stat.label}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -713,7 +701,7 @@ function CaseStudyModal({
           <X className="h-4 w-4" />
         </button>
         <div
-          className={`w-full border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[16/11] p-6" : "aspect-[16/9]"}`}
+          className={`w-full border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[16/11] p-6 sm:p-8" : "aspect-[16/9]"}`}
         >
           <img
             src={project.image}
@@ -835,13 +823,13 @@ function Work() {
                 className="surface lift group cursor-pointer overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
               >
                 <div
-                  className={`relative overflow-hidden border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[4/3] p-6" : "aspect-[16/10]"}`}
+                   className={`relative grid place-items-center overflow-hidden border-b border-border bg-secondary ${project.orientation === "mobile" ? "aspect-[4/3] p-5 sm:p-8" : "aspect-[16/10]"}`}
                 >
                   <img
                     src={project.image}
                     alt={`${project.title} design mockup`}
                     loading="lazy"
-                    className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.03] ${project.orientation === "mobile" ? "object-contain" : "object-cover"}`}
+                    className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.03] ${project.orientation === "mobile" ? "object-contain object-center" : "object-cover"}`}
                   />
                 </div>
                 <div className="p-6">
