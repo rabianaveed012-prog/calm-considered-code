@@ -562,22 +562,20 @@ function Hero() {
         </div>
 
         <div className="relative lg:col-span-5">
-          <div className="relative mx-auto h-[430px] max-w-sm overflow-hidden rounded-[2.5rem] sm:h-[500px]">
-            <div
-              aria-hidden
-              className="absolute inset-0 rounded-[2.5rem] border border-border bg-[color-mix(in_oklab,var(--brand)_10%,var(--card))]"
-            />
-            <img
-              src={rabiaCutoutAsset.url}
-              alt="Rabia Naveed, UI/UX and graphic designer"
-              width={392}
-              height={1253}
-              className="absolute inset-x-0 top-0 z-10 h-auto w-full object-contain object-top"
-            />
-            <span className="float-slow absolute -left-2 top-16 z-20 surface px-3 py-2 text-xs font-medium text-foreground sm:text-sm">
+          <div className="relative mx-auto max-w-sm">
+            <div className="relative h-[430px] overflow-hidden rounded-[2.5rem] border border-border bg-[color-mix(in_oklab,var(--brand)_10%,var(--card))] sm:h-[500px]">
+              <img
+                src={rabiaCutoutAsset.url}
+                alt="Rabia Naveed, UI/UX and graphic designer"
+                width={392}
+                height={1253}
+                className="absolute inset-x-0 top-0 z-10 h-auto w-full object-contain object-top"
+              />
+            </div>
+            <span className="float-slow absolute -left-3 bottom-24 z-20 surface px-3 py-2 text-xs font-medium text-foreground sm:-left-10 sm:text-sm">
               🎨 Figma Specialist
             </span>
-            <span className="pulse-soft absolute -right-2 bottom-16 z-20 surface px-3 py-2 text-xs font-medium text-foreground sm:text-sm">
+            <span className="pulse-soft absolute -right-3 top-20 z-20 surface px-3 py-2 text-xs font-medium text-foreground sm:-right-10 sm:text-sm">
               ✨ 20+ Projects Delivered
             </span>
           </div>
