@@ -320,6 +320,101 @@
   }
 }
 
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.reveal-item {
+  transform: translate3d(0, 18px, 0) scale(0.985);
+}
+
+.reveal.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Custom cursor */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+html.cursor-active .cursor-dot,
+html.cursor-active .cursor-ring {
+  opacity: 1;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--foreground);
+  transition:
+    opacity 0.25s ease,
+    width 0.2s ease,
+    height 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.cursor-dot.is-hover {
+  width: 8px;
+  height: 8px;
+  background: var(--brand);
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--foreground) 32%, transparent);
+  background: color-mix(in oklab, var(--foreground) 3%, transparent);
+  transition:
+    opacity 0.25s ease,
+    width 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.28s ease,
+    background-color 0.28s ease;
+}
+
+.cursor-ring.is-hover {
+  width: 54px;
+  height: 54px;
+  border-color: color-mix(in oklab, var(--brand) 60%, transparent);
+  background: color-mix(in oklab, var(--brand) 10%, transparent);
+}
+
+.cursor-ring.is-down {
+  width: 26px;
+  height: 26px;
+}
+
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.cursor-active,
+  html.cursor-active * {
+    cursor: none !important;
+  }
+}
+
 @utility hero-portrait {
   background: radial-gradient(
     ellipse at 50% 35%,

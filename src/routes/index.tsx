@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import rabiaHeroPortrait from "@/assets/rabia-hero-half.png";
 import goranAsset from "@/assets/goran.png.asset.json";
-import damirAsset from "@/assets/hussnain.png.asset.json";
+import damirAsset from "@/assets/damir.png.asset.json";
 import aliAsset from "@/assets/ali.png.asset.json";
 import kinzaAsset from "@/assets/kinza.png.asset.json";
 import littleParadiseAsset from "@/assets/little-paradise-thumbnail.png";
@@ -1125,6 +1125,8 @@ function Contact() {
 function Index() {
   return (
     <div className="min-h-screen bg-background">
+      <CustomCursor />
+      <ScrollAnimations />
       <Navbar />
       <main>
         <Hero />
