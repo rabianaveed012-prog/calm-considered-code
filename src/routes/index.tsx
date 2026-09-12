@@ -1,3 +1,4 @@
+import destinifyLogo from "@/assets/destinify-logo.png";
 import byKinzaLogo from "@/assets/by-kinza-logo.png";
 import sunnySideLogo from "@/assets/sunnyside-logo.png";
 import fidatoLogo from "@/assets/fidato-logo.png";
@@ -295,6 +296,7 @@ const PROJECTS: Project[] = [
 ];
 
 const LOGO_PROJECTS: Project[] = [
+  { title: "Destinify — Logo Design", image: destinifyLogo, tags: ["Logo Design", "Brand Mark"], context: "A navy and orange Destinify symbol and wordmark presented on a rounded white tile." },
   { title: "Artify — Logo & Brand Identity", image: artifyLogo, tags: ["Logo Design", "App Branding"], context: "A colorful Artify logo and wordmark, presented alongside the app welcome screen." },
   { title: "Fidato — Logo & Brand Identity", image: fidatoLogo, tags: ["Logo Design", "Brand Identity"], context: "Logo and brand identity for the Fidato app, presented on a mobile home screen." },
   { title: "SunnySide — Logo Design", image: sunnySideLogo, tags: ["Logo Design", "Brand Identity"], context: "A sun-inspired symbol and SunnySide wordmark with the tagline Brighter Tomorrows." },
@@ -827,15 +829,16 @@ function CaseStudyModal({
 function Work() {
   const [active, setActive] = useState<(typeof FILTERS)[number]>("All");
   const [selected, setSelected] = useState<Project | null>(null);
-  const visible =
-    active === "All"
-      ? [
-          ...PROJECTS.filter((project) => project.category === "Web Design").slice(0, 2),
-          ...PROJECTS.filter((project) => project.category === "App Design").slice(0, 2),
-          ...LOGO_PROJECTS.filter((project) => project.image === fidatoLogo || project.image === byKinzaLogo),
-        ]
-      : [...PROJECTS, ...LOGO_PROJECTS].filter((project) => project.category === active);
-
+  const [showAll, setShowAll] = useState(false);
+  const allProjects = [...PROJECTS, ...LOGO_PROJECTS];
+  const featured = [
+    ...PROJECTS.filter((project) => project.category === "Web Design").slice(0, 2),
+    ...PROJECTS.filter((project) => project.category === "App Design").slice(0, 2),
+    ...LOGO_PROJECTS.filter((project) => project.image === destinifyLogo || project.image === byKinzaLogo),
+  ];
+  const visible = active === "All"
+    ? showAll ? [...featured, ...allProjects.filter((project) => !featured.includes(project))] : featured
+    : allProjects.filter((project) => project.category === active);
   return (
     <section id="work" className="px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
@@ -853,7 +856,7 @@ function Work() {
               <button
                 key={filter}
                 type="button"
-                onClick={() => setActive(filter)}
+                onClick={() => { setActive(filter); setShowAll(false); }}
                 className={
                   isActive
                     ? "rounded-full bg-brand px-4 py-2 text-sm font-medium text-brand-foreground"
@@ -871,7 +874,7 @@ function Work() {
             New {active.toLowerCase()} case studies are coming soon.
           </p>
         ) : (
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div id="work-projects" className="mt-10 grid gap-6 md:grid-cols-2">
             {visible.map((project) => (
               <article
                 key={project.title}
@@ -915,6 +918,13 @@ function Work() {
             ))}
           </div>
         )}
+        {active === "All" && !showAll && allProjects.length > featured.length ? (
+          <div className="mt-10 flex justify-center">
+            <button type="button" onClick={() => setShowAll(true)} aria-controls="work-projects" className="inline-flex items-center gap-2 rounded-full border border-brand/25 bg-card px-6 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
+              View More <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+            </button>
+          </div>
+        ) : null}
       </div>
       {selected ? (
         <CaseStudyModal project={selected} onClose={() => setSelected(null)} />
