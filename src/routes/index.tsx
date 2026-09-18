@@ -31,7 +31,7 @@ import {
   BookOpen,
   X,
 } from "lucide-react";
-import rabiaHeroPortrait from "@/assets/rabia-hero-half.png";
+import rabiaHeroPortrait from "@/assets/rabia-standing-portrait.png";
 import goranAsset from "@/assets/goran.png.asset.json";
 import damirAsset from "@/assets/damir.png.asset.json";
 import { CustomCursor } from "@/components/CustomCursor";
@@ -567,7 +567,7 @@ clarity, usability, and thoughtful visual details.
               width={1024}
               height={1536}
               fetchPriority="high"
-              className="relative z-10 h-full w-full object-contain object-bottom pt-5"
+              className="relative z-10 h-full w-full object-cover object-center"
             />
           </div>
         </div>
