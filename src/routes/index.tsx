@@ -563,8 +563,8 @@ function SectionHeading({
     <div
       className={
         align === "center"
-          ? "section-heading mx-auto max-w-2xl text-center"
-          : "section-heading max-w-2xl text-left"
+          ? "section-heading section-header mx-auto max-w-2xl text-center"
+          : "section-heading section-header max-w-2xl text-left"
       }
     >
       {eyebrow ? (
@@ -672,7 +672,7 @@ function About() {
   return (
     <section ref={sectionRef} id="about" className="relative overflow-hidden px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
-        <div className="about-intro relative z-10">
+        <div className="about-intro section-header relative z-10">
           <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand">
             <span aria-hidden="true" className="h-px w-8 shrink-0 bg-brand/50" />
             About me
@@ -829,22 +829,18 @@ function Work() {
   const [active, setActive] = useState<(typeof FILTERS)[number]>("All");
   const [selected, setSelected] = useState<Project | null>(null);
   const [showAll, setShowAll] = useState(false);
-  const allProjects = [...PROJECTS, ...LOGO_PROJECTS];
-  const featured = [
-    ...PROJECTS.filter((project) => project.category === "Web Design").slice(0, 2),
-    ...PROJECTS.filter((project) => project.category === "App Design").slice(0, 2),
-    ...LOGO_PROJECTS.filter(
-      (project) => project.image === destinifyLogo || project.image === byKinzaLogo,
-    ),
-  ];
+  const allProjects = [...PROJECTS, ...LOGO_PROJECTS].sort(
+    (a, b) => Number(b.year) - Number(a.year),
+  );
+  const featured = allProjects.slice(0, 6);
   const visible =
     active === "All"
       ? showAll
-        ? [...featured, ...allProjects.filter((project) => !featured.includes(project))]
+        ? allProjects
         : featured
       : allProjects.filter((project) => project.category === active);
   return (
-    <section id="work" className="editorial-work px-6 py-24 sm:py-28">
+    <section id="work" className="editorial-work portfolio-grid px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Portfolio"
@@ -886,45 +882,53 @@ function Work() {
             New {active.toLowerCase()} case studies are coming soon.
           </p>
         ) : (
-          <div id="work-projects" className="work-gallery mt-10">
-            {visible.map((project) => (
-              <article
-                key={project.title}
-                role="button"
-                tabIndex={0}
-                onClick={() => openProject(project)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    openProject(project);
-                  }
-                }}
-                className="work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-              >
-                <div className="work-project-image">
-                  <img
-                    src={project.image}
-                    alt={`${project.title} design mockup`}
-                    loading="lazy"
-                    className="work-thumbnail"
-                    style={
-                      project.image === bridaAsset ? { objectPosition: "center 60%" } : undefined
+          <div id="work-projects" key={active} className="work-gallery mt-10">
+            {visible.map((project) => {
+              const [title, ...subtitle] = project.title.split(/\s+\u2014\s+/);
+              return (
+                <article
+                  key={project.title}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => openProject(project)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      openProject(project);
                     }
-                  />
-                </div>
-                <div className="work-project-info">
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 className="min-w-0 text-lg font-semibold tracking-tight text-foreground">
-                      {project.title}
-                    </h3>
-                    <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" />
+                  }}
+                  className="work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                >
+                  <div className="work-project-image">
+                    <img
+                      src={project.image}
+                      alt={`${project.title} design mockup`}
+                      loading="lazy"
+                      className="work-thumbnail"
+                      style={
+                        project.image === bridaAsset ? { objectPosition: "center 60%" } : undefined
+                      }
+                    />
+                    <ArrowUpRight className="project-corner-arrow" size={20} aria-hidden="true" />
+                    <span className="project-hover-overlay" aria-hidden="true">
+                      <span>
+                        View project <ArrowUpRight size={16} />
+                      </span>
+                    </span>
                   </div>
-                  <p className="work-project-category mt-1 text-sm text-muted-foreground">
-                    {project.category} &middot; {project.year}
-                  </p>
-                </div>
-              </article>
-            ))}
+                  <div className="work-project-info">
+                    <p className="work-project-category">
+                      {project.category} &middot; {project.year}
+                    </p>
+                    <h3>{title}</h3>
+                    {subtitle.length > 0 && (
+                      <p className="project-subtitle">{subtitle.join(" ")}</p>
+                    )}
+                    <p className="project-summary">{project.role}</p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         )}
         {active === "All" && !showAll && allProjects.length > featured.length ? (
@@ -1064,107 +1068,216 @@ function Process() {
   );
 }
 function Services() {
+  const [openService, setOpenService] = useState<number | null>(0);
   return (
-    <section id="services" className="services-studio px-6 py-24 sm:py-28">
+    <section id="services" className="services-studio services-accordion px-6 py-24 sm:py-28">
       <div className="services-studio-layout mx-auto max-w-6xl">
         <div className="services-studio-intro">
           <SectionHeading
             eyebrow="Services"
             title="Thoughtful design, from idea to launch."
             subtitle="Digital experiences and brand identities built around your goals, with care in every detail."
-            align="left"
+            align="center"
           />
-          <a
-            href="#contact"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-brand/25 bg-card px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-          >
+        </div>
+        <div className="service-accordion-list">
+          {SERVICES.map((service, index) => {
+            const isOpen = openService === index;
+            return (
+              <article
+                key={service.title}
+                className="service-accordion-row"
+                data-open={isOpen}
+                onPointerEnter={(event) => {
+                  if (
+                    event.pointerType === "mouse" &&
+                    window.matchMedia("(hover: hover)").matches &&
+                    !event.currentTarget.parentElement?.querySelector(":focus-within")
+                  )
+                    setOpenService(index);
+                }}
+              >
+                <h3>
+                  <button
+                    type="button"
+                    className="service-accordion-trigger"
+                    id={"service-trigger-" + index}
+                    aria-expanded={isOpen}
+                    aria-controls={"service-panel-" + index}
+                    onClick={() => setOpenService(isOpen ? null : index)}
+                  >
+                    <span className="service-accordion-number" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="service-accordion-title">{service.title}</span>
+                    <service.icon
+                      className="service-accordion-icon"
+                      size={28}
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <ArrowUpRight
+                      className="service-accordion-arrow"
+                      size={28}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </h3>
+                <div
+                  className="service-accordion-panel"
+                  id={"service-panel-" + index}
+                  role="region"
+                  aria-labelledby={"service-trigger-" + index}
+                  aria-hidden={!isOpen}
+                  inert={!isOpen}
+                >
+                  <div className="service-accordion-clip">
+                    <div className="service-accordion-details">
+                      <p>{service.body}</p>
+                      <ul aria-label={service.title + " specialties"}>
+                        {service.tags.map((tag) => (
+                          <li key={tag}>{tag}</li>
+                        ))}
+                      </ul>
+                      <a
+                        href="#contact"
+                        className="service-link"
+                        aria-label={"Let's talk about " + service.title}
+                      >
+                        Let's talk <ArrowUpRight size={18} aria-hidden="true" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <div className="service-accordion-cta">
+          <a href="#contact" className="inline-flex items-center gap-2">
             Discuss your project <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
           </a>
-        </div>
-        <div className="service-list">
-          {SERVICES.map((service, index) => (
-            <article key={service.title} data-reveal-item="service" className="service-row group">
-              <service.icon
-                className="service-card-icon"
-                size={30}
-                strokeWidth={1.5}
-                aria-hidden="true"
-              />
-              <span className="service-number" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3>{service.title}</h3>
-              <div className="service-description">
-                <p>{service.body}</p>
-                <ul aria-label={service.title + " specialties"}>
-                  {service.tags.map((tag) => (
-                    <li key={tag}>{tag}</li>
-                  ))}
-                </ul>
-              </div>
-              <a
-                href="#contact"
-                aria-label={"Let's talk about " + service.title}
-                className="service-link"
-              >
-                Let's talk <ArrowUpRight aria-hidden="true" size={18} />
-              </a>
-            </article>
-          ))}
         </div>
       </div>
     </section>
   );
 }
 function Testimonials() {
-  const reviews = TESTIMONIALS.map((item) => (
-    <figure key={item.name} className="testimonial-card flex h-full min-w-0 flex-col">
-      <Quote className="testimonial-quote-mark" size={40} strokeWidth={1.25} aria-hidden="true" />
-      <blockquote className="mb-8 mt-5 text-base leading-relaxed text-foreground">
-        {item.quote}
-      </blockquote>
-      <figcaption className="testimonial-author mt-auto flex items-center gap-4">
-        <span className="testimonial-avatar relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--brand)_14%,var(--card))] text-sm font-semibold text-brand">
-          <span aria-hidden="true">
-            {item.name
-              .split(" ")
-              .map((part) => part[0])
-              .join("")
-              .slice(0, 2)}
-          </span>
-          {item.photo ? (
-            <img
-              src={item.photo}
-              alt=""
-              width={48}
-              height={48}
-              loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover"
-              onError={(event) => {
-                event.currentTarget.style.display = "none";
-              }}
-            />
-          ) : null}
-        </span>
-        <div className="min-w-0">
-          <p className="text-sm font-semibold text-foreground">{item.name}</p>
-          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.role}</p>
-        </div>
-      </figcaption>
-    </figure>
-  ));
-
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [reduced, setReduced] = useState(false);
+  const quoteRef = useRef<HTMLQuoteElement>(null);
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  useEffect(() => {
+    if (paused || focused || reduced) return;
+    const timer = window.setInterval(
+      () => setActive((value) => (value + 1) % TESTIMONIALS.length),
+      6000,
+    );
+    return () => window.clearInterval(timer);
+  }, [paused, focused, reduced, active]);
+  useEffect(() => {
+    if (reduced || !quoteRef.current?.animate) return;
+    const animation = quoteRef.current.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: 350,
+      easing: "ease",
+    });
+    return () => animation.cancel();
+  }, [active, reduced]);
+  const item = TESTIMONIALS[active];
+  if (!item) return null;
+  const initials = (name: string) =>
+    name
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .slice(0, 2);
   return (
-    <section id="testimonials" className="testimonials-classic px-6 py-24 sm:py-28">
+    <section id="testimonials" className="testimonials-featured px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Testimonials"
           title="What my clients say"
           subtitle="Experiences shared by the clients and collaborators behind my work. Their trust inspires me to keep creating thoughtful digital experiences."
-          align="left"
+          align="center"
         />
-        <div className="testimonials-grid mt-10 grid auto-rows-fr gap-5 md:grid-cols-2">
-          {reviews}
+        <div
+          className="quote-slider"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Client testimonials"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setFocused(true)}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+          }}
+        >
+          <Quote className="featured-quote-mark" size={64} strokeWidth={1.2} aria-hidden="true" />
+          <div
+            className="featured-review"
+            aria-live={paused || focused || reduced ? "polite" : "off"}
+            aria-atomic="true"
+          >
+            <blockquote ref={quoteRef} className="featured-quote" id="featured-testimonial">
+              {item.quote}
+            </blockquote>
+            <div className="featured-client">
+              <span className="featured-client-avatar" aria-hidden="true">
+                {initials(item.name)}
+              </span>
+              <p className="featured-client-name">{item.name}</p>
+              <p className="featured-client-role">{item.role}</p>
+            </div>
+          </div>
+          <div className="quote-slider-controls">
+            <button
+              type="button"
+              className="quote-arrow"
+              aria-label="Previous testimonial"
+              onClick={() =>
+                setActive((value) => (value + TESTIMONIALS.length - 1) % TESTIMONIALS.length)
+              }
+            >
+              <ChevronLeft size={20} aria-hidden="true" />
+            </button>
+            <div className="quote-selectors" role="group" aria-label="Choose client testimonial">
+              {TESTIMONIALS.map((client, index) => (
+                <button
+                  type="button"
+                  key={client.name}
+                  aria-label={"Read testimonial from " + client.name}
+                  aria-pressed={index === active}
+                  aria-controls="featured-testimonial"
+                  onClick={() => setActive(index)}
+                >
+                  {initials(client.name)}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="quote-arrow"
+              aria-label="Next testimonial"
+              onClick={() => setActive((value) => (value + 1) % TESTIMONIALS.length)}
+            >
+              <ChevronRight size={20} aria-hidden="true" />
+            </button>
+          </div>
+          <button
+            type="button"
+            className="quote-rotation"
+            onClick={() => setReduced((value) => !value)}
+          >
+            {reduced ? "Play slideshow" : "Pause slideshow"}
+          </button>
         </div>
       </div>
     </section>
@@ -1199,32 +1312,12 @@ function Certifications() {
   return (
     <section id="certifications" className="overflow-hidden px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="credentials-heading">
           <SectionHeading
             eyebrow="Credentials"
             title="Learning that shapes my work."
             subtitle="My certificates in UX, graphic design, and the skills behind thoughtful client work."
           />
-          <div className="flex gap-3">
-            <button
-              type="button"
-              aria-label="Previous certificate"
-              disabled={!canPrev}
-              onClick={() => moveTo(selected - 1)}
-              className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"
-            >
-              <ChevronLeft aria-hidden="true" className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              aria-label="Next certificate"
-              disabled={!canNext}
-              onClick={() => moveTo(selected + 1)}
-              className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"
-            >
-              <ChevronRight aria-hidden="true" className="h-5 w-5" />
-            </button>
-          </div>
         </div>
         <div
           ref={carouselRef}
@@ -1287,6 +1380,26 @@ function Certifications() {
               </article>
             ))}
           </div>
+        </div>
+        <div className="certificate-controls mt-6 flex justify-center gap-3">
+          <button
+            type="button"
+            aria-label="Previous certificate"
+            disabled={!canPrev}
+            onClick={() => moveTo(selected - 1)}
+            className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"
+          >
+            <ChevronLeft aria-hidden="true" className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            aria-label="Next certificate"
+            disabled={!canNext}
+            onClick={() => moveTo(selected + 1)}
+            className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"
+          >
+            <ChevronRight aria-hidden="true" className="h-5 w-5" />
+          </button>
         </div>
         <div className="mt-7 flex justify-center gap-1" aria-label="Choose certificate">
           {CERTIFICATIONS.map((cert, index) => (
