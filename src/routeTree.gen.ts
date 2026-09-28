@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HeroPreviewRouteImport } from './routes/hero-preview'
+import { Route as WorkArtifyRouteImport } from './routes/work.artify'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HeroPreviewRoute = HeroPreviewRouteImport.update({
+  id: '/hero-preview',
+  path: '/hero-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkArtifyRoute = WorkArtifyRouteImport.update({
+  id: '/work/artify',
+  path: '/work/artify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/hero-preview': typeof HeroPreviewRoute
+  '/work/artify': typeof WorkArtifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/hero-preview': typeof HeroPreviewRoute
+  '/work/artify': typeof WorkArtifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/hero-preview': typeof HeroPreviewRoute
+  '/work/artify': typeof WorkArtifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/hero-preview' | '/work/artify'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/hero-preview' | '/work/artify'
+  id: '__root__' | '/' | '/hero-preview' | '/work/artify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HeroPreviewRoute: typeof HeroPreviewRoute
+  WorkArtifyRoute: typeof WorkArtifyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hero-preview': {
+      id: '/hero-preview'
+      path: '/hero-preview'
+      fullPath: '/hero-preview'
+      preLoaderRoute: typeof HeroPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/artify': {
+      id: '/work/artify'
+      path: '/work/artify'
+      fullPath: '/work/artify'
+      preLoaderRoute: typeof WorkArtifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HeroPreviewRoute: HeroPreviewRoute,
+  WorkArtifyRoute: WorkArtifyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

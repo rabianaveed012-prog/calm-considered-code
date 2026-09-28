@@ -1,3 +1,5 @@
+import "@/editorial-home.css";
+import { useNavigate } from "@tanstack/react-router";
 import destinifyLogo from "@/assets/destinify-logo.png";
 import byKinzaLogo from "@/assets/by-kinza-logo.png";
 import sunnySideLogo from "@/assets/sunnyside-logo.png";
@@ -8,6 +10,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
+  Quote,
+  PanelsTopLeft,
+  CodeXml,
   Check,
   Copy,
   Github,
@@ -22,7 +27,6 @@ import {
   Award,
   GraduationCap,
   BadgeCheck,
-  Star,
   Monitor,
   Zap,
   LayoutGrid,
@@ -31,12 +35,12 @@ import {
   BookOpen,
   X,
 } from "lucide-react";
-import rabiaHeroPortrait from "@/assets/rabia-standing-portrait.png";
+import { SplitHero } from "@/components/SplitHero";
 import goranAsset from "@/assets/goran.png.asset.json";
 import damirAsset from "@/assets/damir.png.asset.json";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ScrollAnimations } from "@/components/ScrollAnimations";
-import { FloatingBar } from "@/components/FloatingBar";
+
 import aliAsset from "@/assets/ali.png.asset.json";
 import kinzaAsset from "@/assets/kinza.png.asset.json";
 import littleParadiseAsset from "@/assets/little-paradise-thumbnail.png";
@@ -80,7 +84,11 @@ const NAV = [
 
 const SOCIALS = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/rabianaveed012/", icon: Linkedin },
-  { label: "Upwork", href: "https://www.upwork.com/freelancers/~012d4726a0419ab017?mp_source=share", icon: Briefcase },
+  {
+    label: "Upwork",
+    href: "https://www.upwork.com/freelancers/~012d4726a0419ab017?mp_source=share",
+    icon: Briefcase,
+  },
   { label: "Behance", href: "https://www.behance.net/rabianaveed2", icon: Palette },
   { label: "GitHub", href: "https://github.com/rabianaveed012-prog", icon: Github },
 ];
@@ -296,12 +304,47 @@ const PROJECTS: Project[] = [
 ];
 
 const LOGO_PROJECTS: Project[] = [
-  { title: "Destinify — Logo Design", image: destinifyLogo, tags: ["Logo Design", "Brand Mark"], context: "A navy and orange Destinify symbol and wordmark presented on a rounded white tile." },
-  { title: "Artify — Logo & Brand Identity", image: artifyLogo, tags: ["Logo Design", "App Branding"], context: "A colorful Artify logo and wordmark, presented alongside the app welcome screen." },
-  { title: "Fidato — Logo & Brand Identity", image: fidatoLogo, tags: ["Logo Design", "Brand Identity"], context: "Logo and brand identity for the Fidato app, presented on a mobile home screen." },
-  { title: "SunnySide — Logo Design", image: sunnySideLogo, tags: ["Logo Design", "Brand Identity"], context: "A sun-inspired symbol and SunnySide wordmark with the tagline Brighter Tomorrows." },
-  { title: "TechDose by Kinza — Logo & Brand Identity", image: byKinzaLogo, tags: ["Logo Design", "Brand Identity"], context: "Logo design and brand identity for TechDose by Kinza, presented on dark stationery with an iridescent finish." },
-].map((project) => ({ ...project, category: "Logo & Branding", orientation: "branding", year: "", role: "", goals: [], tools: [], metrics: [] }));
+  {
+    title: "Destinify — Logo Design",
+    image: destinifyLogo,
+    tags: ["Logo Design", "Brand Mark"],
+    context: "A navy and orange Destinify symbol and wordmark presented on a rounded white tile.",
+  },
+  {
+    title: "Artify — Logo & Brand Identity",
+    image: artifyLogo,
+    tags: ["Logo Design", "App Branding"],
+    context: "A colorful Artify logo and wordmark, presented alongside the app welcome screen.",
+  },
+  {
+    title: "Fidato — Logo & Brand Identity",
+    image: fidatoLogo,
+    tags: ["Logo Design", "Brand Identity"],
+    context: "Logo and brand identity for the Fidato app, presented on a mobile home screen.",
+  },
+  {
+    title: "SunnySide — Logo Design",
+    image: sunnySideLogo,
+    tags: ["Logo Design", "Brand Identity"],
+    context: "A sun-inspired symbol and SunnySide wordmark with the tagline Brighter Tomorrows.",
+  },
+  {
+    title: "TechDose by Kinza — Logo & Brand Identity",
+    image: byKinzaLogo,
+    tags: ["Logo Design", "Brand Identity"],
+    context:
+      "Logo design and brand identity for TechDose by Kinza, presented on dark stationery with an iridescent finish.",
+  },
+].map((project) => ({
+  ...project,
+  category: "Logo & Branding",
+  orientation: "branding",
+  year: "",
+  role: "",
+  goals: [],
+  tools: [],
+  metrics: [],
+}));
 const PROCESS = [
   {
     no: "01",
@@ -331,31 +374,37 @@ const PROCESS = [
 
 const SERVICES = [
   {
+    icon: Monitor,
     title: "Website Design",
     body: "Marketing sites that stay legible, fast, and consistent at every breakpoint.",
     tags: ["Responsive", "SEO-Friendly", "Conversion UI"],
   },
   {
+    icon: PanelsTopLeft,
     title: "Landing Pages",
     body: "Focused single-page narratives built around one clear action.",
     tags: ["Hero Sections", "CTAs", "Lead Gen"],
   },
   {
+    icon: CodeXml,
     title: "Web App & SaaS",
     body: "Dense product surfaces made calm through hierarchy and patterns.",
     tags: ["Dashboards", "SaaS UI", "Complex Flows"],
   },
   {
+    icon: Smartphone,
     title: "Mobile App Design",
     body: "Native-feeling flows with tokenised components and real prototypes.",
     tags: ["iOS / Android", "Design Systems", "Prototyping"],
   },
   {
+    icon: PenTool,
     title: "Logo Design",
     body: "Distinct marks drawn in vector and tested at every size.",
     tags: ["Vector Mark", "Typography", "Iconography"],
   },
   {
+    icon: BookOpen,
     title: "Brand Guidelines",
     body: "Documented rules so a brand stays itself across every team.",
     tags: ["Brand Strategy", "Color Tokens", "Style Guides"],
@@ -404,13 +453,90 @@ const TESTIMONIALS: {
 ];
 
 const CERTIFICATIONS = [
-  { title: "Foundations of User Experience (UX) Design", issuer: "Google · Coursera", tag: "UX Design", kind: "google", file: "google-ux-foundations.pdf", image: "/certificates/google-ux-foundations-preview.png", credentialId: "43PXCGRFS99X", date: "23 Apr 2026", verificationUrl: "https://www.coursera.org/account/accomplishments/verify/43PXCGRFS99X", crop: { x: 432, y: 160, width: 1056, height: 814 } },
-  { title: "Start the UX Design Process", issuer: "Google · Coursera", tag: "UX Research", kind: "google", file: "google-ux-process.pdf", image: "/certificates/google-ux-process-preview.png", credentialId: "W8RTOV69LULO", date: "23 Apr 2026", verificationUrl: "https://www.coursera.org/account/accomplishments/verify/W8RTOV69LULO", crop: { x: 432, y: 160, width: 1056, height: 814 } },
-  { title: "Graphic Design", issuer: "DigiSkills Training Program", tag: "Graphic Design", kind: "digiskills", file: "graphic-design.pdf", image: "/certificates/graphic-design-preview.png", credentialId: "WBPMJF8MK", date: "25 Jul 2024", verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx", crop: { x: 466, y: 160, width: 988, height: 695 } },
-  { title: "Active Listening", issuer: "Coursera", tag: "Communication", kind: "coursera", file: "active-listening.pdf", image: "/certificates/active-listening-preview.png", credentialId: "SW329QMJN823", date: "23 Apr 2026", verificationUrl: "https://www.coursera.org/account/accomplishments/verify/SW329QMJN823", crop: { x: 432, y: 160, width: 1056, height: 814 } },
-  { title: "WordPress", issuer: "DigiSkills Training Program", tag: "Web Design", kind: "digiskills", file: "wordpress.pdf", image: "/certificates/wordpress-preview.png", credentialId: "SRF9T67MK", date: "24 Oct 2024", verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx", crop: { x: 398, y: 160, width: 1124, height: 793 } },
-  { title: "Communication and Soft Skills", issuer: "DigiSkills Training Program", tag: "Soft Skills", kind: "digiskills", file: "communication-soft-skills.pdf", image: "/certificates/communication-soft-skills-preview.png", credentialId: "Z2TGEYCMK", date: "24 Oct 2024", verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx", crop: { x: 398, y: 160, width: 1124, height: 793 } },
-  { title: "Freelancing", issuer: "DigiSkills Training Program", tag: "Freelancing", kind: "digiskills", file: "freelancing.pdf", image: "/certificates/freelancing-preview.png", credentialId: "96RJEXYMK", date: "25 Jul 2024", verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx", crop: { x: 466, y: 160, width: 988, height: 695 } },
+  {
+    title: "Foundations of User Experience (UX) Design",
+    issuer: "Google · Coursera",
+    tag: "UX Design",
+    kind: "google",
+    file: "google-ux-foundations.pdf",
+    image: "/certificates/google-ux-foundations-preview.png",
+    credentialId: "43PXCGRFS99X",
+    date: "23 Apr 2026",
+    verificationUrl: "https://www.coursera.org/account/accomplishments/verify/43PXCGRFS99X",
+    crop: { x: 432, y: 160, width: 1056, height: 814 },
+  },
+  {
+    title: "Start the UX Design Process",
+    issuer: "Google · Coursera",
+    tag: "UX Research",
+    kind: "google",
+    file: "google-ux-process.pdf",
+    image: "/certificates/google-ux-process-preview.png",
+    credentialId: "W8RTOV69LULO",
+    date: "23 Apr 2026",
+    verificationUrl: "https://www.coursera.org/account/accomplishments/verify/W8RTOV69LULO",
+    crop: { x: 432, y: 160, width: 1056, height: 814 },
+  },
+  {
+    title: "Graphic Design",
+    issuer: "DigiSkills Training Program",
+    tag: "Graphic Design",
+    kind: "digiskills",
+    file: "graphic-design.pdf",
+    image: "/certificates/graphic-design-preview.png",
+    credentialId: "WBPMJF8MK",
+    date: "25 Jul 2024",
+    verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx",
+    crop: { x: 466, y: 160, width: 988, height: 695 },
+  },
+  {
+    title: "Active Listening",
+    issuer: "Coursera",
+    tag: "Communication",
+    kind: "coursera",
+    file: "active-listening.pdf",
+    image: "/certificates/active-listening-preview.png",
+    credentialId: "SW329QMJN823",
+    date: "23 Apr 2026",
+    verificationUrl: "https://www.coursera.org/account/accomplishments/verify/SW329QMJN823",
+    crop: { x: 432, y: 160, width: 1056, height: 814 },
+  },
+  {
+    title: "WordPress",
+    issuer: "DigiSkills Training Program",
+    tag: "Web Design",
+    kind: "digiskills",
+    file: "wordpress.pdf",
+    image: "/certificates/wordpress-preview.png",
+    credentialId: "SRF9T67MK",
+    date: "24 Oct 2024",
+    verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx",
+    crop: { x: 398, y: 160, width: 1124, height: 793 },
+  },
+  {
+    title: "Communication and Soft Skills",
+    issuer: "DigiSkills Training Program",
+    tag: "Soft Skills",
+    kind: "digiskills",
+    file: "communication-soft-skills.pdf",
+    image: "/certificates/communication-soft-skills-preview.png",
+    credentialId: "Z2TGEYCMK",
+    date: "24 Oct 2024",
+    verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx",
+    crop: { x: 398, y: 160, width: 1124, height: 793 },
+  },
+  {
+    title: "Freelancing",
+    issuer: "DigiSkills Training Program",
+    tag: "Freelancing",
+    kind: "digiskills",
+    file: "freelancing.pdf",
+    image: "/certificates/freelancing-preview.png",
+    credentialId: "96RJEXYMK",
+    date: "25 Jul 2024",
+    verificationUrl: "https://lms.digiskills.pk/MyResults/MyResults.aspx",
+    crop: { x: 466, y: 160, width: 988, height: 695 },
+  },
 ];
 const EMAIL = "rabianaveed@email.com";
 
@@ -434,9 +560,17 @@ function SectionHeading({
   align?: "center" | "left";
 }) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl text-left"}>
+    <div
+      className={
+        align === "center"
+          ? "section-heading mx-auto max-w-2xl text-center"
+          : "section-heading max-w-2xl text-left"
+      }
+    >
       {eyebrow ? (
-        <p className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand ${align === "center" ? "justify-center" : ""}`}>
+        <p
+          className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand ${align === "center" ? "justify-center" : ""}`}
+        >
           <span aria-hidden="true" className="h-px w-8 shrink-0 bg-brand/50" />
           {eyebrow}
         </p>
@@ -450,137 +584,11 @@ function SectionHeading({
     </div>
   );
 }
-function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuButton = useRef<HTMLButtonElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-        menuButton.current?.focus();
-      }
-    };
-    const onPointer = (event: PointerEvent) => {
-      if (!headerRef.current?.contains(event.target as Node)) setMenuOpen(false);
-    };
-    const desktop = window.matchMedia("(min-width: 1024px)");
-    const onResize = () => { if (desktop.matches) setMenuOpen(false); };
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("pointerdown", onPointer);
-    desktop.addEventListener("change", onResize);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("pointerdown", onPointer);
-      desktop.removeEventListener("change", onResize);
-    };
-  }, [menuOpen]);
-
-  return (
-    <header ref={headerRef} className="glass-nav sticky top-0 z-50">
-      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-6 py-4 lg:grid-cols-[1fr_auto_1fr]">
-        <a href="#top" onClick={() => setMenuOpen(false)} className="truncate text-[18px] font-bold tracking-tight text-foreground">Rabia Naveed</a>
-        <nav aria-label="Main navigation" className="hidden justify-center gap-8 lg:flex">
-          {NAV.map((item) => (
-            <a key={item.label} href={item.href} className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand">{item.label}</a>
-          ))}
-        </nav>
-        <div className="flex justify-end">
-          <a href="#contact" className="hidden shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 lg:inline-flex">
-            Let&apos;s talk <ArrowUpRight className="h-4 w-4" />
-          </a>
-          <button
-            ref={menuButton}
-            type="button"
-            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMenuOpen((open) => !open)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-brand hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand lg:hidden"
-          >
-            {menuOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
-          </button>
-        </div>
-      </div>
-      <nav
-        id="mobile-navigation"
-        aria-label="Mobile navigation"
-        hidden={!menuOpen}
-        className="absolute inset-x-0 top-full max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-border bg-card px-6 py-3 shadow-[var(--shadow-lift)] lg:hidden"
-      >
-        {NAV.map((item) => (
-          <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">{item.label}</a>
-        ))}
-      </nav>
-    </header>
-  );
-}
-function Hero() {
-  return (
-    <section id="top" className="relative overflow-hidden px-6 py-16 sm:py-24">
-      <div aria-hidden className="mesh-bg pointer-events-none absolute inset-0" />
-      <div aria-hidden className="grid-overlay pointer-events-none absolute inset-0" />
-
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-12">
-        <div className="min-w-0 lg:col-span-7">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-[var(--shadow-card)]">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            Available for Freelance &amp; Remote Roles
-          </span>
-          <h1 className="mt-7 text-[2.35rem] font-bold leading-[1.06] tracking-tight text-foreground sm:text-[3.15rem]">
-            UI/UX designer creating{" "}
-<span className="text-brand">clear, thoughtful</span> digital experiences.
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            I design clean, user-friendly web and mobile experiences with a focus on
-clarity, usability, and thoughtful visual details.
-          </p>
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <a
-              href="#work"
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
-            >
-              View My Work
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:text-brand"
-            >
-              Let&apos;s Talk
-            </a>
-          </div>
-
-        </div>
-
-        <div className="relative mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
-          <div className="hero-portrait relative isolate mx-auto aspect-[2/3] w-full max-w-[360px] overflow-hidden rounded-t-[11rem] rounded-b-[2rem] border border-brand/15">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-x-[10%] top-[12%] aspect-square rounded-full border border-brand/15 bg-card/30" />
-            <img
-              src={rabiaHeroPortrait}
-              alt="Rabia Naveed, UI/UX and graphic designer"
-              width={1024}
-              height={1536}
-              fetchPriority="high"
-              className="relative z-10 h-full w-full object-cover object-center"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Marquee() {
   const items = [...MARQUEE, ...MARQUEE, ...MARQUEE, ...MARQUEE];
   return (
     <div className="overflow-hidden border-y border-border bg-card py-5">
-      <div className="marquee-track flex w-max items-center gap-8 whitespace-nowrap">
+      <div className="skills-strip marquee-track flex w-max items-center gap-8 whitespace-nowrap">
         {[0, 1].map((dup) => (
           <div key={dup} className="flex items-center gap-8">
             {items.map((item, i) => (
@@ -601,16 +609,19 @@ function Marquee() {
 
 function About() {
   const sectionRef = useRef<HTMLElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const [countProgress, setCountProgress] = useState(1);
 
   useEffect(() => {
-    const section = sectionRef.current;
+    const section = statsRef.current;
     if (!section) return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
     let running = false;
+    let counted = false;
     const startCount = () => {
-      if (running || reducedMotion.matches) return;
+      if (running || counted || reducedMotion.matches) return;
+      counted = true;
       running = true;
       setCountProgress(0);
       const started = performance.now();
@@ -618,12 +629,12 @@ function About() {
         const progress = Math.min((now - started) / 1400, 1);
         setCountProgress(1 - Math.pow(1 - progress, 3));
         if (progress < 1) frame = window.requestAnimationFrame(tick);
-        else { running = false; frame = 0; }
+        else {
+          running = false;
+          frame = 0;
+        }
       };
       frame = window.requestAnimationFrame(tick);
-    };
-    const onFocus = (event: FocusEvent) => {
-      if (!section.contains(event.relatedTarget as Node | null)) startCount();
     };
     const onMotionChange = () => {
       if (reducedMotion.matches) {
@@ -632,37 +643,36 @@ function About() {
         setCountProgress(1);
       }
     };
-    section.addEventListener("mouseenter", startCount);
-    section.addEventListener("focusin", onFocus);
     reducedMotion.addEventListener("change", onMotionChange);
     let observer: IntersectionObserver | undefined;
-    if (window.matchMedia("(hover: none)").matches && "IntersectionObserver" in window) {
-      observer = new IntersectionObserver((entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          startCount();
-          observer?.disconnect();
-        }
-      }, { threshold: 0.15 });
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            startCount();
+            observer?.disconnect();
+          }
+        },
+        { threshold: 0.15 },
+      );
       observer.observe(section);
     }
     return () => {
       window.cancelAnimationFrame(frame);
       observer?.disconnect();
-      section.removeEventListener("mouseenter", startCount);
-      section.removeEventListener("focusin", onFocus);
       reducedMotion.removeEventListener("change", onMotionChange);
     };
   }, []);
   const highlights = [
-    { value: "20+", label: "Projects Delivered", icon: Briefcase },
-    { value: "2+", label: "Years of Design Experience", icon: Palette },
-    { value: "100%", label: "Client Satisfaction", icon: BadgeCheck },
+    { value: "20+", label: "Projects Delivered" },
+    { value: "2+", label: "Years of Design Experience" },
+    { value: "100%", label: "Client Satisfaction" },
   ];
 
   return (
     <section ref={sectionRef} id="about" className="relative overflow-hidden px-6 py-24 sm:py-28">
-      <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-2 lg:gap-16">
-        <div className="relative z-10">
+      <div className="mx-auto max-w-6xl">
+        <div className="about-intro relative z-10">
           <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand">
             <span aria-hidden="true" className="h-px w-8 shrink-0 bg-brand/50" />
             About me
@@ -670,60 +680,43 @@ function About() {
           <h2 className="mt-7 text-3xl font-bold leading-[1.12] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             Designing clarity into every <span className="text-brand">interaction.</span>
           </h2>
-          <p className="mt-7 text-base leading-relaxed text-muted-foreground sm:text-lg">
-            I&apos;m Rabia, a UI/UX and graphic designer who enjoys turning ideas
-            into clean, thoughtful, and visually engaging digital experiences.
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            I&apos;m Rabia, a UI/UX and graphic designer who enjoys turning ideas into clean,
+            thoughtful, and visually engaging digital experiences.
           </p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-            From mobile apps and websites to brand identities, I bring together
-            user research, visual hierarchy, and product thinking to create
-            designs that feel effortless to use. Every detail has a purpose,
-            from the first interaction to the final handover.
+            From mobile apps and websites to brand identities, I bring together user research,
+            visual hierarchy, and product thinking to create designs that feel effortless to use.
+            Every detail has a purpose, from the first interaction to the final handover.
           </p>
           <a
             href="#contact"
-            className="mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+            className="mt-6 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
           >
             Hire Me
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>
 
-        <div className="relative isolate mx-auto w-full max-w-lg py-10 sm:py-16">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-[78%] rounded-t-[45%] rounded-br-[48%] bg-[color-mix(in_oklab,var(--brand)_12%,var(--background))]" />
-          <div aria-hidden="true" className="grid-overlay pointer-events-none absolute -inset-6 -z-10" />
-          <div aria-hidden="true" className="pointer-events-none absolute -bottom-3 left-3 -z-10 h-[72%] w-[85%] -rotate-12 rounded-[50%] border border-brand/20" />
-          <div aria-hidden="true" className="pointer-events-none absolute bottom-0 right-[18%] -z-10 h-24 w-px bg-brand/30">
-            <span className="absolute bottom-5 -left-1 h-2 w-2 rounded-full bg-brand" />
-          </div>
-          <div className="grid grid-cols-2 items-start gap-3 sm:gap-6">
-            {highlights.map(({ value, label, icon: Icon }, index) => (
-              <div
-                key={label}
-                className={`surface lift relative flex min-h-[172px] min-w-0 flex-col justify-center p-4 shadow-[var(--shadow-lift)] sm:min-h-[190px] sm:p-6 ${index === 1 ? "row-span-2 mt-12 sm:mt-16" : ""}`}
-              >
-                <div className="flex items-center justify-between gap-2 sm:gap-3">
-                  <p className="text-3xl font-bold leading-none tracking-tight tabular-nums text-brand sm:text-5xl"><span className="sr-only">{value}</span><span aria-hidden="true">{Math.round(parseInt(value, 10) * countProgress)}{value.replace(/[0-9]/g, "")}</span></p>
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-secondary text-brand sm:h-10 sm:w-10">
-                    <Icon aria-hidden="true" className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </span>
-                </div>
-                <p className="mt-4 min-h-[2.75rem] text-sm font-medium leading-snug text-foreground sm:min-h-[3rem] sm:text-base">{label}</p>
-              </div>
-            ))}
-          </div>
+        <div ref={statsRef} className="about-stat-strip" aria-label="Design experience and results">
+          {highlights.map(({ value, label }) => (
+            <div key={label} className="about-stat">
+              <p className="about-stat-value">
+                <span className="sr-only">{value}</span>
+                <span aria-hidden="true">
+                  {Math.round(parseInt(value, 10) * countProgress)}
+                  {value.replace(/[0-9]/g, "")}
+                </span>
+              </p>
+              <p className="about-stat-label">{label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
-function CaseStudyModal({
-  project,
-  onClose,
-}: {
-  project: Project;
-  onClose: () => void;
-}) {
+function CaseStudyModal({ project, onClose }: { project: Project; onClose: () => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -756,9 +749,7 @@ function CaseStudyModal({
         >
           <X className="h-4 w-4" />
         </button>
-        <div
-          className="relative aspect-[4/3] w-full border-b border-border bg-secondary"
-        >
+        <div className="relative aspect-[4/3] w-full border-b border-border bg-secondary">
           <img
             src={project.image}
             alt={project.title}
@@ -769,57 +760,57 @@ function CaseStudyModal({
 
         <div className="p-7 sm:p-9">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
-            {project.category}{project.year ? ` · ${project.year}` : ""}
+            {project.category}
+            {project.year ? ` · ${project.year}` : ""}
           </p>
           <h3 className="mt-3 text-2xl font-bold tracking-tight text-foreground">
             {project.title}
           </h3>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            {project.context}
-          </p>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{project.context}</p>
 
-          {project.orientation !== "branding" && <>
-          <div className="mt-7">
-            <h4 className="text-sm font-semibold text-foreground">My role</h4>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {project.role}
-            </p>
-          </div>
-
-          <div className="mt-7">
-            <h4 className="text-sm font-semibold text-foreground">Key design goals</h4>
-            <ul className="mt-3 grid gap-3 sm:grid-cols-2">
-              {project.goals.map((goal) => (
-                <li key={goal} className="flex items-start gap-3">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand">
-                    <Check className="h-3 w-3 text-brand-foreground" />
-                  </span>
-                  <span className="min-w-0 text-sm text-foreground">{goal}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-7">
-            <h4 className="text-sm font-semibold text-foreground">Figma & tools</h4>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {project.tools.map((tool) => (
-                <Pill key={tool}>{tool}</Pill>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-7 grid gap-4 sm:grid-cols-3">
-            {project.metrics.map((metric) => (
-              <div key={metric.label} className="rounded-xl border border-border bg-secondary px-5 py-4">
-                <p className="text-2xl font-bold tracking-tight text-brand">
-                  {metric.value}
-                </p>
-                <p className="mt-1 text-xs text-muted-foreground">{metric.label}</p>
+          {project.orientation !== "branding" && (
+            <>
+              <div className="mt-7">
+                <h4 className="text-sm font-semibold text-foreground">My role</h4>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{project.role}</p>
               </div>
-            ))}
-          </div>
-          </>}
+
+              <div className="mt-7">
+                <h4 className="text-sm font-semibold text-foreground">Key design goals</h4>
+                <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {project.goals.map((goal) => (
+                    <li key={goal} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand">
+                        <Check className="h-3 w-3 text-brand-foreground" />
+                      </span>
+                      <span className="min-w-0 text-sm text-foreground">{goal}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-7">
+                <h4 className="text-sm font-semibold text-foreground">Figma & tools</h4>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {project.tools.map((tool) => (
+                    <Pill key={tool}>{tool}</Pill>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-7 grid gap-4 sm:grid-cols-3">
+                {project.metrics.map((metric) => (
+                  <div
+                    key={metric.label}
+                    className="rounded-xl border border-border bg-secondary px-5 py-4"
+                  >
+                    <p className="text-2xl font-bold tracking-tight text-brand">{metric.value}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{metric.label}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -827,6 +818,14 @@ function CaseStudyModal({
 }
 
 function Work() {
+  const navigate = useNavigate();
+  const openProject = (project: Project) => {
+    if (project.title.startsWith("Artify")) {
+      void navigate({ to: "/work/artify" });
+    } else {
+      setSelected(project);
+    }
+  };
   const [active, setActive] = useState<(typeof FILTERS)[number]>("All");
   const [selected, setSelected] = useState<Project | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -834,13 +833,18 @@ function Work() {
   const featured = [
     ...PROJECTS.filter((project) => project.category === "Web Design").slice(0, 2),
     ...PROJECTS.filter((project) => project.category === "App Design").slice(0, 2),
-    ...LOGO_PROJECTS.filter((project) => project.image === destinifyLogo || project.image === byKinzaLogo),
+    ...LOGO_PROJECTS.filter(
+      (project) => project.image === destinifyLogo || project.image === byKinzaLogo,
+    ),
   ];
-  const visible = active === "All"
-    ? showAll ? [...featured, ...allProjects.filter((project) => !featured.includes(project))] : featured
-    : allProjects.filter((project) => project.category === active);
+  const visible =
+    active === "All"
+      ? showAll
+        ? [...featured, ...allProjects.filter((project) => !featured.includes(project))]
+        : featured
+      : allProjects.filter((project) => project.category === active);
   return (
-    <section id="work" className="px-6 py-24 sm:py-28">
+    <section id="work" className="editorial-work px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Portfolio"
@@ -849,14 +853,22 @@ function Work() {
           subtitle="Case studies across product, web, mobile, and brand."
         />
 
-        <div className="mt-10 flex flex-wrap justify-center gap-2">
+        <div
+          role="group"
+          aria-label="Filter projects"
+          className="work-filters mt-10 flex flex-wrap gap-2"
+        >
           {FILTERS.map((filter) => {
             const isActive = filter === active;
             return (
               <button
                 key={filter}
                 type="button"
-                onClick={() => { setActive(filter); setShowAll(false); }}
+                aria-pressed={isActive}
+                onClick={() => {
+                  setActive(filter);
+                  setShowAll(false);
+                }}
                 className={
                   isActive
                     ? "rounded-full bg-brand px-4 py-2 text-sm font-medium text-brand-foreground"
@@ -874,45 +886,42 @@ function Work() {
             New {active.toLowerCase()} case studies are coming soon.
           </p>
         ) : (
-          <div id="work-projects" className="mt-10 grid gap-6 md:grid-cols-2">
+          <div id="work-projects" className="work-gallery mt-10">
             {visible.map((project) => (
               <article
                 key={project.title}
                 role="button"
                 tabIndex={0}
-                onClick={() => setSelected(project)}
+                onClick={() => openProject(project)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    setSelected(project);
+                    openProject(project);
                   }
                 }}
-                className="surface lift group cursor-pointer overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                className="work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
               >
-                <div
-                   className={`relative overflow-hidden border-b border-border bg-secondary ${project.orientation === "web" ? "aspect-[4/3]" : "aspect-square"}`}
-                >
+                <div className="work-project-image">
                   <img
                     src={project.image}
                     alt={`${project.title} design mockup`}
                     loading="lazy"
-                    className={`absolute inset-0 h-full w-full ${project.orientation === "web" ? "object-cover" : "object-contain object-center"}`}
-                    style={project.image === bridaAsset ? { objectPosition: "center 60%" } : undefined}
+                    className="work-thumbnail"
+                    style={
+                      project.image === bridaAsset ? { objectPosition: "center 60%" } : undefined
+                    }
                   />
                 </div>
-                <div className="p-6">
+                <div className="work-project-info">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="min-w-0 text-lg font-semibold tracking-tight text-foreground">
                       {project.title}
                     </h3>
                     <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" />
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground">{project.year}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <Pill key={tag}>{tag}</Pill>
-                    ))}
-                  </div>
+                  <p className="work-project-category mt-1 text-sm text-muted-foreground">
+                    {project.category} &middot; {project.year}
+                  </p>
                 </div>
               </article>
             ))}
@@ -920,15 +929,18 @@ function Work() {
         )}
         {active === "All" && !showAll && allProjects.length > featured.length ? (
           <div className="mt-10 flex justify-center">
-            <button type="button" onClick={() => setShowAll(true)} aria-controls="work-projects" className="inline-flex items-center gap-2 rounded-full border border-brand/25 bg-card px-6 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
+            <button
+              type="button"
+              onClick={() => setShowAll(true)}
+              aria-controls="work-projects"
+              className="inline-flex items-center gap-2 rounded-full border border-brand/25 bg-card px-6 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+            >
               View More <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </button>
           </div>
         ) : null}
       </div>
-      {selected ? (
-        <CaseStudyModal project={selected} onClose={() => setSelected(null)} />
-      ) : null}
+      {selected ? <CaseStudyModal project={selected} onClose={() => setSelected(null)} /> : null}
     </section>
   );
 }
@@ -966,7 +978,10 @@ function Process() {
     if (!card) return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({
-      top: window.scrollY + card.getBoundingClientRect().top - Math.max(100, window.innerHeight * 0.25),
+      top:
+        window.scrollY +
+        card.getBoundingClientRect().top -
+        Math.max(100, window.innerHeight * 0.25),
       behavior: reducedMotion ? "instant" : "smooth",
     });
     card.focus({ preventScroll: true });
@@ -983,8 +998,14 @@ function Process() {
         />
         <div className="mt-12 grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:sticky lg:top-28 lg:col-span-5">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">The journey, step by step</p>
-            <nav aria-label="Design process steps" className="relative space-y-2 border-l border-border pl-5">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              The journey, step by step
+            </p>
+            <nav
+              aria-label="Design process steps"
+              style={{ "--process-progress": (active + 1) / PROCESS.length } as React.CSSProperties}
+              className="relative space-y-2 border-l border-border pl-5"
+            >
               {PROCESS.map((item, index) => (
                 <button
                   key={item.no}
@@ -994,14 +1015,20 @@ function Process() {
                   aria-controls={`process-step-${item.no}`}
                   className={`relative flex w-full items-center gap-3 rounded-xl border px-4 py-4 text-left transition-colors focus-visible:outline-2 focus-visible:outline-brand ${active === index ? "border-brand/20 bg-card text-foreground shadow-[var(--shadow-card)]" : "border-transparent text-muted-foreground hover:bg-secondary"}`}
                 >
-                  <span aria-hidden="true" className={`absolute -left-[27px] h-3 w-3 rounded-full border-2 transition-colors ${index <= active ? "border-brand bg-brand" : "border-border bg-background"}`} />
+                  <span
+                    aria-hidden="true"
+                    className={`absolute -left-[27px] h-3 w-3 rounded-full border-2 transition-colors ${index <= active ? "border-brand bg-brand" : "border-border bg-background"}`}
+                  />
                   <span className="text-sm font-semibold tabular-nums text-brand">{item.no}</span>
                   <span className="text-sm font-medium">{item.title}</span>
                 </button>
               ))}
             </nav>
             <div aria-hidden="true" className="mt-6 h-1 overflow-hidden rounded-full bg-secondary">
-              <div className="h-full rounded-full bg-brand transition-[width] duration-500 motion-reduce:transition-none" style={{ width: `${((active + 1) / PROCESS.length) * 100}%` }} />
+              <div
+                className="h-full rounded-full bg-brand transition-[width] duration-500 motion-reduce:transition-none"
+                style={{ width: `${((active + 1) / PROCESS.length) * 100}%` }}
+              />
             </div>
           </div>
           <div className="space-y-10 sm:space-y-16 lg:col-span-7 lg:space-y-24">
@@ -1009,15 +1036,24 @@ function Process() {
               <article
                 key={step.no}
                 id={`process-step-${step.no}`}
-                ref={(element) => { cards.current[index] = element; }}
+                ref={(element) => {
+                  cards.current[index] = element;
+                }}
                 tabIndex={-1}
                 className={`process-step relative flex min-h-[320px] flex-col justify-center rounded-3xl border bg-card p-7 sm:min-h-[380px] sm:p-10 focus-visible:outline-2 focus-visible:outline-brand ${active === index ? "process-step--active border-brand/30 shadow-[var(--shadow-lift)]" : "border-border shadow-[var(--shadow-card)]"}`}
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">Step {step.no} / 04</p>
-                <h3 className="mt-5 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{step.title}</h3>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                  <span className="process-number">{step.no}</span>
+                  <span className="sr-only"> / 04</span>
+                </p>
+                <h3 className="mt-5 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                  {step.title}
+                </h3>
                 <p className="mt-5 text-base leading-relaxed text-muted-foreground">{step.body}</p>
                 <div className="mt-7 flex flex-wrap gap-2">
-                  {step.tags.map((tag) => <Pill key={tag}>{tag}</Pill>)}
+                  {step.tags.map((tag) => (
+                    <Pill key={tag}>{tag}</Pill>
+                  ))}
                 </div>
               </article>
             ))}
@@ -1028,48 +1064,53 @@ function Process() {
   );
 }
 function Services() {
-  const serviceIcons = [Monitor, Zap, LayoutGrid, Smartphone, PenTool, BookOpen];
-
   return (
-    <section id="services" className="bg-[color-mix(in_oklab,var(--brand)_4%,var(--background))] px-6 py-24 sm:py-28">
-      <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+    <section id="services" className="services-studio px-6 py-24 sm:py-28">
+      <div className="services-studio-layout mx-auto max-w-6xl">
+        <div className="services-studio-intro">
           <SectionHeading
             eyebrow="Services"
             title="Thoughtful design, from idea to launch."
             subtitle="Digital experiences and brand identities built around your goals, with care in every detail."
             align="left"
           />
-          <a href="#contact" className="inline-flex shrink-0 items-center gap-2 rounded-full border border-brand/25 bg-card px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
+          <a
+            href="#contact"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-brand/25 bg-card px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+          >
             Discuss your project <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
           </a>
         </div>
-        <div className="mt-12 grid auto-rows-fr gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service, index) => {
-            const Icon = serviceIcons[index] ?? Palette;
-            return (
-              <article key={service.title} data-reveal-item="service" className="group relative isolate flex min-w-0 flex-col overflow-hidden rounded-3xl border border-border/60 bg-card p-6 shadow-[var(--shadow-card)] transition-[transform,box-shadow,border-color] duration-300 hover:border-brand/30 hover:shadow-[var(--shadow-lift)] focus-within:border-brand/30 motion-safe:hover:-translate-y-1 sm:p-8">
-                <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-12 -z-10 h-36 w-36 rounded-full bg-brand/5 blur-2xl transition-colors group-hover:bg-brand/10" />
-                <div className="flex items-center justify-between">
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--brand)_9%,var(--card))] text-brand">
-                    <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={1.5} />
-                  </span>
-                  <span aria-hidden="true" className="text-xs font-medium tabular-nums tracking-widest text-muted-foreground/60">{String(index + 1).padStart(2, "0")}</span>
-                </div>
-                <h3 className="mt-6 text-xl font-semibold tracking-tight text-foreground">{service.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">{service.body}</p>
-                <ul aria-label={`${service.title} specialties`} className="mb-6 mt-6 flex flex-wrap gap-2">
+        <div className="service-list">
+          {SERVICES.map((service, index) => (
+            <article key={service.title} data-reveal-item="service" className="service-row group">
+              <service.icon
+                className="service-card-icon"
+                size={30}
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
+              <span className="service-number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3>{service.title}</h3>
+              <div className="service-description">
+                <p>{service.body}</p>
+                <ul aria-label={service.title + " specialties"}>
                   {service.tags.map((tag) => (
-                    <li key={tag} className="rounded-full bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground">{tag}</li>
+                    <li key={tag}>{tag}</li>
                   ))}
                 </ul>
-                <a href="#contact" aria-label={`Let's talk about ${service.title}`} className="mt-auto flex items-center justify-between border-t border-border/70 pt-4 text-sm font-medium text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
-                  Let&apos;s talk
-                  <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
-                </a>
-              </article>
-            );
-          })}
+              </div>
+              <a
+                href="#contact"
+                aria-label={"Let's talk about " + service.title}
+                className="service-link"
+              >
+                Let's talk <ArrowUpRight aria-hidden="true" size={18} />
+              </a>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -1077,18 +1118,20 @@ function Services() {
 }
 function Testimonials() {
   const reviews = TESTIMONIALS.map((item) => (
-    <figure key={item.name} className="flex h-full min-w-0 flex-col rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">
-      <div aria-hidden="true" className="flex gap-2 text-brand">
-        {Array.from({ length: 5 }, (_, index) => (
-          <Star key={index} className="h-4 w-4 fill-current" />
-        ))}
-      </div>
+    <figure key={item.name} className="testimonial-card flex h-full min-w-0 flex-col">
+      <Quote className="testimonial-quote-mark" size={40} strokeWidth={1.25} aria-hidden="true" />
       <blockquote className="mb-8 mt-5 text-base leading-relaxed text-foreground">
         {item.quote}
       </blockquote>
-      <figcaption className="mt-auto flex items-center gap-3">
-        <span className="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--brand)_14%,var(--card))] text-sm font-semibold text-brand">
-          <span aria-hidden="true">{item.name.split(" ").map((part) => part[0]).join("").slice(0, 2)}</span>
+      <figcaption className="testimonial-author mt-auto flex items-center gap-4">
+        <span className="testimonial-avatar relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--brand)_14%,var(--card))] text-sm font-semibold text-brand">
+          <span aria-hidden="true">
+            {item.name
+              .split(" ")
+              .map((part) => part[0])
+              .join("")
+              .slice(0, 2)}
+          </span>
           {item.photo ? (
             <img
               src={item.photo}
@@ -1097,7 +1140,9 @@ function Testimonials() {
               height={48}
               loading="lazy"
               className="absolute inset-0 h-full w-full object-cover"
-              onError={(event) => { event.currentTarget.style.display = "none"; }}
+              onError={(event) => {
+                event.currentTarget.style.display = "none";
+              }}
             />
           ) : null}
         </span>
@@ -1110,7 +1155,7 @@ function Testimonials() {
   ));
 
   return (
-    <section id="testimonials" className="px-6 py-24 sm:py-28">
+    <section id="testimonials" className="testimonials-classic px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Testimonials"
@@ -1118,7 +1163,7 @@ function Testimonials() {
           subtitle="Experiences shared by the clients and collaborators behind my work. Their trust inspires me to keep creating thoughtful digital experiences."
           align="left"
         />
-        <div className="mt-10 grid auto-rows-fr gap-6 md:grid-cols-2">
+        <div className="testimonials-grid mt-10 grid auto-rows-fr gap-5 md:grid-cols-2">
           {reviews}
         </div>
       </div>
@@ -1126,7 +1171,11 @@ function Testimonials() {
   );
 }
 function Certifications() {
-  const [carouselRef, carousel] = useEmblaCarousel({ align: "start", containScroll: false, loop: false });
+  const [carouselRef, carousel] = useEmblaCarousel({
+    align: "start",
+    containScroll: false,
+    loop: false,
+  });
   const [selected, setSelected] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
@@ -1139,7 +1188,9 @@ function Certifications() {
     };
     update();
     carousel.on("select", update).on("reInit", update);
-    return () => { carousel.off("select", update).off("reInit", update); };
+    return () => {
+      carousel.off("select", update).off("reInit", update);
+    };
   }, [carousel]);
   const moveTo = (index: number) => {
     carousel?.scrollTo(index, window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -1149,26 +1200,89 @@ function Certifications() {
     <section id="certifications" className="overflow-hidden px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading eyebrow="Credentials" title="Learning that shapes my work." subtitle="My certificates in UX, graphic design, and the skills behind thoughtful client work." />
+          <SectionHeading
+            eyebrow="Credentials"
+            title="Learning that shapes my work."
+            subtitle="My certificates in UX, graphic design, and the skills behind thoughtful client work."
+          />
           <div className="flex gap-3">
-            <button type="button" aria-label="Previous certificate" disabled={!canPrev} onClick={() => moveTo(selected - 1)} className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"><ChevronLeft aria-hidden="true" className="h-5 w-5" /></button>
-            <button type="button" aria-label="Next certificate" disabled={!canNext} onClick={() => moveTo(selected + 1)} className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"><ChevronRight aria-hidden="true" className="h-5 w-5" /></button>
+            <button
+              type="button"
+              aria-label="Previous certificate"
+              disabled={!canPrev}
+              onClick={() => moveTo(selected - 1)}
+              className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"
+            >
+              <ChevronLeft aria-hidden="true" className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next certificate"
+              disabled={!canNext}
+              onClick={() => moveTo(selected + 1)}
+              className="grid h-12 w-12 place-items-center rounded-full border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:border-brand hover:text-brand disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-brand"
+            >
+              <ChevronRight aria-hidden="true" className="h-5 w-5" />
+            </button>
           </div>
         </div>
-        <div ref={carouselRef} role="region" aria-roledescription="carousel" aria-label="Certificates" className="mt-10 overflow-hidden">
+        <div
+          ref={carouselRef}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Certificates"
+          className="mt-10 overflow-hidden"
+        >
           <div className="flex items-stretch touch-pan-y gap-6">
             {CERTIFICATIONS.map((cert, index) => (
-              <article key={cert.file} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${CERTIFICATIONS.length}: ${cert.title}`} className="flex min-w-0 flex-[0_0_88%] flex-col overflow-hidden rounded-3xl border border-border bg-card sm:flex-[0_0_calc((100%-24px)/2)] lg:flex-[0_0_calc((100%-48px)/3)]">
+              <article
+                key={cert.file}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${index + 1} of ${CERTIFICATIONS.length}: ${cert.title}`}
+                className="flex min-w-0 flex-[0_0_88%] flex-col overflow-hidden rounded-3xl border border-border bg-card sm:flex-[0_0_calc((100%-24px)/2)] lg:flex-[0_0_calc((100%-48px)/3)]"
+              >
                 <div className="flex h-56 shrink-0 items-center justify-center border-b border-border bg-secondary p-3">
-                  <div className="relative max-h-full w-full overflow-hidden bg-white" style={{ aspectRatio: `${cert.crop.width} / ${cert.crop.height}` }}>
-                    <img src={cert.image} alt={`${cert.title} certificate awarded to Rabia Naveed`} loading="lazy" draggable={false} className="absolute max-w-none" style={{ width: `${1920 / cert.crop.width * 100}%`, left: `${-cert.crop.x / cert.crop.width * 100}%`, top: `${-cert.crop.y / cert.crop.height * 100}%` }} />
+                  <div
+                    className="relative max-h-full w-full overflow-hidden bg-white"
+                    style={{ aspectRatio: `${cert.crop.width} / ${cert.crop.height}` }}
+                  >
+                    <img
+                      src={cert.image}
+                      alt={`${cert.title} certificate awarded to Rabia Naveed`}
+                      loading="lazy"
+                      draggable={false}
+                      className="absolute max-w-none"
+                      style={{
+                        width: `${(1920 / cert.crop.width) * 100}%`,
+                        left: `${(-cert.crop.x / cert.crop.width) * 100}%`,
+                        top: `${(-cert.crop.y / cert.crop.height) * 100}%`,
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col items-start p-6">
-                  <div className="flex flex-wrap items-center gap-3"><Pill>{cert.tag}</Pill><span className="text-xs text-muted-foreground">{cert.date}</span></div>
-                  <h3 className="mt-4 min-h-[4.5rem] text-lg font-semibold leading-snug tracking-tight text-foreground">{cert.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{cert.issuer}</p><p className="mb-5 mt-3 break-all text-xs text-muted-foreground">Credential ID: {cert.credentialId}</p>
-                  <a href={cert.verificationUrl} target="_blank" rel="noreferrer" onFocus={() => moveTo(index)} aria-label={`View ${cert.title} certificate (opens in a new tab)`} className="mt-auto inline-flex items-center gap-2 rounded-full border border-brand/25 px-4 py-2.5 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">View Certificate <ArrowUpRight aria-hidden="true" className="h-4 w-4" /></a>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Pill>{cert.tag}</Pill>
+                    <span className="text-xs text-muted-foreground">{cert.date}</span>
+                  </div>
+                  <h3 className="mt-4 min-h-[4.5rem] text-lg font-semibold leading-snug tracking-tight text-foreground">
+                    {cert.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{cert.issuer}</p>
+                  <p className="mb-5 mt-3 break-all text-xs text-muted-foreground">
+                    Credential ID: {cert.credentialId}
+                  </p>
+                  <a
+                    href={cert.verificationUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    onFocus={() => moveTo(index)}
+                    aria-label={`View ${cert.title} certificate (opens in a new tab)`}
+                    className="mt-auto inline-flex items-center gap-2 rounded-full border border-brand/25 px-4 py-2.5 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                  >
+                    View Certificate <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                  </a>
                 </div>
               </article>
             ))}
@@ -1176,8 +1290,18 @@ function Certifications() {
         </div>
         <div className="mt-7 flex justify-center gap-1" aria-label="Choose certificate">
           {CERTIFICATIONS.map((cert, index) => (
-            <button key={cert.file} type="button" aria-label={`Show ${cert.title}`} aria-current={selected === index ? "true" : undefined} onClick={() => moveTo(index)} className="grid h-10 w-10 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-brand">
-              <span aria-hidden="true" className={`h-2 rounded-full transition-[width,background-color] motion-reduce:transition-none ${selected === index ? "w-6 bg-brand" : "w-2 bg-border"}`} />
+            <button
+              key={cert.file}
+              type="button"
+              aria-label={`Show ${cert.title}`}
+              aria-current={selected === index ? "true" : undefined}
+              onClick={() => moveTo(index)}
+              className="grid h-10 w-10 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-brand"
+            >
+              <span
+                aria-hidden="true"
+                className={`h-2 rounded-full transition-[width,background-color] motion-reduce:transition-none ${selected === index ? "w-6 bg-brand" : "w-2 bg-border"}`}
+              />
             </button>
           ))}
         </div>
@@ -1187,7 +1311,10 @@ function Certifications() {
 }
 function Contact() {
   return (
-    <footer id="contact" className="border-t border-border bg-[color-mix(in_oklab,var(--brand)_5%,var(--background))] px-6 pb-8 pt-16 sm:pt-24">
+    <footer
+      id="contact"
+      className="border-t border-border bg-[color-mix(in_oklab,var(--brand)_5%,var(--background))] px-6 pb-8 pt-16 sm:pt-24"
+    >
       <div className="mx-auto max-w-6xl">
         <div className="grid items-center gap-10 pb-14 sm:pb-20 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
           <div>
@@ -1196,14 +1323,19 @@ function Contact() {
               Have something in mind?
             </p>
             <h2 className="mt-6 max-w-xl text-4xl font-bold leading-[1.12] tracking-tight text-foreground sm:text-5xl">
-              Your next idea,<br /><span className="text-brand">thoughtfully designed.</span>
+              Your next idea,
+              <br />
+              <span className="text-brand">thoughtfully designed.</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground">
-              A new product, a fresh look, or a better experience.
-              Let&apos;s talk about what you want to create.
+              A new product, a fresh look, or a better experience. Let&apos;s talk about what you
+              want to create.
             </p>
           </div>
-          <div data-reveal-item="contact" className="rounded-3xl border border-brand/15 bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">
+          <div
+            data-reveal-item="contact"
+            className="rounded-3xl border border-brand/15 bg-card p-6 shadow-[var(--shadow-card)] sm:p-8"
+          >
             <p className="text-sm font-medium text-muted-foreground">Start a conversation</p>
             <a
               href={`mailto:${EMAIL}`}
@@ -1216,50 +1348,69 @@ function Contact() {
             </a>
             <div className="mt-7 border-t border-border pt-6">
               <p className="text-xs text-muted-foreground">Or find me here</p>
-              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3">
+              <div className="footer-social-links">
                 {SOCIALS.map(({ label, href }) => (
                   <a
                     key={label}
                     href={href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-medium text-foreground underline-offset-4 transition-colors hover:text-brand hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+                    className={"footer-social-link " + (label === "Upwork" ? "footer-upwork" : "")}
                   >
-                    {label}<ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+                    {label === "Upwork" ? (
+                      <span className="footer-upwork-mark" aria-hidden="true">
+                        up
+                      </span>
+                    ) : (
+                      <span
+                        className={"footer-social-icon floating-brand-icon--" + label.toLowerCase()}
+                        aria-hidden="true"
+                      />
+                    )}
+                    {label}
+                    <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
                   </a>
                 ))}
               </div>
             </div>
           </div>
         </div>
-        <div data-reveal-item="footer" className="flex flex-col gap-6 border-t border-border py-7 sm:flex-row sm:items-center sm:justify-between">
-          <a href="#top" className="text-lg font-bold tracking-tight text-foreground">Rabia Naveed<span className="text-brand">.</span></a>
+        <div
+          data-reveal-item="footer"
+          className="flex flex-col gap-6 border-t border-border py-7 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <a href="#top" className="text-lg font-bold tracking-tight text-foreground">
+            Rabia Naveed<span className="text-brand">.</span>
+          </a>
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
             <MapPin aria-hidden="true" className="h-4 w-4 text-brand" />
             Gujranwala, Pakistan
           </p>
-          <a href="#top" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-brand">
+          <a
+            href="#top"
+            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-brand"
+          >
             Back to top <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
           </a>
         </div>
-        <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} Rabia Naveed. All rights reserved.</p>
+        <p className="text-xs text-muted-foreground">
+          &copy; {new Date().getFullYear()} Rabia Naveed. All rights reserved.
+        </p>
       </div>
     </footer>
   );
 }
 function Index() {
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="portfolio-home min-h-screen bg-background pb-24">
       <CustomCursor />
       <ScrollAnimations />
-      <FloatingBar />
-      <Navbar />
+
       <main>
-        <Hero />
-        <Marquee />
+        <SplitHero />
+        <About />
         <Work />
         <Process />
-        <About />
         <Services />
         <Testimonials />
         <Certifications />

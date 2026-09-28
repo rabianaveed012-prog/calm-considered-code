@@ -28,7 +28,8 @@ export function CustomCursor() {
     const onMove = (event: MouseEvent) => {
       mouseX = event.clientX;
       mouseY = event.clientY;
-      document.documentElement.classList.add("cursor-active");
+      const overHero = (event.target as Element | null)?.closest("#top, .portrait-hero");
+      document.documentElement.classList.toggle("cursor-active", !overHero);
 
       const target = event.target as HTMLElement | null;
       const hovering = Boolean(target?.closest?.(INTERACTIVE));

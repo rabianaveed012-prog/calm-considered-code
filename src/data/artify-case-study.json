@@ -1,0 +1,121 @@
+[
+  {
+    "id": 1,
+    "src": "/case-studies/artify/artify-01.jpg",
+    "title": "Artify app cover",
+    "width": 3881,
+    "height": 3031
+  },
+  {
+    "id": 2,
+    "src": "/case-studies/artify/artify-02.jpg",
+    "title": "Project overview",
+    "width": 3881,
+    "height": 2907
+  },
+  {
+    "id": 3,
+    "src": "/case-studies/artify/artify-03.jpg",
+    "title": "Design process",
+    "width": 3050,
+    "height": 3966
+  },
+  {
+    "id": 4,
+    "src": "/case-studies/artify/artify-04.jpg",
+    "title": "Core features",
+    "width": 2500,
+    "height": 4000
+  },
+  {
+    "id": 5,
+    "src": "/case-studies/artify/artify-05.jpg",
+    "title": "Brand guidelines",
+    "width": 2048,
+    "height": 4000
+  },
+  {
+    "id": 6,
+    "src": "/case-studies/artify/artify-06.jpg",
+    "title": "User flow",
+    "width": 3242,
+    "height": 4000
+  },
+  {
+    "id": 7,
+    "src": "/case-studies/artify/artify-07.jpg",
+    "title": "Design system",
+    "width": 4000,
+    "height": 2949
+  },
+  {
+    "id": 8,
+    "src": "/case-studies/artify/artify-08.jpg",
+    "title": "Low-fidelity wireframes",
+    "width": 3635,
+    "height": 4000
+  },
+  {
+    "id": 9,
+    "src": "/case-studies/artify/artify-09.jpg",
+    "title": "High-fidelity wireframes",
+    "width": 3989,
+    "height": 4000
+  },
+  {
+    "id": 10,
+    "src": "/case-studies/artify/artify-10.jpg",
+    "title": "Visual designs: onboarding, discovery and search",
+    "width": 4120,
+    "height": 15836
+  },
+  {
+    "id": 11,
+    "src": "/case-studies/artify/artify-11.jpg",
+    "title": "Artist profiles, checkout and orders",
+    "width": 4120,
+    "height": 11161
+  },
+  {
+    "id": 12,
+    "src": "/case-studies/artify/artify-12.jpg",
+    "title": "Reviews, events and profile settings",
+    "width": 4120,
+    "height": 9642
+  },
+  {
+    "id": 14,
+    "src": "/case-studies/artify/artify-14.jpg",
+    "title": "Splash, login and search details",
+    "width": 1040,
+    "height": 1289
+  },
+  {
+    "id": 15,
+    "src": "/case-studies/artify/artify-15.jpg",
+    "title": "Artist profiles and order flow details",
+    "width": 1477,
+    "height": 4000
+  },
+  {
+    "id": 16,
+    "src": "/case-studies/artify/artify-16.jpg",
+    "title": "Reviews, wishlists and events details",
+    "width": 992,
+    "height": 1289
+  },
+  {
+    "id": 17,
+    "src": "/case-studies/artify/artify-17.png",
+    "title": "Home, navigation and art discovery details",
+    "width": 1040,
+    "height": 1303
+  },
+  {
+    "id": 13,
+    "src": "/case-studies/artify/artify-13.jpg",
+    "title": "Thank you for scrolling",
+    "width": 4000,
+    "height": 1915
+  }
+]
