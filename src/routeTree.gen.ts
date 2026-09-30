@@ -11,7 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HeroPreviewRouteImport } from './routes/hero-preview'
+import { Route as WorkAgrinovaRouteImport } from './routes/work.agrinova'
 import { Route as WorkArtifyRouteImport } from './routes/work.artify'
+import { Route as WorkBlissHavenRouteImport } from './routes/work.bliss-haven'
+import { Route as WorkDestinifyRouteImport } from './routes/work.destinify'
+import { Route as WorkFidatoRouteImport } from './routes/work.fidato'
+import { Route as WorkFreelaRouteImport } from './routes/work.freela'
+import { Route as WorkTechdoseRouteImport } from './routes/work.techdose'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +29,122 @@ const HeroPreviewRoute = HeroPreviewRouteImport.update({
   path: '/hero-preview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkAgrinovaRoute = WorkAgrinovaRouteImport.update({
+  id: '/work/agrinova',
+  path: '/work/agrinova',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkArtifyRoute = WorkArtifyRouteImport.update({
   id: '/work/artify',
   path: '/work/artify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkBlissHavenRoute = WorkBlissHavenRouteImport.update({
+  id: '/work/bliss-haven',
+  path: '/work/bliss-haven',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkDestinifyRoute = WorkDestinifyRouteImport.update({
+  id: '/work/destinify',
+  path: '/work/destinify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkFidatoRoute = WorkFidatoRouteImport.update({
+  id: '/work/fidato',
+  path: '/work/fidato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkFreelaRoute = WorkFreelaRouteImport.update({
+  id: '/work/freela',
+  path: '/work/freela',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkTechdoseRoute = WorkTechdoseRouteImport.update({
+  id: '/work/techdose',
+  path: '/work/techdose',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
+  '/work/bliss-haven': typeof WorkBlissHavenRoute
+  '/work/destinify': typeof WorkDestinifyRoute
+  '/work/fidato': typeof WorkFidatoRoute
+  '/work/freela': typeof WorkFreelaRoute
+  '/work/techdose': typeof WorkTechdoseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
+  '/work/bliss-haven': typeof WorkBlissHavenRoute
+  '/work/destinify': typeof WorkDestinifyRoute
+  '/work/fidato': typeof WorkFidatoRoute
+  '/work/freela': typeof WorkFreelaRoute
+  '/work/techdose': typeof WorkTechdoseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
+  '/work/bliss-haven': typeof WorkBlissHavenRoute
+  '/work/destinify': typeof WorkDestinifyRoute
+  '/work/fidato': typeof WorkFidatoRoute
+  '/work/freela': typeof WorkFreelaRoute
+  '/work/techdose': typeof WorkTechdoseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/hero-preview' | '/work/artify'
+  fullPaths:
+    | '/'
+    | '/hero-preview'
+    | '/work/agrinova'
+    | '/work/artify'
+    | '/work/bliss-haven'
+    | '/work/destinify'
+    | '/work/fidato'
+    | '/work/freela'
+    | '/work/techdose'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/hero-preview' | '/work/artify'
-  id: '__root__' | '/' | '/hero-preview' | '/work/artify'
+  to:
+    | '/'
+    | '/hero-preview'
+    | '/work/agrinova'
+    | '/work/artify'
+    | '/work/bliss-haven'
+    | '/work/destinify'
+    | '/work/fidato'
+    | '/work/freela'
+    | '/work/techdose'
+  id:
+    | '__root__'
+    | '/'
+    | '/hero-preview'
+    | '/work/agrinova'
+    | '/work/artify'
+    | '/work/bliss-haven'
+    | '/work/destinify'
+    | '/work/fidato'
+    | '/work/freela'
+    | '/work/techdose'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HeroPreviewRoute: typeof HeroPreviewRoute
+  WorkAgrinovaRoute: typeof WorkAgrinovaRoute
   WorkArtifyRoute: typeof WorkArtifyRoute
+  WorkBlissHavenRoute: typeof WorkBlissHavenRoute
+  WorkDestinifyRoute: typeof WorkDestinifyRoute
+  WorkFidatoRoute: typeof WorkFidatoRoute
+  WorkFreelaRoute: typeof WorkFreelaRoute
+  WorkTechdoseRoute: typeof WorkTechdoseRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,11 +163,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HeroPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/work/agrinova': {
+      id: '/work/agrinova'
+      path: '/work/agrinova'
+      fullPath: '/work/agrinova'
+      preLoaderRoute: typeof WorkAgrinovaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/work/artify': {
       id: '/work/artify'
       path: '/work/artify'
       fullPath: '/work/artify'
       preLoaderRoute: typeof WorkArtifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/bliss-haven': {
+      id: '/work/bliss-haven'
+      path: '/work/bliss-haven'
+      fullPath: '/work/bliss-haven'
+      preLoaderRoute: typeof WorkBlissHavenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/destinify': {
+      id: '/work/destinify'
+      path: '/work/destinify'
+      fullPath: '/work/destinify'
+      preLoaderRoute: typeof WorkDestinifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/fidato': {
+      id: '/work/fidato'
+      path: '/work/fidato'
+      fullPath: '/work/fidato'
+      preLoaderRoute: typeof WorkFidatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/freela': {
+      id: '/work/freela'
+      path: '/work/freela'
+      fullPath: '/work/freela'
+      preLoaderRoute: typeof WorkFreelaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/techdose': {
+      id: '/work/techdose'
+      path: '/work/techdose'
+      fullPath: '/work/techdose'
+      preLoaderRoute: typeof WorkTechdoseRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,7 +218,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HeroPreviewRoute: HeroPreviewRoute,
+  WorkAgrinovaRoute: WorkAgrinovaRoute,
   WorkArtifyRoute: WorkArtifyRoute,
+  WorkBlissHavenRoute: WorkBlissHavenRoute,
+  WorkDestinifyRoute: WorkDestinifyRoute,
+  WorkFidatoRoute: WorkFidatoRoute,
+  WorkFreelaRoute: WorkFreelaRoute,
+  WorkTechdoseRoute: WorkTechdoseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 
-const INTERACTIVE =
-  'a, button, [role="button"], input, textarea, select, label, summary, [data-cursor="hover"]';
+const INTERACTIVE = 'a[href], button:not(:disabled), [role="button"], input:not(:disabled), textarea:not(:disabled), select:not(:disabled), label[for], summary, [data-cursor="hover"]';
 
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement | null>(null);
@@ -9,72 +8,78 @@ export function CustomCursor() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduced) return;
-    setEnabled(true);
+    const fine = window.matchMedia("(pointer: fine)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setEnabled(fine.matches && !reduced.matches);
+    update();
+    fine.addEventListener("change", update);
+    reduced.addEventListener("change", update);
+    return () => { fine.removeEventListener("change", update); reduced.removeEventListener("change", update); };
   }, []);
 
   useEffect(() => {
     if (!enabled) return;
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let ringX = mouseX;
-    let ringY = mouseY;
-    let frame = 0;
-
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    let inside = false, pressed = false, frame = 0, previousTime = 0;
+    let lastTarget: Element | null = null;
+    const reset = () => {
+      inside = false;
+      pressed = false;
+      lastTarget = null;
+      document.documentElement.classList.remove("cursor-active");
+      ringRef.current?.classList.remove("is-hover", "is-down");
+      dotRef.current?.classList.remove("is-hover");
+    };
     const onMove = (event: MouseEvent) => {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-      const overHero = (event.target as Element | null)?.closest("#top, .portrait-hero");
-      document.documentElement.classList.toggle("cursor-active", !overHero);
-
-      const target = event.target as HTMLElement | null;
-      const hovering = Boolean(target?.closest?.(INTERACTIVE));
-      ringRef.current?.classList.toggle("is-hover", hovering);
-      dotRef.current?.classList.toggle("is-hover", hovering);
+      mouseX = event.clientX; mouseY = event.clientY;
+      if (!inside) { ringX = mouseX; ringY = mouseY; }
+      inside = true;
+      pressed = Boolean(event.buttons & 1);
     };
-
-    const onLeave = () => document.documentElement.classList.remove("cursor-active");
-    const onDown = () => ringRef.current?.classList.add("is-down");
-    const onUp = () => ringRef.current?.classList.remove("is-down");
-
-    const tick = () => {
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    const onOut = (event: MouseEvent) => { if (!event.relatedTarget) reset(); };
+    const onDown = (event: MouseEvent) => { onMove(event); };
+    const onUp = () => { pressed = false; ringRef.current?.classList.remove("is-down"); };
+    const onVisibility = () => { if (document.hidden) reset(); };
+    const tick = (time: number) => {
+      const elapsed = previousTime ? Math.min(time - previousTime, 64) : 16.67;
+      previousTime = time;
+      if (inside) {
+        // Hit testing also refreshes hover after scrolling or route changes without mouse movement.
+        const target = document.elementFromPoint(mouseX, mouseY);
+        const active = Boolean(target) && !target?.closest("#top, .portrait-hero");
+        document.documentElement.classList.toggle("cursor-active", active);
+        const hovering = active && Boolean(target?.closest(INTERACTIVE)) && !target?.closest('[aria-disabled="true"], [inert]');
+        ringRef.current?.classList.toggle("is-hover", hovering);
+        dotRef.current?.classList.toggle("is-hover", hovering);
+        if (target !== lastTarget) { pressed = false; lastTarget = target; }
+        ringRef.current?.classList.toggle("is-down", active && pressed);
+        const blend = 1 - Math.exp(-elapsed / 45);
+        ringX += (mouseX - ringX) * blend;
+        ringY += (mouseY - ringY) * blend;
+        if (dotRef.current) dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+        if (ringRef.current) ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
       }
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
-      }
-      frame = window.requestAnimationFrame(tick);
+      frame = requestAnimationFrame(tick);
     };
-
-    frame = window.requestAnimationFrame(tick);
+    frame = requestAnimationFrame(tick);
     window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("mouseout", onLeave);
+    window.addEventListener("mouseout", onOut);
     window.addEventListener("mousedown", onDown);
     window.addEventListener("mouseup", onUp);
-
+    window.addEventListener("blur", reset);
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
-      window.cancelAnimationFrame(frame);
+      cancelAnimationFrame(frame);
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseout", onLeave);
+      window.removeEventListener("mouseout", onOut);
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
-      document.documentElement.classList.remove("cursor-active");
+      window.removeEventListener("blur", reset);
+      document.removeEventListener("visibilitychange", onVisibility);
+      reset();
     };
   }, [enabled]);
 
   if (!enabled) return null;
-
-  return (
-    <>
-      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
-      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
-    </>
-  );
+  return <><div ref={ringRef} className="cursor-ring" aria-hidden="true" /><div ref={dotRef} className="cursor-dot" aria-hidden="true" /></>;
 }

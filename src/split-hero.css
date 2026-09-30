@@ -1,4 +1,4 @@
-﻿.split-preview {
+.split-preview {
   --paper: #f5f2eb;
   --ink: #282321;
   --rust: #94553f;
@@ -2342,4 +2342,41 @@
 }
 @media (max-width: 767px) {
   .portrait-hero-title span.portrait-surname:last-child { font-size: 0.335em; top: 106%; right: 18%; }
+}
+
+/* One entrance per hero mount. Individual transforms preserve layout positioning. */
+@media (prefers-reduced-motion: no-preference) {
+  .portrait-hero .availability-intro {
+    animation: portrait-entrance-fade 500ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .portrait-hero .portrait-hero-title {
+    animation: portrait-entrance-name 750ms cubic-bezier(0.22, 1, 0.36, 1) 80ms backwards;
+  }
+  .portrait-hero .availability-role,
+  .portrait-hero .portrait-hero-action > p {
+    animation: portrait-entrance-copy 650ms cubic-bezier(0.22, 1, 0.36, 1) 220ms backwards;
+  }
+  .portrait-hero .portrait-hero-photo {
+    animation: portrait-entrance-photo 800ms cubic-bezier(0.22, 1, 0.36, 1) 300ms backwards;
+  }
+  .portrait-hero .portrait-hero-button {
+    animation: portrait-entrance-copy 600ms cubic-bezier(0.22, 1, 0.36, 1) 580ms backwards;
+  }
+  .portrait-hero .portrait-hero-button:focus-visible { animation: none; }
+}
+@keyframes portrait-entrance-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes portrait-entrance-name {
+  from { opacity: 0; translate: 0 18px; }
+  to { opacity: 0.16; translate: 0 0; }
+}
+@keyframes portrait-entrance-copy {
+  from { opacity: 0; translate: 0 8px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes portrait-entrance-photo {
+  from { opacity: 0; scale: .97; }
+  to { opacity: 1; scale: 1; }
 }

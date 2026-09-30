@@ -1,22 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import pages from "@/data/artify-case-study.json";
+import pages from "@/data/bliss-haven-case-study.json";
 
-export const Route = createFileRoute("/work/artify")({
+export const Route = createFileRoute("/work/bliss-haven")({
   head: () => ({
     meta: [
-      { title: "Artify App Case Study | Rabia Naveed" },
+      { title: "Bliss Haven Spa Website Case Study | Rabia Naveed" },
       {
         name: "description",
         content:
-          "Artify mobile app UX/UI case study by Rabia Naveed: project overview, design process, brand guidelines, user flows, wireframes and visual designs.",
+          "Bliss Haven Spa landing page case study by Rabia Naveed: project goals, design solution, typography, color palette and responsive layouts.",
       },
     ],
   }),
-  component: ArtifyCaseStudy,
+  component: BlissHavenCaseStudy,
 });
 
-function ArtifyCaseStudy() {
+function BlissHavenCaseStudy() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-md">
@@ -43,11 +43,11 @@ function ArtifyCaseStudy() {
       <main id="case-study">
         <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-16">
           <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-brand">
-            <span aria-hidden="true" className="h-px w-10 bg-brand" /> App design / Case study
+            <span aria-hidden="true" className="h-px w-10 bg-brand" /> Web design / Case study
           </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">Artify</h1>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">Bliss Haven Spa</h1>
           <p className="mt-4 max-w-xl text-base text-muted-foreground">
-            Explore. Engage. Enjoy. An art discovery mobile app, designed by Rabia Naveed.
+            A responsive spa landing page, designed by Rabia Naveed.
           </p>
           <p className="mt-5 text-sm text-muted-foreground">
             UX &amp; UI Designer · 2025 · 8 weeks · Figma
@@ -56,14 +56,14 @@ function ArtifyCaseStudy() {
         </div>
         <div className="mx-auto max-w-[1200px] bg-white">
           {pages.map((page, index) => (
-            <section key={page.id} aria-labelledby={`artify-heading-${page.id}`}>
-              <h2 id={`artify-heading-${page.id}`} className="sr-only">
+            <section key={page.src} aria-labelledby={`bliss-haven-heading-${page.src}`}>
+              <h2 id={`bliss-haven-heading-${page.src}`} className="sr-only">
                 {page.title}
               </h2>
               <div className="block">
                 <img draggable={false}
                   src={page.src}
-                  alt={`Artify case study: ${page.title}`}
+                  alt={`Bliss Haven Spa case study: ${page.title}`}
                   width={page.width}
                   height={page.height}
                   loading={index === 0 ? "eager" : "lazy"}

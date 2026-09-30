@@ -96,11 +96,11 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           height={1535}
           fetchPriority="high"
         />
-        <div className="portrait-hero-availability" data-split-reveal>
+        <div className="portrait-hero-availability">
           <p className="availability-intro">Available for</p>
           <p className="availability-role">UI/UX Designer Roles</p>
         </div>
-        <div className="portrait-hero-action" data-split-reveal>
+        <div className="portrait-hero-action">
           <p>
             Turning ideas into
             <br />

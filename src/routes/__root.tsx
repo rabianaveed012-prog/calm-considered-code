@@ -1,3 +1,4 @@
+import { CustomCursor } from "@/components/CustomCursor";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -125,8 +126,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      {/* Nested routes share one persistent cursor instance. */}
       <Outlet />
+      <CustomCursor />
     </QueryClientProvider>
   );
 }

@@ -36,13 +36,12 @@ import {
   X,
 } from "lucide-react";
 import { SplitHero } from "@/components/SplitHero";
-import goranAsset from "@/assets/goran.png.asset.json";
-import damirAsset from "@/assets/damir.png.asset.json";
-import { CustomCursor } from "@/components/CustomCursor";
+import goranAsset from "@/assets/testimonials/goran.png";
+import damirAsset from "@/assets/testimonials/damir.png";
 import { ScrollAnimations } from "@/components/ScrollAnimations";
 
-import aliAsset from "@/assets/ali.png.asset.json";
-import kinzaAsset from "@/assets/kinza.png.asset.json";
+import aliAsset from "@/assets/testimonials/ali.png";
+import kinzaAsset from "@/assets/testimonials/kinza.png";
 import littleParadiseAsset from "@/assets/little-paradise-thumbnail.png";
 import marketeriaAsset from "@/assets/marketeria-thumbnail.png";
 import spaAsset from "@/assets/bliss-haven-thumbnail.png";
@@ -151,7 +150,7 @@ const PROJECTS: Project[] = [
     title: "Marketeria Digital — B2B Growth Website",
     category: "Web Design",
     tags: ["Landing Page", "B2B", "Fractional Partner"],
-    year: "2026",
+    year: "2025",
     image: marketeriaAsset,
     orientation: "web",
     context:
@@ -173,7 +172,7 @@ const PROJECTS: Project[] = [
     title: "Bliss Haven Spa — Wellness Website",
     category: "Web Design",
     tags: ["Landing Page", "Wellness", "Luxury Spa"],
-    year: "2026",
+    year: "2025",
     image: spaAsset,
     orientation: "web",
     context:
@@ -195,7 +194,7 @@ const PROJECTS: Project[] = [
     title: "Brida Stone Inc — Natural Stone E-commerce Website",
     category: "Web Design",
     tags: ["E-commerce", "Product Showcase", "Natural Stone"],
-    year: "2026",
+    year: "2024",
     image: bridaAsset,
     orientation: "web",
     context:
@@ -217,7 +216,7 @@ const PROJECTS: Project[] = [
     title: "Freela — Freelance Client Management App",
     category: "App Design",
     tags: ["Mobile App", "Dashboard", "Productivity"],
-    year: "2026",
+    year: "2025",
     image: freelaAsset,
     orientation: "mobile",
     context:
@@ -239,7 +238,7 @@ const PROJECTS: Project[] = [
     title: "AgriNova — Smart Agriculture Mobile App",
     category: "App Design",
     tags: ["Mobile App", "AgriTech", "E-commerce"],
-    year: "2026",
+    year: "2024",
     image: agriNovaAsset,
     orientation: "mobile",
     context:
@@ -261,7 +260,7 @@ const PROJECTS: Project[] = [
     title: "Artify — Art Discovery Mobile App",
     category: "App Design",
     tags: ["Mobile App", "Art & Culture", "Discovery"],
-    year: "2026",
+    year: "2025",
     image: artifyAsset,
     orientation: "mobile",
     context:
@@ -283,7 +282,7 @@ const PROJECTS: Project[] = [
     title: "ConsultEase — Doctor Consultation App",
     category: "App Design",
     tags: ["Healthcare", "Mobile App", "Booking UX"],
-    year: "2026",
+    year: "2024",
     image: consultEaseAsset,
     orientation: "mobile",
     context:
@@ -420,7 +419,7 @@ const TESTIMONIALS: {
 }[] = [
   {
     name: "Goran Karanovic",
-    photo: goranAsset.url,
+    photo: goranAsset,
     role: "Upwork Client • Strategy Specialist",
     accent: "color-mix(in oklab, var(--brand) 55%, var(--card))",
     quote:
@@ -428,7 +427,7 @@ const TESTIMONIALS: {
   },
   {
     name: "Damir Kovacevic",
-    photo: damirAsset.url,
+    photo: damirAsset,
     role: "Product Lead • Long-term Client",
     accent: "color-mix(in oklab, var(--brand) 75%, var(--card))",
     quote:
@@ -436,7 +435,7 @@ const TESTIMONIALS: {
   },
   {
     name: "Ali Hassan",
-    photo: aliAsset.url,
+    photo: aliAsset,
     role: "AI & Full-Stack Developer",
     accent: "color-mix(in oklab, var(--brand) 40%, var(--card))",
     quote:
@@ -444,7 +443,7 @@ const TESTIMONIALS: {
   },
   {
     name: "Kinza Shafique",
-    photo: kinzaAsset.url,
+    photo: kinzaAsset,
     role: "Design Mentor",
     accent: "color-mix(in oklab, var(--brand) 65%, var(--card))",
     quote:
@@ -822,6 +821,18 @@ function Work() {
   const openProject = (project: Project) => {
     if (project.title.startsWith("Artify")) {
       void navigate({ to: "/work/artify" });
+    } else if (project.image === freelaAsset) {
+      void navigate({ to: "/work/freela" });
+    } else if (project.image === agriNovaAsset) {
+      void navigate({ to: "/work/agrinova" });
+    } else if (project.image === spaAsset) {
+      void navigate({ to: "/work/bliss-haven" });
+    } else if (project.image === byKinzaLogo) {
+      void navigate({ to: "/work/techdose" });
+    } else if (project.image === destinifyLogo) {
+      void navigate({ to: "/work/destinify" });
+    } else if (project.image === fidatoLogo) {
+      void navigate({ to: "/work/fidato" });
     } else {
       setSelected(project);
     }
@@ -906,7 +917,7 @@ function Work() {
                       loading="lazy"
                       className="work-thumbnail"
                       style={
-                        project.image === bridaAsset ? { objectPosition: "center 60%" } : undefined
+                        project.image === bridaAsset ? { objectPosition: "center 42%" } : undefined
                       }
                     />
                     <ArrowUpRight className="project-corner-arrow" size={20} aria-hidden="true" />
@@ -1516,7 +1527,6 @@ function Contact() {
 function Index() {
   return (
     <div className="portfolio-home min-h-screen bg-background pb-24">
-      <CustomCursor />
       <ScrollAnimations />
 
       <main>

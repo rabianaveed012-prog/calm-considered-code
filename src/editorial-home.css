@@ -1515,7 +1515,8 @@
 }
 .portfolio-home #testimonials.testimonials-featured .featured-quote {
   position: relative;
-  margin: 0;
+  margin: 0 auto;
+  width: 100%;
   padding: 0 72px;
   font-size: clamp(28px, 2.6vw, 36px);
   font-weight: 400;

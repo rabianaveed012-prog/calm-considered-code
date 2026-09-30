@@ -107,3 +107,18 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Repository assets and production preview
+
+All rendered portfolio images are repository-owned. Bundled portraits, logos and project thumbnails live in `src/assets`; case-study screens, certificates and icons live in `public` and use root-relative URLs. Legacy `*.asset.json` metadata is not imported by the application. No Lovable asset service is needed to render the images.
+
+After cloning, run `npm install` and `npm run dev`.
+
+This project's production target is a Cloudflare worker. To verify the actual production output, run:
+
+```sh
+npm run build
+npx wrangler dev --config .output/server/wrangler.json --ip 127.0.0.1 --port 4175
+```
+
+Open the preview at `http://127.0.0.1:4175`, including direct `/work/agrinova`, `/work/freela`, `/work/techdose`, `/work/destinify`, `/work/artify`, `/work/bliss-haven` and `/work/fidato` routes. The template's `vite preview` command expects a different server output and should not be used to validate this Cloudflare build.

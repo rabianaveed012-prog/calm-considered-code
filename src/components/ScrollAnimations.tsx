@@ -5,12 +5,6 @@ export function ScrollAnimations() {
     if (!("IntersectionObserver" in window)) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const selector = [
-      "#top h1",
-      "#top h1 + p",
-      "#top h1 ~ div",
-      "#top .hero-portrait",
-      "#top .editorial-intro",
-      "#top [data-split-reveal]",
       "main section:not(#top) h2 + p",
       "#services > div > div > a",
       "main section:not(#top):not(.split-information) h2",
@@ -39,10 +33,7 @@ export function ScrollAnimations() {
           const order = groupOrder.get(group) ?? 0;
           groupOrder.set(group, order + 1);
           const isCard = element.matches("article, figure, .surface");
-          const isPortrait = element.classList.contains("hero-portrait");
-          const from = isPortrait
-            ? { opacity: 0, transform: "translateY(8px) scale(0.985)" }
-            : isCard
+          const from = isCard
               ? { opacity: 0, transform: "translateY(14px) scale(0.99)" }
               : { opacity: 0, transform: "translateY(10px)" };
           const animation = element.animate([from, { opacity: 1, transform: "translateY(0)" }], {
