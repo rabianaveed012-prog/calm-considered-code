@@ -13,10 +13,17 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as HeroPreviewRouteImport } from './routes/hero-preview'
 import { Route as WorkAgrinovaRouteImport } from './routes/work.agrinova'
 import { Route as WorkArtifyRouteImport } from './routes/work.artify'
+import { Route as WorkArtifyIdentityRouteImport } from './routes/work.artify-identity'
 import { Route as WorkBlissHavenRouteImport } from './routes/work.bliss-haven'
+import { Route as WorkBridaStoneRouteImport } from './routes/work.brida-stone'
+import { Route as WorkConsulteaseRouteImport } from './routes/work.consultease'
+import { Route as WorkCothmRouteImport } from './routes/work.cothm'
 import { Route as WorkDestinifyRouteImport } from './routes/work.destinify'
 import { Route as WorkFidatoRouteImport } from './routes/work.fidato'
 import { Route as WorkFreelaRouteImport } from './routes/work.freela'
+import { Route as WorkLittleParadiseRouteImport } from './routes/work.little-paradise'
+import { Route as WorkMarketeriaRouteImport } from './routes/work.marketeria'
+import { Route as WorkSunnySideRouteImport } from './routes/work.sunny-side'
 import { Route as WorkTechdoseRouteImport } from './routes/work.techdose'
 
 const IndexRoute = IndexRouteImport.update({
@@ -39,9 +46,29 @@ const WorkArtifyRoute = WorkArtifyRouteImport.update({
   path: '/work/artify',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkArtifyIdentityRoute = WorkArtifyIdentityRouteImport.update({
+  id: '/work/artify-identity',
+  path: '/work/artify-identity',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkBlissHavenRoute = WorkBlissHavenRouteImport.update({
   id: '/work/bliss-haven',
   path: '/work/bliss-haven',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkBridaStoneRoute = WorkBridaStoneRouteImport.update({
+  id: '/work/brida-stone',
+  path: '/work/brida-stone',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkConsulteaseRoute = WorkConsulteaseRouteImport.update({
+  id: '/work/consultease',
+  path: '/work/consultease',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkCothmRoute = WorkCothmRouteImport.update({
+  id: '/work/cothm',
+  path: '/work/cothm',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkDestinifyRoute = WorkDestinifyRouteImport.update({
@@ -59,6 +86,21 @@ const WorkFreelaRoute = WorkFreelaRouteImport.update({
   path: '/work/freela',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkLittleParadiseRoute = WorkLittleParadiseRouteImport.update({
+  id: '/work/little-paradise',
+  path: '/work/little-paradise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkMarketeriaRoute = WorkMarketeriaRouteImport.update({
+  id: '/work/marketeria',
+  path: '/work/marketeria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkSunnySideRoute = WorkSunnySideRouteImport.update({
+  id: '/work/sunny-side',
+  path: '/work/sunny-side',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkTechdoseRoute = WorkTechdoseRouteImport.update({
   id: '/work/techdose',
   path: '/work/techdose',
@@ -70,10 +112,17 @@ export interface FileRoutesByFullPath {
   '/hero-preview': typeof HeroPreviewRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
+  '/work/artify-identity': typeof WorkArtifyIdentityRoute
   '/work/bliss-haven': typeof WorkBlissHavenRoute
+  '/work/brida-stone': typeof WorkBridaStoneRoute
+  '/work/consultease': typeof WorkConsulteaseRoute
+  '/work/cothm': typeof WorkCothmRoute
   '/work/destinify': typeof WorkDestinifyRoute
   '/work/fidato': typeof WorkFidatoRoute
   '/work/freela': typeof WorkFreelaRoute
+  '/work/little-paradise': typeof WorkLittleParadiseRoute
+  '/work/marketeria': typeof WorkMarketeriaRoute
+  '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
 }
 export interface FileRoutesByTo {
@@ -81,10 +130,17 @@ export interface FileRoutesByTo {
   '/hero-preview': typeof HeroPreviewRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
+  '/work/artify-identity': typeof WorkArtifyIdentityRoute
   '/work/bliss-haven': typeof WorkBlissHavenRoute
+  '/work/brida-stone': typeof WorkBridaStoneRoute
+  '/work/consultease': typeof WorkConsulteaseRoute
+  '/work/cothm': typeof WorkCothmRoute
   '/work/destinify': typeof WorkDestinifyRoute
   '/work/fidato': typeof WorkFidatoRoute
   '/work/freela': typeof WorkFreelaRoute
+  '/work/little-paradise': typeof WorkLittleParadiseRoute
+  '/work/marketeria': typeof WorkMarketeriaRoute
+  '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
 }
 export interface FileRoutesById {
@@ -93,10 +149,17 @@ export interface FileRoutesById {
   '/hero-preview': typeof HeroPreviewRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
+  '/work/artify-identity': typeof WorkArtifyIdentityRoute
   '/work/bliss-haven': typeof WorkBlissHavenRoute
+  '/work/brida-stone': typeof WorkBridaStoneRoute
+  '/work/consultease': typeof WorkConsulteaseRoute
+  '/work/cothm': typeof WorkCothmRoute
   '/work/destinify': typeof WorkDestinifyRoute
   '/work/fidato': typeof WorkFidatoRoute
   '/work/freela': typeof WorkFreelaRoute
+  '/work/little-paradise': typeof WorkLittleParadiseRoute
+  '/work/marketeria': typeof WorkMarketeriaRoute
+  '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
 }
 export interface FileRouteTypes {
@@ -106,10 +169,17 @@ export interface FileRouteTypes {
     | '/hero-preview'
     | '/work/agrinova'
     | '/work/artify'
+    | '/work/artify-identity'
     | '/work/bliss-haven'
+    | '/work/brida-stone'
+    | '/work/consultease'
+    | '/work/cothm'
     | '/work/destinify'
     | '/work/fidato'
     | '/work/freela'
+    | '/work/little-paradise'
+    | '/work/marketeria'
+    | '/work/sunny-side'
     | '/work/techdose'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,10 +187,17 @@ export interface FileRouteTypes {
     | '/hero-preview'
     | '/work/agrinova'
     | '/work/artify'
+    | '/work/artify-identity'
     | '/work/bliss-haven'
+    | '/work/brida-stone'
+    | '/work/consultease'
+    | '/work/cothm'
     | '/work/destinify'
     | '/work/fidato'
     | '/work/freela'
+    | '/work/little-paradise'
+    | '/work/marketeria'
+    | '/work/sunny-side'
     | '/work/techdose'
   id:
     | '__root__'
@@ -128,10 +205,17 @@ export interface FileRouteTypes {
     | '/hero-preview'
     | '/work/agrinova'
     | '/work/artify'
+    | '/work/artify-identity'
     | '/work/bliss-haven'
+    | '/work/brida-stone'
+    | '/work/consultease'
+    | '/work/cothm'
     | '/work/destinify'
     | '/work/fidato'
     | '/work/freela'
+    | '/work/little-paradise'
+    | '/work/marketeria'
+    | '/work/sunny-side'
     | '/work/techdose'
   fileRoutesById: FileRoutesById
 }
@@ -140,10 +224,17 @@ export interface RootRouteChildren {
   HeroPreviewRoute: typeof HeroPreviewRoute
   WorkAgrinovaRoute: typeof WorkAgrinovaRoute
   WorkArtifyRoute: typeof WorkArtifyRoute
+  WorkArtifyIdentityRoute: typeof WorkArtifyIdentityRoute
   WorkBlissHavenRoute: typeof WorkBlissHavenRoute
+  WorkBridaStoneRoute: typeof WorkBridaStoneRoute
+  WorkConsulteaseRoute: typeof WorkConsulteaseRoute
+  WorkCothmRoute: typeof WorkCothmRoute
   WorkDestinifyRoute: typeof WorkDestinifyRoute
   WorkFidatoRoute: typeof WorkFidatoRoute
   WorkFreelaRoute: typeof WorkFreelaRoute
+  WorkLittleParadiseRoute: typeof WorkLittleParadiseRoute
+  WorkMarketeriaRoute: typeof WorkMarketeriaRoute
+  WorkSunnySideRoute: typeof WorkSunnySideRoute
   WorkTechdoseRoute: typeof WorkTechdoseRoute
 }
 
@@ -177,11 +268,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkArtifyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/work/artify-identity': {
+      id: '/work/artify-identity'
+      path: '/work/artify-identity'
+      fullPath: '/work/artify-identity'
+      preLoaderRoute: typeof WorkArtifyIdentityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/work/bliss-haven': {
       id: '/work/bliss-haven'
       path: '/work/bliss-haven'
       fullPath: '/work/bliss-haven'
       preLoaderRoute: typeof WorkBlissHavenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/brida-stone': {
+      id: '/work/brida-stone'
+      path: '/work/brida-stone'
+      fullPath: '/work/brida-stone'
+      preLoaderRoute: typeof WorkBridaStoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/consultease': {
+      id: '/work/consultease'
+      path: '/work/consultease'
+      fullPath: '/work/consultease'
+      preLoaderRoute: typeof WorkConsulteaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/cothm': {
+      id: '/work/cothm'
+      path: '/work/cothm'
+      fullPath: '/work/cothm'
+      preLoaderRoute: typeof WorkCothmRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/work/destinify': {
@@ -205,6 +324,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkFreelaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/work/little-paradise': {
+      id: '/work/little-paradise'
+      path: '/work/little-paradise'
+      fullPath: '/work/little-paradise'
+      preLoaderRoute: typeof WorkLittleParadiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/marketeria': {
+      id: '/work/marketeria'
+      path: '/work/marketeria'
+      fullPath: '/work/marketeria'
+      preLoaderRoute: typeof WorkMarketeriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/sunny-side': {
+      id: '/work/sunny-side'
+      path: '/work/sunny-side'
+      fullPath: '/work/sunny-side'
+      preLoaderRoute: typeof WorkSunnySideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/work/techdose': {
       id: '/work/techdose'
       path: '/work/techdose'
@@ -220,10 +360,17 @@ const rootRouteChildren: RootRouteChildren = {
   HeroPreviewRoute: HeroPreviewRoute,
   WorkAgrinovaRoute: WorkAgrinovaRoute,
   WorkArtifyRoute: WorkArtifyRoute,
+  WorkArtifyIdentityRoute: WorkArtifyIdentityRoute,
   WorkBlissHavenRoute: WorkBlissHavenRoute,
+  WorkBridaStoneRoute: WorkBridaStoneRoute,
+  WorkConsulteaseRoute: WorkConsulteaseRoute,
+  WorkCothmRoute: WorkCothmRoute,
   WorkDestinifyRoute: WorkDestinifyRoute,
   WorkFidatoRoute: WorkFidatoRoute,
   WorkFreelaRoute: WorkFreelaRoute,
+  WorkLittleParadiseRoute: WorkLittleParadiseRoute,
+  WorkMarketeriaRoute: WorkMarketeriaRoute,
+  WorkSunnySideRoute: WorkSunnySideRoute,
   WorkTechdoseRoute: WorkTechdoseRoute,
 }
 export const routeTree = rootRouteImport

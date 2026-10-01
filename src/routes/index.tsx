@@ -4,7 +4,7 @@ import destinifyLogo from "@/assets/destinify-logo.png";
 import byKinzaLogo from "@/assets/by-kinza-logo.png";
 import sunnySideLogo from "@/assets/sunnyside-logo.png";
 import fidatoLogo from "@/assets/fidato-logo.png";
-import artifyLogo from "@/assets/artify-logo.png";
+const artifyLogo = "/case-studies/artify-identity/original-logo.jpg";
 import useEmblaCarousel from "embla-carousel-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -107,6 +107,7 @@ const FILTERS = [
   "App Design",
   "Logo & Branding",
   "Social Media Posts",
+  "Event Design / Print Design",
 ] as const;
 
 type Project = {
@@ -123,7 +124,17 @@ type Project = {
   metrics: { value: string; label: string }[];
 };
 
+const cothmThumbnail = "/case-studies/cothm/culinary-standees.png";
+const COTHM_PROJECT: Project = {
+  title: "COTHM Culinary Event Standee Design",
+  category: "Event Design / Print Design",
+  tags: ["Event Standee", "Print Design", "Visual Storytelling"],
+  year: "", image: cothmThumbnail, orientation: "branding",
+  context: "Four COTHM culinary event standees featuring regional dishes, landmarks and yellow panels in a warm event setting.",
+  role: "Visual Storytelling", goals: [], tools: [], metrics: [],
+};
 const PROJECTS: Project[] = [
+  COTHM_PROJECT,
   {
     title: "Little Paradise Budva — Responsive Stay Website",
     category: "Web Design",
@@ -285,20 +296,11 @@ const PROJECTS: Project[] = [
     year: "2024",
     image: consultEaseAsset,
     orientation: "mobile",
-    context:
-      "Multi-screen mobile flow covering doctor profiles, chat, onboarding, and error states in deep teal and coral.",
-    role: "Booking flow UX, edge-case and error-state design, and handover documentation.",
-    goals: [
-      "Get a patient from search to booked in under a minute",
-      "Design honest, calm failure and retry states",
-      "Keep chat and appointment context together",
-    ],
-    tools: ["Figma", "Flow Mapping", "Component Variants"],
-    metrics: [
-      { value: "6", label: "Key flows" },
-      { value: "24", label: "Screens designed" },
-      { value: "5", label: "Error states covered" },
-    ],
+    context: "ConsultEase mobile interfaces for doctor discovery, appointment booking and consultation management in teal, mint and white.",
+    role: "UX flows, wireframes, mobile UI and a reusable design system.",
+    goals: ["Discover doctors", "Book appointments", "Manage consultations"],
+    tools: [],
+    metrics: [],
   },
 ];
 
@@ -310,10 +312,10 @@ const LOGO_PROJECTS: Project[] = [
     context: "A navy and orange Destinify symbol and wordmark presented on a rounded white tile.",
   },
   {
-    title: "Artify — Logo & Brand Identity",
+    title: "Artify — Visual Identity",
     image: artifyLogo,
-    tags: ["Logo Design", "App Branding"],
-    context: "A colorful Artify logo and wordmark, presented alongside the app welcome screen.",
+    tags: ["Logo Design", "Visual Identity"],
+    context: "The original Artify symbol, wordmark and Explore Engage Enjoy tagline.",
   },
   {
     title: "Fidato — Logo & Brand Identity",
@@ -819,14 +821,28 @@ function CaseStudyModal({ project, onClose }: { project: Project; onClose: () =>
 function Work() {
   const navigate = useNavigate();
   const openProject = (project: Project) => {
-    if (project.title.startsWith("Artify")) {
+    if (project.image === cothmThumbnail) {
+      void navigate({ to: "/work/cothm" });
+    } else if (project.image === artifyLogo) {
+      void navigate({ to: "/work/artify-identity" });
+    } else if (project.title.startsWith("Artify")) {
       void navigate({ to: "/work/artify" });
+    } else if (project.image === bridaAsset) {
+      void navigate({ to: "/work/brida-stone" });
+    } else if (project.image === littleParadiseAsset) {
+      void navigate({ to: "/work/little-paradise" });
+    } else if (project.image === marketeriaAsset) {
+      void navigate({ to: "/work/marketeria" });
+    } else if (project.image === consultEaseAsset) {
+      void navigate({ to: "/work/consultease" });
     } else if (project.image === freelaAsset) {
       void navigate({ to: "/work/freela" });
     } else if (project.image === agriNovaAsset) {
       void navigate({ to: "/work/agrinova" });
     } else if (project.image === spaAsset) {
       void navigate({ to: "/work/bliss-haven" });
+    } else if (project.image === sunnySideLogo) {
+      void navigate({ to: "/work/sunny-side" });
     } else if (project.image === byKinzaLogo) {
       void navigate({ to: "/work/techdose" });
     } else if (project.image === destinifyLogo) {
@@ -843,7 +859,7 @@ function Work() {
   const allProjects = [...PROJECTS, ...LOGO_PROJECTS].sort(
     (a, b) => Number(b.year) - Number(a.year),
   );
-  const featured = allProjects.slice(0, 6);
+  const featured = [...allProjects.filter((project) => project !== COTHM_PROJECT).slice(0, 5), COTHM_PROJECT];
   const visible =
     active === "All"
       ? showAll
@@ -893,7 +909,7 @@ function Work() {
             New {active.toLowerCase()} case studies are coming soon.
           </p>
         ) : (
-          <div id="work-projects" key={active} className="work-gallery mt-10">
+          <div id="work-projects" key={active} data-category={active} className="work-gallery mt-10">
             {visible.map((project) => {
               const [title, ...subtitle] = project.title.split(/\s+\u2014\s+/);
               return (
@@ -908,28 +924,30 @@ function Work() {
                       openProject(project);
                     }
                   }}
-                  className="work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                  className={`work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand${project === COTHM_PROJECT ? " cothm-project" : ""}`}
                 >
                   <div className="work-project-image">
                     <img
                       src={project.image}
-                      alt={`${project.title} design mockup`}
+                      alt={project === COTHM_PROJECT ? project.context : `${project.title} design mockup`}
                       loading="lazy"
                       className="work-thumbnail"
                       style={
                         project.image === bridaAsset ? { objectPosition: "center 42%" } : undefined
                       }
                     />
+                    {project !== COTHM_PROJECT && <>
                     <ArrowUpRight className="project-corner-arrow" size={20} aria-hidden="true" />
                     <span className="project-hover-overlay" aria-hidden="true">
                       <span>
                         View project <ArrowUpRight size={16} />
                       </span>
                     </span>
+                    </>}
                   </div>
                   <div className="work-project-info">
                     <p className="work-project-category">
-                      {project.category} &middot; {project.year}
+                      {project.category}{project.year && <> &middot; {project.year}</>}
                     </p>
                     <h3>{title}</h3>
                     {subtitle.length > 0 && (

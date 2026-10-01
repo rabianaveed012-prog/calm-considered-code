@@ -1804,3 +1804,17 @@
     scale: 1;
   }
 }
+
+.portfolio-home #work.portfolio-grid #work-projects[data-category="App Design"] article.work-project:first-child { grid-column: auto; }
+
+/* Keep all four COTHM standees visible, including on hover. */
+.portfolio-home #work.portfolio-grid article.cothm-project > .work-project-image {
+  background: #e8e2d8;
+}
+.portfolio-home #work.portfolio-grid article.cothm-project img.work-thumbnail,
+.portfolio-home #work.portfolio-grid article.cothm-project:hover img.work-thumbnail {
+  object-fit: contain;
+  object-position: center;
+  scale: 1;
+  transform: none;
+}
