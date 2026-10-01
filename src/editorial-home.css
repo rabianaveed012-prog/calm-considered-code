@@ -1818,3 +1818,114 @@
   scale: 1;
   transform: none;
 }
+
+/* Production phone layout: override the desktop rules above without changing tablet. */
+@media (max-width: 767px) {
+  .portfolio-home {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  .portfolio-home :is(#about, #work, #process, #services, #testimonials, #certifications) {
+    padding-block: 56px;
+    padding-inline: 20px;
+    min-height: 0;
+  }
+  .portfolio-home #work.portfolio-grid .work-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px 14px;
+    text-align: left;
+  }
+  .portfolio-home #work.portfolio-grid .work-filters button {
+    flex: 0 0 auto;
+    min-height: 44px;
+    max-width: 100%;
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: normal;
+  }
+  .portfolio-home #about .about-stat-strip {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 32px;
+  }
+  .portfolio-home #about .about-stat {
+    padding: 24px 0;
+    text-align: left;
+  }
+  .portfolio-home #about .about-stat + .about-stat {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .portfolio-home #about .about-stat-value {
+    font-size: 56px;
+    line-height: 1.1;
+  }
+  .portfolio-home #about .about-stat-label {
+    display: block;
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-wrap: normal;
+  }
+  .portfolio-home #process nav button {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 12px;
+    min-height: 44px;
+    text-align: left;
+  }
+  .portfolio-home #process nav button > span:last-child {
+    min-width: 0;
+    white-space: normal;
+    line-height: 1.5;
+  }
+  .portfolio-home #process .process-step {
+    min-height: 0;
+    padding-top: 24px;
+  }
+  .portfolio-home #services.services-accordion article.service-accordion-row h3 {
+    margin: 0;
+  }
+  .portfolio-home #services .service-accordion-trigger {
+    grid-template-columns: 24px minmax(0, 1fr) 24px;
+    gap: 12px;
+    padding: 24px 0;
+    align-items: start;
+  }
+  .portfolio-home #services .service-accordion-title {
+    min-width: 0;
+    font-size: clamp(26px, 7vw, 32px);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    overflow-wrap: break-word;
+  }
+  .portfolio-home #services .service-accordion-number {
+    line-height: 2.4;
+  }
+  .portfolio-home #services .service-accordion-details {
+    padding: 0 0 24px;
+  }
+  .portfolio-home #services .service-accordion-details > p {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .portfolio-home .featured-review {
+    min-height: 0;
+  }
+  .portfolio-home #contact h2 {
+    font-size: clamp(32px, 9vw, 40px);
+    line-height: 1.15;
+    overflow-wrap: break-word;
+  }
+  .portfolio-home #work button[aria-controls="work-projects"] {
+    background: #94553f;
+    color: #fff7ef;
+    min-height: 44px;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+  html.cursor-active, html.cursor-active * { cursor: auto !important; }
+}

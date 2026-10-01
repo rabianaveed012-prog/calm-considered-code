@@ -8,7 +8,7 @@ export function CustomCursor() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const fine = window.matchMedia("(pointer: fine)");
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setEnabled(fine.matches && !reduced.matches);
     update();
