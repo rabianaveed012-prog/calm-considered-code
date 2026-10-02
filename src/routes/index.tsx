@@ -831,7 +831,9 @@ function CaseStudyModal({ project, onClose }: { project: Project; onClose: () =>
 function Work() {
   const navigate = useNavigate();
   const openProject = (project: Project) => {
-    if (project.image === cothmThumbnail) {
+    if (project.image === "/burgundy-bakery-thumbnail.png") {
+      void navigate({ to: "/work/bakery" });
+    } else if (project.image === cothmThumbnail) {
       void navigate({ to: "/work/cothm" });
     } else if (project.image === artifyLogo) {
       void navigate({ to: "/work/artify-identity" });

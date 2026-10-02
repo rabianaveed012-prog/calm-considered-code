@@ -14,6 +14,7 @@ import { Route as HeroPreviewRouteImport } from './routes/hero-preview'
 import { Route as WorkAgrinovaRouteImport } from './routes/work.agrinova'
 import { Route as WorkArtifyRouteImport } from './routes/work.artify'
 import { Route as WorkArtifyIdentityRouteImport } from './routes/work.artify-identity'
+import { Route as WorkBakeryRouteImport } from './routes/work.bakery'
 import { Route as WorkBlissHavenRouteImport } from './routes/work.bliss-haven'
 import { Route as WorkBridaStoneRouteImport } from './routes/work.brida-stone'
 import { Route as WorkConsulteaseRouteImport } from './routes/work.consultease'
@@ -49,6 +50,11 @@ const WorkArtifyRoute = WorkArtifyRouteImport.update({
 const WorkArtifyIdentityRoute = WorkArtifyIdentityRouteImport.update({
   id: '/work/artify-identity',
   path: '/work/artify-identity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkBakeryRoute = WorkBakeryRouteImport.update({
+  id: '/work/bakery',
+  path: '/work/bakery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkBlissHavenRoute = WorkBlissHavenRouteImport.update({
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
+  '/work/bakery': typeof WorkBakeryRoute
   '/work/bliss-haven': typeof WorkBlissHavenRoute
   '/work/brida-stone': typeof WorkBridaStoneRoute
   '/work/consultease': typeof WorkConsulteaseRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
+  '/work/bakery': typeof WorkBakeryRoute
   '/work/bliss-haven': typeof WorkBlissHavenRoute
   '/work/brida-stone': typeof WorkBridaStoneRoute
   '/work/consultease': typeof WorkConsulteaseRoute
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
+  '/work/bakery': typeof WorkBakeryRoute
   '/work/bliss-haven': typeof WorkBlissHavenRoute
   '/work/brida-stone': typeof WorkBridaStoneRoute
   '/work/consultease': typeof WorkConsulteaseRoute
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
+    | '/work/bakery'
     | '/work/bliss-haven'
     | '/work/brida-stone'
     | '/work/consultease'
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
+    | '/work/bakery'
     | '/work/bliss-haven'
     | '/work/brida-stone'
     | '/work/consultease'
@@ -206,6 +217,7 @@ export interface FileRouteTypes {
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
+    | '/work/bakery'
     | '/work/bliss-haven'
     | '/work/brida-stone'
     | '/work/consultease'
@@ -225,6 +237,7 @@ export interface RootRouteChildren {
   WorkAgrinovaRoute: typeof WorkAgrinovaRoute
   WorkArtifyRoute: typeof WorkArtifyRoute
   WorkArtifyIdentityRoute: typeof WorkArtifyIdentityRoute
+  WorkBakeryRoute: typeof WorkBakeryRoute
   WorkBlissHavenRoute: typeof WorkBlissHavenRoute
   WorkBridaStoneRoute: typeof WorkBridaStoneRoute
   WorkConsulteaseRoute: typeof WorkConsulteaseRoute
@@ -273,6 +286,13 @@ declare module '@tanstack/react-router' {
       path: '/work/artify-identity'
       fullPath: '/work/artify-identity'
       preLoaderRoute: typeof WorkArtifyIdentityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/bakery': {
+      id: '/work/bakery'
+      path: '/work/bakery'
+      fullPath: '/work/bakery'
+      preLoaderRoute: typeof WorkBakeryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/work/bliss-haven': {
@@ -361,6 +381,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorkAgrinovaRoute: WorkAgrinovaRoute,
   WorkArtifyRoute: WorkArtifyRoute,
   WorkArtifyIdentityRoute: WorkArtifyIdentityRoute,
+  WorkBakeryRoute: WorkBakeryRoute,
   WorkBlissHavenRoute: WorkBlissHavenRoute,
   WorkBridaStoneRoute: WorkBridaStoneRoute,
   WorkConsulteaseRoute: WorkConsulteaseRoute,
