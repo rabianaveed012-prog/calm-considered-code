@@ -134,6 +134,16 @@ const COTHM_PROJECT: Project = {
   role: "Visual Storytelling", goals: [], tools: [], metrics: [],
 };
 const PROJECTS: Project[] = [
+  {
+    title: "Burgundy Bakery Social Media Showcase",
+    category: "Social Media Posts",
+    tags: ["Social Media", "Bakery"],
+    year: "",
+    image: "/burgundy-bakery-thumbnail.png",
+    orientation: "branding",
+    context: "Burgundy and cream bakery social media designs featuring cupcakes, tartlets, cakes, cookies and donuts.",
+    role: "", goals: [], tools: [], metrics: [],
+  },
   COTHM_PROJECT,
   {
     title: "Little Paradise Budva — Responsive Stay Website",
