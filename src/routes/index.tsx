@@ -1419,7 +1419,7 @@ function Certifications() {
                   <a
                     href={cert.verificationUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     onFocus={() => moveTo(index)}
                     aria-label={`View ${cert.title} certificate (opens in a new tab)`}
                     className="mt-auto inline-flex items-center gap-2 rounded-full border border-brand/25 px-4 py-2.5 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-brand-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
@@ -1517,7 +1517,7 @@ function Contact() {
                     key={label}
                     href={href}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className={"footer-social-link " + (label === "Upwork" ? "footer-upwork" : "")}
                   >
                     {label === "Upwork" ? (

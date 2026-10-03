@@ -1,18 +1,30 @@
 import "./lib/error-capture";
+import { setSecurityHeaders } from "./lib/security-headers";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
 type ServerEntry = {
-  fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
+  fetch: (request: Request) => Promise<Response> | Response;
 };
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
 async function getServerEntry(): Promise<ServerEntry> {
   if (!serverEntryPromise) {
-    serverEntryPromise = import("@tanstack/react-start/server-entry").then(
-      (m) => (m.default ?? m) as ServerEntry,
+    serverEntryPromise = import("@tanstack/react-start/server").then(
+      ({ createStartHandler, defaultStreamHandler }) => ({
+        fetch: createStartHandler((context) => {
+          if (import.meta.env.PROD) {
+            const nonce = crypto.randomUUID().replaceAll("-", "");
+            context.router.update({ ssr: { ...context.router.options.ssr, nonce } });
+            setSecurityHeaders(context.responseHeaders, context.request.url, nonce);
+            // Nonces must not be replayed from shared HTML caches.
+            context.responseHeaders.set("Cache-Control", "private, no-store");
+          }
+          return defaultStreamHandler(context);
+        }),
+      }),
     );
   }
   return serverEntryPromise;
@@ -45,17 +57,27 @@ function isH3SwallowedErrorBody(body: string): boolean {
 }
 
 export default {
-  async fetch(request: Request, env: unknown, ctx: unknown) {
+  async fetch(request: Request) {
     try {
       const handler = await getServerEntry();
-      const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const response = await handler.fetch(request);
+      const normalized = await normalizeCatastrophicSsrResponse(response);
+      if (!import.meta.env.PROD) return normalized;
+      const headers = new Headers(normalized.headers);
+      setSecurityHeaders(headers, request.url);
+      return new Response(normalized.body, {
+        status: normalized.status,
+        statusText: normalized.statusText,
+        headers,
+      });
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
-        status: 500,
-        headers: { "content-type": "text/html; charset=utf-8" },
+      const headers = new Headers({
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "no-store",
       });
+      if (import.meta.env.PROD) setSecurityHeaders(headers, request.url);
+      return new Response(renderErrorPage(), { status: 500, headers });
     }
   },
 };

@@ -7,7 +7,7 @@ export function FloatingBar() {
       <a
         href="https://www.upwork.com/freelancers/~012d4726a0419ab017?mp_source=share"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className="floating-hire"
         data-cursor="hover"
       >
@@ -20,7 +20,7 @@ export function FloatingBar() {
         <a
           href="https://www.linkedin.com/in/rabianaveed012/"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="floating-social"
           aria-label="LinkedIn" title="LinkedIn"
           data-cursor="hover"
@@ -30,7 +30,7 @@ export function FloatingBar() {
         <a
           href="https://www.behance.net/rabianaveed2"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="floating-social"
           aria-label="Behance" title="Behance"
           data-cursor="hover"
@@ -40,7 +40,7 @@ export function FloatingBar() {
         <a
           href="https://github.com/rabianaveed012-prog"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="floating-social"
           aria-label="GitHub" title="GitHub"
           data-cursor="hover"
