@@ -1951,3 +1951,7 @@
   text-decoration: none;
   box-shadow: none;
 }
+
+/* Preserve the complete supplied Meridian device composition. */
+.portfolio-home #work.portfolio-grid article.meridian-project img.work-thumbnail,.portfolio-home #work.portfolio-grid article.meridian-project:hover img.work-thumbnail{object-fit:contain;object-position:center;scale:1;transform:none}
+.portfolio-home #work.portfolio-grid article.meridian-project .work-project-image{background:#193c34}

@@ -24,6 +24,7 @@ import { Route as WorkFidatoRouteImport } from './routes/work.fidato'
 import { Route as WorkFreelaRouteImport } from './routes/work.freela'
 import { Route as WorkLittleParadiseRouteImport } from './routes/work.little-paradise'
 import { Route as WorkMarketeriaRouteImport } from './routes/work.marketeria'
+import { Route as WorkMeridianRealtyRouteImport } from './routes/work.meridian-realty'
 import { Route as WorkSunnySideRouteImport } from './routes/work.sunny-side'
 import { Route as WorkTechdoseRouteImport } from './routes/work.techdose'
 
@@ -102,6 +103,11 @@ const WorkMarketeriaRoute = WorkMarketeriaRouteImport.update({
   path: '/work/marketeria',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkMeridianRealtyRoute = WorkMeridianRealtyRouteImport.update({
+  id: '/work/meridian-realty',
+  path: '/work/meridian-realty',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkSunnySideRoute = WorkSunnySideRouteImport.update({
   id: '/work/sunny-side',
   path: '/work/sunny-side',
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/work/freela': typeof WorkFreelaRoute
   '/work/little-paradise': typeof WorkLittleParadiseRoute
   '/work/marketeria': typeof WorkMarketeriaRoute
+  '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
 }
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/work/freela': typeof WorkFreelaRoute
   '/work/little-paradise': typeof WorkLittleParadiseRoute
   '/work/marketeria': typeof WorkMarketeriaRoute
+  '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
 }
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/work/freela': typeof WorkFreelaRoute
   '/work/little-paradise': typeof WorkLittleParadiseRoute
   '/work/marketeria': typeof WorkMarketeriaRoute
+  '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
 }
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/work/freela'
     | '/work/little-paradise'
     | '/work/marketeria'
+    | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
   fileRoutesByTo: FileRoutesByTo
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/work/freela'
     | '/work/little-paradise'
     | '/work/marketeria'
+    | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
   id:
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/work/freela'
     | '/work/little-paradise'
     | '/work/marketeria'
+    | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
   fileRoutesById: FileRoutesById
@@ -247,6 +259,7 @@ export interface RootRouteChildren {
   WorkFreelaRoute: typeof WorkFreelaRoute
   WorkLittleParadiseRoute: typeof WorkLittleParadiseRoute
   WorkMarketeriaRoute: typeof WorkMarketeriaRoute
+  WorkMeridianRealtyRoute: typeof WorkMeridianRealtyRoute
   WorkSunnySideRoute: typeof WorkSunnySideRoute
   WorkTechdoseRoute: typeof WorkTechdoseRoute
 }
@@ -358,6 +371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkMarketeriaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/work/meridian-realty': {
+      id: '/work/meridian-realty'
+      path: '/work/meridian-realty'
+      fullPath: '/work/meridian-realty'
+      preLoaderRoute: typeof WorkMeridianRealtyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/work/sunny-side': {
       id: '/work/sunny-side'
       path: '/work/sunny-side'
@@ -391,6 +411,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorkFreelaRoute: WorkFreelaRoute,
   WorkLittleParadiseRoute: WorkLittleParadiseRoute,
   WorkMarketeriaRoute: WorkMarketeriaRoute,
+  WorkMeridianRealtyRoute: WorkMeridianRealtyRoute,
   WorkSunnySideRoute: WorkSunnySideRoute,
   WorkTechdoseRoute: WorkTechdoseRoute,
 }

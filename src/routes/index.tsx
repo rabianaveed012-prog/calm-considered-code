@@ -133,7 +133,14 @@ const COTHM_PROJECT: Project = {
   context: "Four COTHM culinary event standees featuring regional dishes, landmarks and yellow panels in a warm event setting.",
   role: "Visual Storytelling", goals: [], tools: [], metrics: [],
 };
+const MERIDIAN_PROJECT: Project = {
+ title: "Meridian Realty Group", category: "Web Design", tags: ["Real Estate", "Responsive Design"], year: "",
+ image: "/case-studies/meridian/showcase.png", orientation: "web",
+ context: "Responsive real estate website design featuring property discovery, services, agents and market insights.",
+ role: "UI/UX Designer", goals: [], tools: [], metrics: [],
+};
 const PROJECTS: Project[] = [
+ MERIDIAN_PROJECT,
   {
     title: "Burgundy Bakery Social Media Showcase",
     category: "Social Media Posts",
@@ -831,7 +838,9 @@ function CaseStudyModal({ project, onClose }: { project: Project; onClose: () =>
 function Work() {
   const navigate = useNavigate();
   const openProject = (project: Project) => {
-    if (project.image === "/burgundy-bakery-thumbnail.png") {
+    if (project === MERIDIAN_PROJECT) {
+      void navigate({ to: "/work/meridian-realty" });
+    } else if (project.image === "/burgundy-bakery-thumbnail.png") {
       void navigate({ to: "/work/bakery" });
     } else if (project.image === cothmThumbnail) {
       void navigate({ to: "/work/cothm" });
@@ -871,7 +880,7 @@ function Work() {
   const allProjects = [...PROJECTS, ...LOGO_PROJECTS].sort(
     (a, b) => Number(b.year) - Number(a.year),
   );
-  const featured = [...allProjects.filter((project) => project !== COTHM_PROJECT).slice(0, 5), COTHM_PROJECT];
+  const featured = [MERIDIAN_PROJECT, ...allProjects.filter((project) => project !== COTHM_PROJECT && project !== MERIDIAN_PROJECT).slice(0, 4), COTHM_PROJECT];
   const visible =
     active === "All"
       ? showAll
@@ -936,7 +945,7 @@ function Work() {
                       openProject(project);
                     }
                   }}
-                  className={`work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand${project === COTHM_PROJECT ? " cothm-project" : ""}`}
+                  className={`work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand${project === COTHM_PROJECT ? " cothm-project" : project === MERIDIAN_PROJECT ? " meridian-project" : ""}`}
                 >
                   <div className="work-project-image">
                     <img
@@ -959,7 +968,7 @@ function Work() {
                   </div>
                   <div className="work-project-info">
                     <p className="work-project-category">
-                      {project.category}{project.year && <> &middot; {project.year}</>}
+                      {project.category}{project === MERIDIAN_PROJECT && <> &middot; Real Estate</>}{project.year && <> &middot; {project.year}</>}
                     </p>
                     <h3>{title}</h3>
                     {subtitle.length > 0 && (

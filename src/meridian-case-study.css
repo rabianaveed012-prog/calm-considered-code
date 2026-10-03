@@ -1,0 +1,239 @@
+.meridian-case {
+  background: #f8f5ec;
+  color: #193c34;
+  color-scheme: light;
+}
+.meridian-case * {
+  box-sizing: border-box;
+}
+.mr-shell {
+  width: min(1240px, calc(100% - 80px));
+  margin-inline: auto;
+}
+.meridian-case figure {
+  margin: 0;
+}
+.meridian-case img {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: default;
+}
+.mr-hero {
+  padding: 64px 0 0;
+  background: #193c34;
+  color: #f5efdf;
+}
+.mr-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.8;
+  margin: 0 0 22px;
+}
+.meridian-case h1,
+.meridian-case h2 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1.06;
+  margin: 0;
+}
+.meridian-case h1 {
+  font-size: clamp(52px, 8vw, 108px);
+}
+.meridian-case h2 {
+  font-size: clamp(34px, 4.2vw, 56px);
+}
+.meridian-case em {
+  font-weight: 400;
+}
+.mr-hero-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 24px 0 40px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.mr-hero-caption p {
+  max-width: 360px;
+  margin: 0;
+}
+.mr-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding-block: 72px;
+  border-bottom: 1px solid #d8ded2;
+}
+.mr-copy {
+  max-width: 600px;
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 24px 0 0;
+  color: #50685b;
+}
+.mr-overview .mr-copy {
+  margin-top: 0;
+}
+.mr-overview dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 28px;
+}
+.mr-overview dt {
+  color: #687869;
+}
+.mr-overview dd {
+  margin: 6px 0 0;
+}
+.mr-feature,
+.mr-gallery {
+  padding-block: 64px;
+}
+.mr-section-head {
+  margin-bottom: 32px;
+}
+.mr-crop {
+  overflow: hidden;
+  border: 1px solid #d8ded2;
+}
+.mr-home-crop {
+  aspect-ratio: 1441/1260;
+}
+.mr-listings-crop {
+  aspect-ratio: 1441/1560;
+}
+.mr-discovery {
+  background: #e8eddf;
+  padding-block: 64px;
+}
+.mr-page-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 32px 0 24px;
+}
+.mr-page-buttons button {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid #b5c3b3;
+  background: transparent;
+  color: #193c34;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.mr-page-buttons button[aria-pressed="true"] {
+  background: #193c34;
+  color: #faf5e8;
+}
+.mr-page-buttons button:focus-visible,
+.mr-screen-scroll:focus-visible {
+  outline: 2px solid #193c34;
+  outline-offset: 4px;
+}
+.mr-screen-caption {
+  display: flex;
+  gap: 32px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.mr-screen-caption h3 {
+  font:
+    400 28px Georgia,
+    serif;
+  margin: 0;
+}
+.mr-screen-caption p {
+  max-width: 680px;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
+.mr-scroll-hint {
+  font-size: 12px;
+  color: #657465;
+  line-height: 1.6;
+  margin: 18px 0 12px;
+}
+.mr-screen-scroll {
+  max-height: 800px;
+  overflow: auto;
+  border: 1px solid #c6d0c1;
+  background: #f8f5ec;
+  overscroll-behavior: contain;
+}
+.mr-final {
+  background: #193c34;
+  color: #f5efdf;
+  padding-block: 64px 32px;
+}
+.mr-final .mr-copy {
+  color: #c9d3c4;
+}
+.mr-final figure {
+  margin-top: 32px;
+}
+.mr-closing {
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 28px 0 0;
+}
+@media (max-width: 767px) {
+  .mr-shell {
+    width: calc(100% - 40px);
+  }
+  .mr-hero {
+    padding-top: 40px;
+  }
+  .mr-hero-caption {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .mr-overview {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-block: 40px;
+  }
+  .mr-feature,
+  .mr-gallery,
+  .mr-discovery,
+  .mr-final {
+    padding-block: 40px;
+  }
+  .mr-screen-caption {
+    display: block;
+  }
+  .mr-screen-caption p {
+    margin-top: 12px;
+  }
+  .mr-screen-scroll {
+    max-height: 560px;
+  }
+  .mr-screen-scroll img {
+    min-width: 720px;
+  }
+  .mr-page-buttons {
+    gap: 8px;
+  }
+  .mr-page-buttons button {
+    padding-inline: 12px;
+  }
+  .mr-copy {
+    font-size: 15px;
+  }
+  .mr-label {
+    font-size: 10px;
+  }
+}
+
+/* Static artwork uses the native cursor; interactive portfolio controls retain theirs. */
+html.cursor-active .meridian-case img { cursor: default !important; }
+body:has(.meridian-case img:hover) :is(.cursor-dot, .cursor-ring) { visibility: hidden; }
