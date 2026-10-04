@@ -81,7 +81,7 @@ LAYOUT & SECTION-BY-SECTION STRUCTURE:
   - Active Listening & Communication — Coursera / DigiSkills
 
 10. CONTACT & FOOTER SECTION
-- Large high-contrast email CTA: "rabianaveed@email.com"
+- Large high-contrast email CTA: "rabianaveed012@gmail.com"
 - Location display: "Gujranwala, Punjab, Pakistan"
 - Social links & Copyright notice.
 

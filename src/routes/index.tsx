@@ -556,7 +556,7 @@ const CERTIFICATIONS = [
     crop: { x: 0, y: 0, width: 1920, height: 1327 },
   },
 ];
-const EMAIL = "rabianaveed@email.com";
+const EMAIL = "rabianaveed012@gmail.com";
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
