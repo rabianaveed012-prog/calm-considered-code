@@ -16,8 +16,7 @@ async function getServerEntry(): Promise<ServerEntry> {
       ({ createStartHandler, defaultStreamHandler }) => ({
         fetch: createStartHandler((context) => {
           if (import.meta.env.PROD) {
-            const nonce = crypto.randomUUID().replaceAll("-", "");
-            context.router.update({ ssr: { ...context.router.options.ssr, nonce } });
+            const nonce = context.router.options.ssr?.nonce;
             setSecurityHeaders(context.responseHeaders, context.request.url, nonce);
             // Nonces must not be replayed from shared HTML caches.
             context.responseHeaders.set("Cache-Control", "private, no-store");

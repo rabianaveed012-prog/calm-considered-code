@@ -36,3 +36,6 @@ dist-ssr
 .env.*
 !.env.example
 .dev.vars.*
+
+# Vercel local build output and project settings
+.vercel/
