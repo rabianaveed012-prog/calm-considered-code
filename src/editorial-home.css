@@ -269,12 +269,12 @@
   border-radius: 0;
   padding: 28px 0 0;
 }
-.portfolio-home #contact a[href^="mailto:"] > span:last-child {
+.portfolio-home #contact a.contact-email-link > span:last-child {
   background: transparent;
   color: var(--brand);
   border-radius: 0;
 }
-.portfolio-home #contact a[href^="mailto:"] svg {
+.portfolio-home #contact a.contact-email-link svg {
   width: 32px;
   height: 32px;
 }

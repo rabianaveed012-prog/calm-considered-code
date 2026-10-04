@@ -1501,8 +1501,10 @@ function Contact() {
           >
             <p className="text-sm font-medium text-muted-foreground">Start a conversation</p>
             <a
-              href={`mailto:${EMAIL}`}
-              className="group mt-4 flex items-center justify-between gap-4 rounded-lg text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:text-xl"
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-email-link group mt-4 flex items-center justify-between gap-4 rounded-lg text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:text-xl"
             >
               <span className="min-w-0 break-all">{EMAIL}</span>
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand text-brand-foreground transition-transform group-hover:-translate-y-0.5">
