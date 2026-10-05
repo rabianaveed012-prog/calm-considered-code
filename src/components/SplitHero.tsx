@@ -103,9 +103,11 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           height={1535}
           fetchPriority="high"
         />
+        <div className="portfolio-hero-content">
         <div className="portfolio-hero-availability">
           <p className="portfolio-hero-label">Available for</p>
           <p className="portfolio-hero-role">UI/UX Designer<br />Roles</p>
+          <span className="portfolio-hero-divider" aria-hidden="true" />
           <div className="portfolio-hero-socials" aria-label="Social profiles">
             {heroSocials.map(({ label, href, icon }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer">
@@ -122,6 +124,7 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           <Link to="/" hash="services" className="portfolio-hero-button">
             Explore My Services <ArrowRight size={20} aria-hidden="true" />
           </Link>
+        </div>
         </div>
       </div>
     </div>

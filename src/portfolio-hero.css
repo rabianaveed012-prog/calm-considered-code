@@ -26,10 +26,10 @@
 .portfolio-hero-copy h1 span { color: #cf9475; }
 .portfolio-hero-description { font-size: clamp(14px, 1.12vw, 19px); line-height: 1.65; color: #bcb9b5; margin: 0 0 24px; letter-spacing: -.025em; }
 .portfolio-hero-availability { position: absolute; z-index: 2; top: 58%; left: 76%; width: 23%; }
-.portfolio-hero-label { font-size: 10px; text-transform: uppercase; letter-spacing: .38em; margin: 0 0 10px; color: #d2cdc7; }
+.portfolio-hero-label { font-size: 10px; text-transform: uppercase; letter-spacing: .38em; margin: 0; color: #d2cdc7; }
 .portfolio-hero-role { font-size: clamp(22px, 1.95vw, 34px); font-weight: 600; letter-spacing: -.045em; line-height: 1.12; margin: 0; }
-.portfolio-hero-role::after { content: ""; display: block; width: 56px; height: 1px; background: rgb(207 148 117 / 30%); margin-top: 20px; }
-.portfolio-hero-socials { display: flex; gap: 12px; margin-top: 20px; }
+.portfolio-hero-divider { display: block; width: 56px; height: 1px; background: rgb(207 148 117 / 30%); }
+.portfolio-hero-socials { display: flex; gap: 12px; margin-top: 0; }
 .portfolio-hero-socials a { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; padding: 8px; border: 1px solid #37332f; border-radius: 9px; font-size: clamp(8px, .58vw, 11px); white-space: nowrap; background: #131211; color: #f5f2eb; transition: border-color 180ms ease, background-color 180ms ease; }
 .portfolio-hero-wrap a:focus-visible, .portfolio-hero-wrap button:focus-visible { outline: 2px solid #cf9475; outline-offset: 5px; }
 .portfolio-hero-toolbar { display: flex; justify-content: space-between; padding: 16px 5%; font-size: 13px; }
@@ -107,3 +107,27 @@
   .portfolio-hero-availability { top: 65%; }
 }
 .portfolio-hero-socials .footer-social-icon { flex: 0 0 18px; }
+
+/* One grounded desktop content row; retain the existing stacked smaller layouts. */
+.portfolio-hero-content { display: contents; }
+.portfolio-hero-availability { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+@media (min-width: 1200px) {
+  .portfolio-hero-content {
+    position: absolute;
+    z-index: 2;
+    inset: auto clamp(60px, 4.2vw, 80px) clamp(60px, 4.2vw, 80px) 5.7%;
+    display: grid;
+    grid-template-columns: minmax(0, 37%) minmax(0, 1fr) max-content;
+    align-items: end;
+    column-gap: 24px;
+  }
+  .portfolio-hero-content > .portfolio-hero-copy,
+  .portfolio-hero-content > .portfolio-hero-availability {
+    position: static;
+    width: auto;
+    margin: 0;
+    grid-row: 1;
+  }
+  .portfolio-hero-content > .portfolio-hero-copy { grid-column: 1; }
+  .portfolio-hero-content > .portfolio-hero-availability { grid-column: 3; }
+}
