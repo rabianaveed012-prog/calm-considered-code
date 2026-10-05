@@ -109,7 +109,7 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           <div className="portfolio-hero-socials" aria-label="Social profiles">
             {heroSocials.map(({ label, href, icon }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer">
-                {icon === "upwork" ? <span className="portfolio-hero-upwork" aria-hidden="true">up</span> : <span className={"portfolio-hero-icon portfolio-hero-icon--" + icon} aria-hidden="true" />}
+                {icon === "upwork" ? <span className="footer-upwork-mark" aria-hidden="true">up</span> : <span className={"footer-social-icon floating-brand-icon--" + icon} aria-hidden="true" />}
                 <span>{label}</span>
               </a>
             ))}
