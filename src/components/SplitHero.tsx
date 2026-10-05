@@ -2,7 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Menu, X } from "lucide-react";
 import portrait from "@/assets/rabia-editorial-cutout.png";
-import "@/split-hero.css";
+import "@/portfolio-hero.css";
+
+const heroSocials = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/rabianaveed012/", icon: "linkedin" },
+  { label: "Behance", href: "https://www.behance.net/rabianaveed2", icon: "behance" },
+  { label: "Upwork", href: "https://www.upwork.com/freelancers/~012d4726a0419ab017?mp_source=share", icon: "upwork" },
+  { label: "GitHub", href: "https://github.com/rabianaveed012-prog", icon: "github" },
+];
 
 const navigation = ["About", "Work", "Services", "Contact", "Certificates"];
 
@@ -31,19 +38,19 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
   return (
     <div
       id={preview ? undefined : "top"}
-      className={"split-preview " + (preview ? "" : "split-home")}
+      className={"portfolio-hero-wrap " + (preview ? "" : "portfolio-hero-home")}
     >
       {preview && (
-        <div className="split-preview-toolbar">
-          <Link to="/" className="split-compare">
+        <div className="portfolio-hero-toolbar">
+          <Link to="/" className="portfolio-hero-back">
             <ArrowLeft size={16} aria-hidden="true" /> Back to homepage
           </Link>
           <span>Split Hero preview</span>
         </div>
       )}
-      <div className="split-hero portrait-hero">
-        <div className="split-navigation" ref={menuRef}>
-          <Link to="/" className="glass-nav-brand">
+      <div className="portfolio-hero">
+        <div className="portfolio-hero-nav" ref={menuRef}>
+          <Link to="/" className="portfolio-hero-brand">
             Rabia Naveed
           </Link>
           <nav aria-label="Portfolio navigation">
@@ -57,7 +64,7 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
               </Link>
             ))}
           </nav>
-          <Link to="/" hash="contact" className="hero-nav-talk">
+          <Link to="/" hash="contact" className="portfolio-hero-talk">
             Let's talk <ArrowRight size={16} aria-hidden="true" />
           </Link>
           <button
@@ -65,12 +72,12 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            aria-controls="split-menu"
+            aria-controls="portfolio-hero-menu"
             onClick={() => setOpen(!open)}
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
-          <nav id="split-menu" aria-label="Expanded navigation" hidden={!open}>
+          <nav id="portfolio-hero-menu" aria-label="Expanded navigation" hidden={!open}>
             {navigation.map((label) => (
               <Link
                 key={label}
@@ -84,29 +91,36 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           </nav>
         </div>
 
-        <h1 className="portrait-hero-title">
+        <div className="portfolio-hero-watermark" aria-hidden="true">
           <span>RABIA</span>
-          <span className="portrait-surname">NAVEED</span>
-        </h1>
+          <span className="portfolio-hero-surname">NAVEED</span>
+        </div>
         <img
-          className="portrait-hero-photo"
+          className="portfolio-hero-photo"
           src={portrait}
           alt="Rabia Naveed"
           width={1024}
           height={1535}
           fetchPriority="high"
         />
-        <div className="portrait-hero-availability">
-          <p className="availability-intro">Available for</p>
-          <p className="availability-role">UI/UX Designer Roles</p>
+        <div className="portfolio-hero-signature" aria-hidden="true">UI/UX<br /><span>Designer</span></div>
+        <div className="portfolio-hero-availability">
+          <p className="portfolio-hero-label">Available for</p>
+          <p className="portfolio-hero-role">UI/UX Designer<br />Roles</p>
+          <div className="portfolio-hero-socials" aria-label="Social profiles">
+            {heroSocials.map(({ label, href, icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer">
+                {icon === "upwork" ? <span className="portfolio-hero-upwork" aria-hidden="true">up</span> : <span className={"portfolio-hero-icon portfolio-hero-icon--" + icon} aria-hidden="true" />}
+                <span>{label}</span>
+              </a>
+            ))}
+          </div>
         </div>
-        <div className="portrait-hero-action">
-          <p>
-            Turning ideas into
-            <br />
-            <strong>Digital Experiences that People Love</strong>
-          </p>
-          <Link to="/" hash="services" className="portrait-hero-button">
+        <div className="portfolio-hero-copy">
+          <p className="portfolio-hero-eyebrow">Turning ideas into</p>
+          <h1>Digital <span>Experiences</span><br />that People Love</h1>
+          <p className="portfolio-hero-description">I design thoughtful and engaging digital experiences<br className="portfolio-hero-desktop-break" /> that solve real problems and create meaningful impact.</p>
+          <Link to="/" hash="services" className="portfolio-hero-button">
             Explore My Services <ArrowRight size={20} aria-hidden="true" />
           </Link>
         </div>
