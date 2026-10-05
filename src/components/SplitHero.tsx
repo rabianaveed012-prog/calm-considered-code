@@ -103,7 +103,6 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           height={1535}
           fetchPriority="high"
         />
-        <div className="portfolio-hero-signature" aria-hidden="true">UI/UX<br /><span>Designer</span></div>
         <div className="portfolio-hero-availability">
           <p className="portfolio-hero-label">Available for</p>
           <p className="portfolio-hero-role">UI/UX Designer<br />Roles</p>
