@@ -15,9 +15,9 @@
 .portfolio-hero-talk { justify-self: end; min-width: 155px; }
 .portfolio-hero-nav > button { display: none; }
 #portfolio-hero-menu[hidden] { display: none; }
-.portfolio-hero-watermark { position: absolute; z-index: -1; pointer-events: none; top: 16%; left: 21%; width: 65%; font-size: clamp(160px, 19.5vw, 370px); line-height: .83; font-weight: 800; letter-spacing: -.075em; color: #cfb59b; opacity: .09; }
+.portfolio-hero-watermark { position: absolute; z-index: -1; pointer-events: none; top: 16%; left: 21%; width: max-content; font-size: clamp(160px, 19.5vw, 370px); line-height: .83; font-weight: 800; letter-spacing: -.075em; color: #cfb59b; opacity: .09; }
 .portfolio-hero-watermark > span:first-child { display: block; }
-.portfolio-hero-surname { display: block; text-align: right; font-size: .205em; letter-spacing: -.025em; line-height: 1; margin-top: 24px; color: inherit; }
+.portfolio-hero-surname { display: block; text-align: right; font-size: .245em; letter-spacing: -.025em; line-height: 1; margin-top: 16px; color: inherit; }
 .portfolio-hero-photo { position: absolute; z-index: 0; left: 26%; top: 3%; width: 64%; height: auto; max-width: none; pointer-events: none; mask-image: linear-gradient(to bottom, #000 75%, transparent 100%); }
 .portfolio-hero-copy { position: absolute; z-index: 1; left: 5.7%; top: 41%; width: 40%; }
 .portfolio-hero-eyebrow { display: flex; align-items: center; gap: 20px; font-size: clamp(14px, 1.25vw, 21px); line-height: 1.5; margin: 0 0 16px; }
@@ -83,7 +83,7 @@
   .portfolio-hero-label { font-size: 10px; }
   .portfolio-hero-role { font-size: 28px; }
   .portfolio-hero-socials { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 360px; gap: 12px; }
-  .portfolio-hero-watermark { top: 480px; left: 5%; width: 90%; font-size: 24vw; }
+  .portfolio-hero-watermark { top: 480px; left: 5%; width: max-content; font-size: 24vw; }
   .portfolio-hero-surname { margin-top: 12px; }
 }
 @media (max-width: 359px) {
@@ -144,7 +144,7 @@
   .portfolio-hero-nav { top: 5.5%; left: 14%; width: 72%; padding-left: 28px; background: #1e1e1c; }
   .portfolio-hero-brand { justify-self: start; font-size: clamp(20px, 1.45vw, 28px); border-right: 1px solid #383632; padding-right: 28px; }
   .portfolio-hero-nav > nav:not([id]) { gap: clamp(16px, 1.7vw, 32px); }
-  .portfolio-hero-watermark { top: 23%; left: 26%; width: 50%; font-size: 17vw; opacity: .16; }
+  .portfolio-hero-watermark { top: 23%; left: 26%; width: max-content; font-size: 17vw; opacity: .16; }
   .portfolio-hero-photo { left: 18.2%; top: 13%; width: 61.36%; }
   :is(#top, .portfolio-hero-wrap) .portfolio-hero-copy h1 { font-size: clamp(23px, 1.7vw, 32px); line-height: 1.25; letter-spacing: -.035em; margin-bottom: 16px; }
   .portfolio-hero-eyebrow { font-size: clamp(14px, 1.05vw, 20px); }
