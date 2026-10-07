@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Menu, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
 import portrait from "@/assets/rabia-editorial-cutout.png";
 import "@/portfolio-hero.css";
 
@@ -106,20 +106,20 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
         <div className="portfolio-hero-content">
         <div className="portfolio-hero-availability">
           <p className="portfolio-hero-label">Available for</p>
-          <p className="portfolio-hero-role">UI/UX Designer<br />Roles</p>
-          <span className="portfolio-hero-divider" aria-hidden="true" />
+          <p className="portfolio-hero-role">UI/UX Designer Roles</p>
           <div className="portfolio-hero-socials" aria-label="Social profiles">
             {heroSocials.map(({ label, href, icon }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer">
+              <a className="footer-social-link" key={label} href={href} target="_blank" rel="noopener noreferrer">
                 {icon === "upwork" ? <span className="footer-upwork-mark" aria-hidden="true">up</span> : <span className={"footer-social-icon floating-brand-icon--" + icon} aria-hidden="true" />}
                 <span>{label}</span>
+                <ArrowUpRight size={12} aria-hidden="true" />
               </a>
             ))}
           </div>
         </div>
         <div className="portfolio-hero-copy">
           <p className="portfolio-hero-eyebrow">Turning ideas into</p>
-          <h1>Digital <span>Experiences</span><br />that People Love</h1>
+          <h1>Digital Experiences that People Love</h1>
           <p className="portfolio-hero-description">I design thoughtful and engaging digital experiences<br className="portfolio-hero-desktop-break" /> that solve real problems and create meaningful impact.</p>
           <Link to="/" hash="services" className="portfolio-hero-button">
             Explore My Services <ArrowRight size={20} aria-hidden="true" />
