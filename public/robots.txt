@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://calm-considered-code-v6re.vercel.app/sitemap.xml

@@ -53,20 +53,22 @@ import consultEaseAsset from "@/assets/consultease-thumbnail.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    links: [{ rel: "canonical", href: "https://calm-considered-code-v6re.vercel.app/" }],
     meta: [
-      { title: "Rabia Naveed — UI/UX & Graphic Designer Portfolio" },
+      { title: "Rabia Naveed — UI/UX Designer Portfolio" },
       {
         name: "description",
         content:
-          "Portfolio of Rabia Naveed, a UI/UX and graphic designer in Gujranwala, Pakistan, crafting calm, research-driven digital products and design systems.",
+          "Portfolio of Rabia Naveed, a UI/UX Designer in Gujranwala, Pakistan, crafting calm, research-driven digital products and design systems.",
       },
-      { property: "og:title", content: "Rabia Naveed — UI/UX & Graphic Designer" },
+      { property: "og:title", content: "Rabia Naveed — UI/UX Designer" },
       {
         property: "og:description",
         content:
           "Research-led interface design, design systems, and brand identity work by Rabia Naveed.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://calm-considered-code-v6re.vercel.app/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),

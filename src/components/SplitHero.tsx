@@ -2,6 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
 import portrait from "@/assets/rabia-editorial-cutout.png";
+import portrait480 from "@/assets/rabia-editorial-cutout-480.webp";
+import portrait768 from "@/assets/rabia-editorial-cutout-768.webp";
+import portrait1024 from "@/assets/rabia-editorial-cutout-1024.webp";
 import "@/portfolio-hero.css";
 
 const heroSocials = [
@@ -95,6 +98,8 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           <span>RABIA</span>
           <span className="portfolio-hero-surname">NAVEED</span>
         </div>
+        <picture style={{ display: "contents" }}>
+          <source type="image/webp" srcSet={`${portrait480} 480w, ${portrait768} 768w, ${portrait1024} 1024w`} sizes="(max-width: 767px) min(120vw, 650px), (max-width: 1199px) 62vw, min(61.36vw, 1178px)" />
         <img
           className="portfolio-hero-photo"
           src={portrait}
@@ -102,7 +107,9 @@ export function SplitHero({ preview = false }: { preview?: boolean }) {
           width={1024}
           height={1535}
           fetchPriority="high"
+          loading="eager"
         />
+        </picture>
         <div className="portfolio-hero-content">
         <div className="portfolio-hero-availability">
           <p className="portfolio-hero-label">Available for</p>
