@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HeroPreviewRouteImport } from './routes/hero-preview'
+import { Route as MediaSplatRouteImport } from './routes/media.$'
 import { Route as WorkAgrinovaRouteImport } from './routes/work.agrinova'
 import { Route as WorkArtifyRouteImport } from './routes/work.artify'
 import { Route as WorkArtifyIdentityRouteImport } from './routes/work.artify-identity'
@@ -36,6 +37,11 @@ const IndexRoute = IndexRouteImport.update({
 const HeroPreviewRoute = HeroPreviewRouteImport.update({
   id: '/hero-preview',
   path: '/hero-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaSplatRoute = MediaSplatRouteImport.update({
+  id: '/media/$',
+  path: '/media/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkAgrinovaRoute = WorkAgrinovaRouteImport.update({
@@ -122,6 +128,7 @@ const WorkTechdoseRoute = WorkTechdoseRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/hero-preview'
+    | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/hero-preview'
+    | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/hero-preview'
+    | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
@@ -246,6 +258,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HeroPreviewRoute: typeof HeroPreviewRoute
+  MediaSplatRoute: typeof MediaSplatRoute
   WorkAgrinovaRoute: typeof WorkAgrinovaRoute
   WorkArtifyRoute: typeof WorkArtifyRoute
   WorkArtifyIdentityRoute: typeof WorkArtifyIdentityRoute
@@ -278,6 +291,13 @@ declare module '@tanstack/react-router' {
       path: '/hero-preview'
       fullPath: '/hero-preview'
       preLoaderRoute: typeof HeroPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/$': {
+      id: '/media/$'
+      path: '/media/$'
+      fullPath: '/media/$'
+      preLoaderRoute: typeof MediaSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/work/agrinova': {
@@ -398,6 +418,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HeroPreviewRoute: HeroPreviewRoute,
+  MediaSplatRoute: MediaSplatRoute,
   WorkAgrinovaRoute: WorkAgrinovaRoute,
   WorkArtifyRoute: WorkArtifyRoute,
   WorkArtifyIdentityRoute: WorkArtifyIdentityRoute,
