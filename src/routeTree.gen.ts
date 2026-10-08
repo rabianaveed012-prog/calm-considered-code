@@ -31,6 +31,9 @@ import { Route as WorkMarketeriaRouteImport } from './routes/work.marketeria'
 import { Route as WorkMeridianRealtyRouteImport } from './routes/work.meridian-realty'
 import { Route as WorkSunnySideRouteImport } from './routes/work.sunny-side'
 import { Route as WorkTechdoseRouteImport } from './routes/work.techdose'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminProjectsIndexRouteImport } from './routes/_authenticated/admin/projects.index'
+import { Route as AuthenticatedAdminProjectsIdRouteImport } from './routes/_authenticated/admin/projects.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -141,12 +144,29 @@ const WorkTechdoseRoute = WorkTechdoseRouteImport.update({
   path: '/work/techdose',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminProjectsIndexRoute =
+  AuthenticatedAdminProjectsIndexRouteImport.update({
+    id: '/projects/',
+    path: '/projects/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminProjectsIdRoute =
+  AuthenticatedAdminProjectsIdRouteImport.update({
+    id: '/projects/$id',
+    path: '/projects/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
@@ -164,12 +184,14 @@ export interface FileRoutesByFullPath {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
+  '/admin/projects/': typeof AuthenticatedAdminProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
-  '/admin': typeof AuthenticatedAdminRoute
   '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
@@ -187,6 +209,9 @@ export interface FileRoutesByTo {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
+  '/admin/projects': typeof AuthenticatedAdminProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -194,7 +219,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
@@ -212,6 +237,9 @@ export interface FileRoutesById {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
+  '/_authenticated/admin/projects/': typeof AuthenticatedAdminProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -237,12 +265,14 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/admin/'
+    | '/admin/projects/$id'
+    | '/admin/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/hero-preview'
-    | '/admin'
     | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
@@ -260,6 +290,9 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/admin'
+    | '/admin/projects/$id'
+    | '/admin/projects'
   id:
     | '__root__'
     | '/'
@@ -284,6 +317,9 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/_authenticated/admin/'
+    | '/_authenticated/admin/projects/$id'
+    | '/_authenticated/admin/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -466,15 +502,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkTechdoseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/projects/': {
+      id: '/_authenticated/admin/projects/'
+      path: '/projects'
+      fullPath: '/admin/projects/'
+      preLoaderRoute: typeof AuthenticatedAdminProjectsIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/projects/$id': {
+      id: '/_authenticated/admin/projects/$id'
+      path: '/projects/$id'
+      fullPath: '/admin/projects/$id'
+      preLoaderRoute: typeof AuthenticatedAdminProjectsIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminProjectsIdRoute: typeof AuthenticatedAdminProjectsIdRoute
+  AuthenticatedAdminProjectsIndexRoute: typeof AuthenticatedAdminProjectsIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminProjectsIdRoute: AuthenticatedAdminProjectsIdRoute,
+  AuthenticatedAdminProjectsIndexRoute: AuthenticatedAdminProjectsIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
