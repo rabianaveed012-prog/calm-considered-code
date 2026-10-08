@@ -14,16 +14,210 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      projects: {
+        Row: {
+          behance_url: string
+          card_variant: string
+          case_study_path: string
+          category: string
+          cover_image: string
+          created_at: string
+          design_details: string
+          featured: boolean
+          featured_order: number
+          figma_url: string
+          gallery: string[]
+          github_url: string
+          goals: string[]
+          id: string
+          image_position: string
+          live_url: string
+          metrics: Json
+          orientation: string
+          overview: string
+          problem: string
+          research: string
+          results: string
+          role: string
+          short_description: string
+          solution: string
+          sort_order: number
+          status: string
+          tags: string[]
+          title: string
+          tools: string[]
+          updated_at: string
+          ux_process: string
+          visible: boolean
+          year: string
+        }
+        Insert: {
+          behance_url?: string
+          card_variant?: string
+          case_study_path?: string
+          category?: string
+          cover_image?: string
+          created_at?: string
+          design_details?: string
+          featured?: boolean
+          featured_order?: number
+          figma_url?: string
+          gallery?: string[]
+          github_url?: string
+          goals?: string[]
+          id?: string
+          image_position?: string
+          live_url?: string
+          metrics?: Json
+          orientation?: string
+          overview?: string
+          problem?: string
+          research?: string
+          results?: string
+          role?: string
+          short_description?: string
+          solution?: string
+          sort_order?: number
+          status?: string
+          tags?: string[]
+          title: string
+          tools?: string[]
+          updated_at?: string
+          ux_process?: string
+          visible?: boolean
+          year?: string
+        }
+        Update: {
+          behance_url?: string
+          card_variant?: string
+          case_study_path?: string
+          category?: string
+          cover_image?: string
+          created_at?: string
+          design_details?: string
+          featured?: boolean
+          featured_order?: number
+          figma_url?: string
+          gallery?: string[]
+          github_url?: string
+          goals?: string[]
+          id?: string
+          image_position?: string
+          live_url?: string
+          metrics?: Json
+          orientation?: string
+          overview?: string
+          problem?: string
+          research?: string
+          results?: string
+          role?: string
+          short_description?: string
+          solution?: string
+          sort_order?: number
+          status?: string
+          tags?: string[]
+          title?: string
+          tools?: string[]
+          updated_at?: string
+          ux_process?: string
+          visible?: boolean
+          year?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          company: string
+          created_at: string
+          enabled: boolean
+          id: string
+          logo_url: string
+          name: string
+          photo_url: string
+          quote: string
+          role: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          company?: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          logo_url?: string
+          name: string
+          photo_url?: string
+          quote: string
+          role?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          logo_url?: string
+          name?: string
+          photo_url?: string
+          quote?: string
+          role?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +344,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
