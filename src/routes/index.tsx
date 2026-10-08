@@ -101,16 +101,6 @@ function useContact() {
   return { ...DEFAULT_CONTACT, ...(data?.settings.contact ?? {}) };
 }
 
-const SOCIALS_STATIC = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/rabianaveed012/", icon: Linkedin },
-  {
-    label: "Upwork",
-    href: "https://www.upwork.com/freelancers/~012d4726a0419ab017?mp_source=share",
-    icon: Briefcase,
-  },
-  { label: "Behance", href: "https://www.behance.net/rabianaveed2", icon: Palette },
-  { label: "GitHub", href: "https://github.com/rabianaveed012-prog", icon: Github },
-];
 
 const MARQUEE = [
   "UI/UX Design",

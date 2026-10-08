@@ -6,18 +6,25 @@ import portrait480 from "@/assets/rabia-editorial-cutout-480.webp";
 import portrait768 from "@/assets/rabia-editorial-cutout-768.webp";
 import portrait1024 from "@/assets/rabia-editorial-cutout-1024.webp";
 import "@/portfolio-hero.css";
+import { useQuery } from "@tanstack/react-query";
+import { publicContentQuery, DEFAULT_SOCIALS } from "@/lib/public-content";
 
-const heroSocials = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/rabianaveed012/", icon: "linkedin" },
-  { label: "Behance", href: "https://www.behance.net/rabianaveed2", icon: "behance" },
-  { label: "Upwork", href: "https://www.upwork.com/freelancers/~012d4726a0419ab017?mp_source=share", icon: "upwork" },
-  { label: "GitHub", href: "https://github.com/rabianaveed012-prog", icon: "github" },
-];
+function useHeroSocials() {
+  const { data } = useQuery(publicContentQuery);
+  const s = { ...DEFAULT_SOCIALS, ...(data?.settings.socials ?? {}) };
+  return [
+    { label: "LinkedIn", href: s.linkedin, icon: "linkedin" },
+    { label: "Behance", href: s.behance, icon: "behance" },
+    { label: "Upwork", href: s.upwork, icon: "upwork" },
+    { label: "GitHub", href: s.github, icon: "github" },
+  ].filter((item) => item.href);
+}
 
 const navigation = ["About", "Work", "Services", "Contact", "Certificates"];
 
 export function SplitHero({ preview = false }: { preview?: boolean }) {
   const [open, setOpen] = useState(false);
+  const heroSocials = useHeroSocials();
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
