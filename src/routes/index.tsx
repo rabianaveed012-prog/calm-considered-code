@@ -7,6 +7,8 @@ import fidatoLogo from "@/assets/fidato-logo.png";
 const artifyLogo = "/case-studies/artify-identity/original-logo.jpg";
 import useEmblaCarousel from "embla-carousel-react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { publicContentQuery, resolveImage, DEFAULT_CONTACT, DEFAULT_SOCIALS } from "@/lib/public-content";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -72,6 +74,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(publicContentQuery),
   component: Index,
 });
 
@@ -83,16 +86,21 @@ const NAV = [
   { label: "Contact", href: "#contact" },
 ];
 
-const SOCIALS = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/rabianaveed012/", icon: Linkedin },
-  {
-    label: "Upwork",
-    href: "https://www.upwork.com/freelancers/~012d4726a0419ab017?mp_source=share",
-    icon: Briefcase,
-  },
-  { label: "Behance", href: "https://www.behance.net/rabianaveed2", icon: Palette },
-  { label: "GitHub", href: "https://github.com/rabianaveed012-prog", icon: Github },
-];
+function useSocials() {
+  const { data } = useQuery(publicContentQuery);
+  const s = { ...DEFAULT_SOCIALS, ...(data?.settings.socials ?? {}) };
+  return [
+    { label: "LinkedIn", href: s.linkedin, icon: Linkedin },
+    { label: "Upwork", href: s.upwork, icon: Briefcase },
+    { label: "Behance", href: s.behance, icon: Palette },
+    { label: "GitHub", href: s.github, icon: Github },
+  ].filter((item) => item.href);
+}
+function useContact() {
+  const { data } = useQuery(publicContentQuery);
+  return { ...DEFAULT_CONTACT, ...(data?.settings.contact ?? {}) };
+}
+
 
 const MARQUEE = [
   "UI/UX Design",
@@ -114,7 +122,7 @@ const FILTERS = [
 
 type Project = {
   title: string;
-  category: (typeof FILTERS)[number];
+  category: string;
   tags: string[];
   year: string;
   image: string;
@@ -431,7 +439,7 @@ const SERVICES = [
   },
 ];
 
-const TESTIMONIALS: {
+const TESTIMONIALS_STATIC: {
   name: string;
   role: string;
   quote: string;
@@ -558,7 +566,7 @@ const CERTIFICATIONS = [
     crop: { x: 0, y: 0, width: 1920, height: 1327 },
   },
 ];
-const EMAIL = "rabianaveed012@gmail.com";
+
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
@@ -837,52 +845,69 @@ function CaseStudyModal({ project, onClose }: { project: Project; onClose: () =>
   );
 }
 
+type WorkItem = Project & { key: string; href: string; variant: string; imagePosition: string };
+
+function staticHref(project: Project): string {
+  if (project === MERIDIAN_PROJECT) return "/work/meridian-realty";
+  if (project.image === "/burgundy-bakery-thumbnail.png") return "/work/bakery";
+  if (project.image === cothmThumbnail) return "/work/cothm";
+  if (project.image === artifyLogo) return "/work/artify-identity";
+  if (project.title.startsWith("Artify")) return "/work/artify";
+  const map: [string, string][] = [
+    [bridaAsset, "/work/brida-stone"], [littleParadiseAsset, "/work/little-paradise"],
+    [marketeriaAsset, "/work/marketeria"], [consultEaseAsset, "/work/consultease"],
+    [freelaAsset, "/work/freela"], [agriNovaAsset, "/work/agrinova"], [spaAsset, "/work/bliss-haven"],
+    [sunnySideLogo, "/work/sunny-side"], [byKinzaLogo, "/work/techdose"],
+    [destinifyLogo, "/work/destinify"], [fidatoLogo, "/work/fidato"],
+  ];
+  return map.find(([img]) => img === project.image)?.[1] ?? "";
+}
+function staticItem(project: Project): WorkItem {
+  return {
+    ...project,
+    key: project.title,
+    href: staticHref(project),
+    variant: project === COTHM_PROJECT ? "cothm" : project === MERIDIAN_PROJECT ? "meridian" : "",
+    imagePosition: project.image === bridaAsset ? "center 42%" : "",
+  };
+}
+
 function Work() {
   const navigate = useNavigate();
-  const openProject = (project: Project) => {
-    if (project === MERIDIAN_PROJECT) {
-      void navigate({ to: "/work/meridian-realty" });
-    } else if (project.image === "/burgundy-bakery-thumbnail.png") {
-      void navigate({ to: "/work/bakery" });
-    } else if (project.image === cothmThumbnail) {
-      void navigate({ to: "/work/cothm" });
-    } else if (project.image === artifyLogo) {
-      void navigate({ to: "/work/artify-identity" });
-    } else if (project.title.startsWith("Artify")) {
-      void navigate({ to: "/work/artify" });
-    } else if (project.image === bridaAsset) {
-      void navigate({ to: "/work/brida-stone" });
-    } else if (project.image === littleParadiseAsset) {
-      void navigate({ to: "/work/little-paradise" });
-    } else if (project.image === marketeriaAsset) {
-      void navigate({ to: "/work/marketeria" });
-    } else if (project.image === consultEaseAsset) {
-      void navigate({ to: "/work/consultease" });
-    } else if (project.image === freelaAsset) {
-      void navigate({ to: "/work/freela" });
-    } else if (project.image === agriNovaAsset) {
-      void navigate({ to: "/work/agrinova" });
-    } else if (project.image === spaAsset) {
-      void navigate({ to: "/work/bliss-haven" });
-    } else if (project.image === sunnySideLogo) {
-      void navigate({ to: "/work/sunny-side" });
-    } else if (project.image === byKinzaLogo) {
-      void navigate({ to: "/work/techdose" });
-    } else if (project.image === destinifyLogo) {
-      void navigate({ to: "/work/destinify" });
-    } else if (project.image === fidatoLogo) {
-      void navigate({ to: "/work/fidato" });
-    } else {
-      setSelected(project);
-    }
+  const { data: content } = useQuery(publicContentQuery);
+  const openProject = (project: WorkItem) => {
+    if (project.href) void navigate({ href: project.href });
+    else setSelected(project);
   };
   const [active, setActive] = useState<(typeof FILTERS)[number]>("All");
-  const [selected, setSelected] = useState<Project | null>(null);
+  const [selected, setSelected] = useState<WorkItem | null>(null);
   const [showAll, setShowAll] = useState(false);
-  const allProjects = [...PROJECTS, ...LOGO_PROJECTS].sort(
-    (a, b) => Number(b.year) - Number(a.year),
-  );
-  const featured = [MERIDIAN_PROJECT, ...allProjects.filter((project) => project !== COTHM_PROJECT && project !== MERIDIAN_PROJECT).slice(0, 4), COTHM_PROJECT];
+  const staticAll = [...PROJECTS, ...LOGO_PROJECTS].sort((a, b) => Number(b.year) - Number(a.year));
+  const allProjects: WorkItem[] = content
+    ? content.projects.map((row) => ({
+        key: row.id,
+        title: row.title,
+        category: row.category,
+        tags: row.tags,
+        year: row.year,
+        image: resolveImage(row.cover_image),
+        orientation: row.orientation,
+        context: row.short_description,
+        role: row.role,
+        goals: row.goals,
+        tools: row.tools,
+        metrics: row.metrics ?? [],
+        href: row.case_study_path,
+        variant: row.card_variant,
+        imagePosition: row.image_position,
+      }))
+    : staticAll.map(staticItem);
+  const featured: WorkItem[] = content
+    ? content.projects
+        .filter((row) => row.featured)
+        .sort((a, b) => a.featured_order - b.featured_order)
+        .map((row) => allProjects.find((item) => item.key === row.id)!)
+    : [MERIDIAN_PROJECT, ...staticAll.filter((p) => p !== COTHM_PROJECT && p !== MERIDIAN_PROJECT).slice(0, 4), COTHM_PROJECT].map(staticItem);
   const visible =
     active === "All"
       ? showAll
@@ -937,7 +962,7 @@ function Work() {
               const [title, ...subtitle] = project.title.split(/\s+\u2014\s+/);
               return (
                 <article
-                  key={project.title}
+                  key={project.key}
                   role="button"
                   tabIndex={0}
                   onClick={() => openProject(project)}
@@ -947,19 +972,19 @@ function Work() {
                       openProject(project);
                     }
                   }}
-                  className={`work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand${project === COTHM_PROJECT ? " cothm-project" : project === MERIDIAN_PROJECT ? " meridian-project" : ""}`}
+                  className={`work-project group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand${project.variant === "cothm" ? " cothm-project" : project.variant === "meridian" ? " meridian-project" : ""}`}
                 >
                   <div className="work-project-image">
                     <img
                       src={project.image}
-                      alt={project === COTHM_PROJECT ? project.context : `${project.title} design mockup`}
+                      alt={project.variant === "cothm" ? project.context : `${project.title} design mockup`}
                       loading="lazy"
                       className="work-thumbnail"
                       style={
-                        project.image === bridaAsset ? { objectPosition: "center 42%" } : undefined
+                        project.imagePosition ? { objectPosition: project.imagePosition } : undefined
                       }
                     />
-                    {project !== COTHM_PROJECT && <>
+                    {project.variant !== "cothm" && <>
                     <ArrowUpRight className="project-corner-arrow" size={20} aria-hidden="true" />
                     <span className="project-hover-overlay" aria-hidden="true">
                       <span>
@@ -970,7 +995,7 @@ function Work() {
                   </div>
                   <div className="work-project-info">
                     <p className="work-project-category">
-                      {project.category}{project === MERIDIAN_PROJECT && <> &middot; Real Estate</>}{project.year && <> &middot; {project.year}</>}
+                      {project.category}{project.variant === "meridian" && <> &middot; Real Estate</>}{project.year && <> &middot; {project.year}</>}
                     </p>
                     <h3>{title}</h3>
                     {subtitle.length > 0 && (
@@ -1215,6 +1240,10 @@ function Services() {
   );
 }
 function Testimonials() {
+  const { data: content } = useQuery(publicContentQuery);
+  const TESTIMONIALS = content
+    ? content.testimonials.map((t) => ({ name: t.name, role: t.company ? `${t.role} • ${t.company}` : t.role, quote: t.quote, photo: resolveImage(t.photo_url) }))
+    : TESTIMONIALS_STATIC;
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -1230,7 +1259,7 @@ function Testimonials() {
   useEffect(() => {
     if (paused || focused || reduced) return;
     const timer = window.setInterval(
-      () => setActive((value) => (value + 1) % TESTIMONIALS.length),
+      () => setActive((value) => (value + 1) % Math.max(TESTIMONIALS.length, 1)),
       6000,
     );
     return () => window.clearInterval(timer);
@@ -1243,7 +1272,7 @@ function Testimonials() {
     });
     return () => animation.cancel();
   }, [active, reduced]);
-  const item = TESTIMONIALS[active];
+  const item = TESTIMONIALS[active] ?? TESTIMONIALS[0];
   if (!item) return null;
   const initials = (name: string) =>
     name
@@ -1475,6 +1504,9 @@ function Certifications() {
   );
 }
 function Contact() {
+  const contact = useContact();
+  const SOCIALS = useSocials();
+  const EMAIL = contact.email;
   return (
     <footer
       id="contact"
@@ -1485,16 +1517,15 @@ function Contact() {
           <div>
             <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand">
               <span aria-hidden="true" className="h-px w-8 bg-brand/50" />
-              Have something in mind?
+              {contact.cta_eyebrow}
             </p>
             <h2 className="mt-6 max-w-xl text-4xl font-bold leading-[1.12] tracking-tight text-foreground sm:text-5xl">
-              Your next idea,
+              {contact.cta_title}
               <br />
-              <span className="text-brand">thoughtfully designed.</span>
+              <span className="text-brand">{contact.cta_highlight}</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground">
-              A new product, a fresh look, or a better experience. Let&apos;s talk about what you
-              want to create.
+              {contact.cta_text}
             </p>
           </div>
           <div
@@ -1503,7 +1534,7 @@ function Contact() {
           >
             <p className="text-sm font-medium text-muted-foreground">Start a conversation</p>
             <a
-              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="contact-email-link group mt-4 flex items-center justify-between gap-4 rounded-lg text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:text-xl"
@@ -1551,7 +1582,7 @@ function Contact() {
           </a>
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
             <MapPin aria-hidden="true" className="h-4 w-4 text-brand" />
-            Gujranwala, Pakistan
+            {contact.location}
           </p>
           <a
             href="#top"

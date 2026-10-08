@@ -10,7 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as HeroPreviewRouteImport } from './routes/hero-preview'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as MediaSplatRouteImport } from './routes/media.$'
 import { Route as WorkAgrinovaRouteImport } from './routes/work.agrinova'
 import { Route as WorkArtifyRouteImport } from './routes/work.artify'
 import { Route as WorkArtifyIdentityRouteImport } from './routes/work.artify-identity'
@@ -27,15 +31,42 @@ import { Route as WorkMarketeriaRouteImport } from './routes/work.marketeria'
 import { Route as WorkMeridianRealtyRouteImport } from './routes/work.meridian-realty'
 import { Route as WorkSunnySideRouteImport } from './routes/work.sunny-side'
 import { Route as WorkTechdoseRouteImport } from './routes/work.techdose'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminContactRouteImport } from './routes/_authenticated/admin/contact'
+import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin/media'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminSocialRouteImport } from './routes/_authenticated/admin/social'
+import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
+import { Route as AuthenticatedAdminProjectsIndexRouteImport } from './routes/_authenticated/admin/projects.index'
+import { Route as AuthenticatedAdminProjectsIdRouteImport } from './routes/_authenticated/admin/projects.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HeroPreviewRoute = HeroPreviewRouteImport.update({
   id: '/hero-preview',
   path: '/hero-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const MediaSplatRoute = MediaSplatRouteImport.update({
+  id: '/media/$',
+  path: '/media/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkAgrinovaRoute = WorkAgrinovaRouteImport.update({
@@ -118,10 +149,59 @@ const WorkTechdoseRoute = WorkTechdoseRouteImport.update({
   path: '/work/techdose',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminContactRoute =
+  AuthenticatedAdminContactRouteImport.update({
+    id: '/contact',
+    path: '/contact',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminMediaRoute = AuthenticatedAdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSocialRoute =
+  AuthenticatedAdminSocialRouteImport.update({
+    id: '/social',
+    path: '/social',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTestimonialsRoute =
+  AuthenticatedAdminTestimonialsRouteImport.update({
+    id: '/testimonials',
+    path: '/testimonials',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminProjectsIndexRoute =
+  AuthenticatedAdminProjectsIndexRouteImport.update({
+    id: '/projects/',
+    path: '/projects/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminProjectsIdRoute =
+  AuthenticatedAdminProjectsIdRouteImport.update({
+    id: '/projects/$id',
+    path: '/projects/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
@@ -138,10 +218,20 @@ export interface FileRoutesByFullPath {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/social': typeof AuthenticatedAdminSocialRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
+  '/admin/projects/': typeof AuthenticatedAdminProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
@@ -158,11 +248,23 @@ export interface FileRoutesByTo {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/social': typeof AuthenticatedAdminSocialRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
+  '/admin/projects': typeof AuthenticatedAdminProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
   '/work/artify-identity': typeof WorkArtifyIdentityRoute
@@ -179,12 +281,23 @@ export interface FileRoutesById {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/social': typeof AuthenticatedAdminSocialRoute
+  '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
+  '/_authenticated/admin/projects/': typeof AuthenticatedAdminProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/hero-preview'
+    | '/admin'
+    | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
@@ -201,10 +314,20 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/admin/contact'
+    | '/admin/media'
+    | '/admin/settings'
+    | '/admin/social'
+    | '/admin/testimonials'
+    | '/admin/'
+    | '/admin/projects/$id'
+    | '/admin/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/hero-preview'
+    | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
@@ -221,10 +344,22 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/admin/contact'
+    | '/admin/media'
+    | '/admin/settings'
+    | '/admin/social'
+    | '/admin/testimonials'
+    | '/admin'
+    | '/admin/projects/$id'
+    | '/admin/projects'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/hero-preview'
+    | '/_authenticated/admin'
+    | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
     | '/work/artify-identity'
@@ -241,11 +376,22 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/_authenticated/admin/contact'
+    | '/_authenticated/admin/media'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/social'
+    | '/_authenticated/admin/testimonials'
+    | '/_authenticated/admin/'
+    | '/_authenticated/admin/projects/$id'
+    | '/_authenticated/admin/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   HeroPreviewRoute: typeof HeroPreviewRoute
+  MediaSplatRoute: typeof MediaSplatRoute
   WorkAgrinovaRoute: typeof WorkAgrinovaRoute
   WorkArtifyRoute: typeof WorkArtifyRoute
   WorkArtifyIdentityRoute: typeof WorkArtifyIdentityRoute
@@ -273,11 +419,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hero-preview': {
       id: '/hero-preview'
       path: '/hero-preview'
       fullPath: '/hero-preview'
       preLoaderRoute: typeof HeroPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/media/$': {
+      id: '/media/$'
+      path: '/media/$'
+      fullPath: '/media/$'
+      preLoaderRoute: typeof MediaSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/work/agrinova': {
@@ -392,12 +566,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkTechdoseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/contact': {
+      id: '/_authenticated/admin/contact'
+      path: '/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AuthenticatedAdminContactRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/media': {
+      id: '/_authenticated/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AuthenticatedAdminMediaRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/social': {
+      id: '/_authenticated/admin/social'
+      path: '/social'
+      fullPath: '/admin/social'
+      preLoaderRoute: typeof AuthenticatedAdminSocialRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/testimonials': {
+      id: '/_authenticated/admin/testimonials'
+      path: '/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AuthenticatedAdminTestimonialsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/projects/': {
+      id: '/_authenticated/admin/projects/'
+      path: '/projects'
+      fullPath: '/admin/projects/'
+      preLoaderRoute: typeof AuthenticatedAdminProjectsIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/projects/$id': {
+      id: '/_authenticated/admin/projects/$id'
+      path: '/projects/$id'
+      fullPath: '/admin/projects/$id'
+      preLoaderRoute: typeof AuthenticatedAdminProjectsIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminContactRoute: typeof AuthenticatedAdminContactRoute
+  AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminSocialRoute: typeof AuthenticatedAdminSocialRoute
+  AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminProjectsIdRoute: typeof AuthenticatedAdminProjectsIdRoute
+  AuthenticatedAdminProjectsIndexRoute: typeof AuthenticatedAdminProjectsIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminContactRoute: AuthenticatedAdminContactRoute,
+  AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminSocialRoute: AuthenticatedAdminSocialRoute,
+  AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminProjectsIdRoute: AuthenticatedAdminProjectsIdRoute,
+  AuthenticatedAdminProjectsIndexRoute: AuthenticatedAdminProjectsIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   HeroPreviewRoute: HeroPreviewRoute,
+  MediaSplatRoute: MediaSplatRoute,
   WorkAgrinovaRoute: WorkAgrinovaRoute,
   WorkArtifyRoute: WorkArtifyRoute,
   WorkArtifyIdentityRoute: WorkArtifyIdentityRoute,
