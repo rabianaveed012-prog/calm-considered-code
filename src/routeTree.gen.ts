@@ -32,6 +32,11 @@ import { Route as WorkMeridianRealtyRouteImport } from './routes/work.meridian-r
 import { Route as WorkSunnySideRouteImport } from './routes/work.sunny-side'
 import { Route as WorkTechdoseRouteImport } from './routes/work.techdose'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminContactRouteImport } from './routes/_authenticated/admin/contact'
+import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin/media'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminSocialRouteImport } from './routes/_authenticated/admin/social'
+import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
 import { Route as AuthenticatedAdminProjectsIndexRouteImport } from './routes/_authenticated/admin/projects.index'
 import { Route as AuthenticatedAdminProjectsIdRouteImport } from './routes/_authenticated/admin/projects.$id'
 
@@ -149,6 +154,35 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminContactRoute =
+  AuthenticatedAdminContactRouteImport.update({
+    id: '/contact',
+    path: '/contact',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminMediaRoute = AuthenticatedAdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSocialRoute =
+  AuthenticatedAdminSocialRouteImport.update({
+    id: '/social',
+    path: '/social',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTestimonialsRoute =
+  AuthenticatedAdminTestimonialsRouteImport.update({
+    id: '/testimonials',
+    path: '/testimonials',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminProjectsIndexRoute =
   AuthenticatedAdminProjectsIndexRouteImport.update({
     id: '/projects/',
@@ -184,6 +218,11 @@ export interface FileRoutesByFullPath {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/social': typeof AuthenticatedAdminSocialRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
   '/admin/projects/': typeof AuthenticatedAdminProjectsIndexRoute
@@ -209,6 +248,11 @@ export interface FileRoutesByTo {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/social': typeof AuthenticatedAdminSocialRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsIndexRoute
@@ -237,6 +281,11 @@ export interface FileRoutesById {
   '/work/meridian-realty': typeof WorkMeridianRealtyRoute
   '/work/sunny-side': typeof WorkSunnySideRoute
   '/work/techdose': typeof WorkTechdoseRoute
+  '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/social': typeof AuthenticatedAdminSocialRoute
+  '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/projects/$id': typeof AuthenticatedAdminProjectsIdRoute
   '/_authenticated/admin/projects/': typeof AuthenticatedAdminProjectsIndexRoute
@@ -265,6 +314,11 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/admin/contact'
+    | '/admin/media'
+    | '/admin/settings'
+    | '/admin/social'
+    | '/admin/testimonials'
     | '/admin/'
     | '/admin/projects/$id'
     | '/admin/projects/'
@@ -290,6 +344,11 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/admin/contact'
+    | '/admin/media'
+    | '/admin/settings'
+    | '/admin/social'
+    | '/admin/testimonials'
     | '/admin'
     | '/admin/projects/$id'
     | '/admin/projects'
@@ -317,6 +376,11 @@ export interface FileRouteTypes {
     | '/work/meridian-realty'
     | '/work/sunny-side'
     | '/work/techdose'
+    | '/_authenticated/admin/contact'
+    | '/_authenticated/admin/media'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/social'
+    | '/_authenticated/admin/testimonials'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/projects/$id'
     | '/_authenticated/admin/projects/'
@@ -509,6 +573,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/contact': {
+      id: '/_authenticated/admin/contact'
+      path: '/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AuthenticatedAdminContactRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/media': {
+      id: '/_authenticated/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AuthenticatedAdminMediaRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/social': {
+      id: '/_authenticated/admin/social'
+      path: '/social'
+      fullPath: '/admin/social'
+      preLoaderRoute: typeof AuthenticatedAdminSocialRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/testimonials': {
+      id: '/_authenticated/admin/testimonials'
+      path: '/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AuthenticatedAdminTestimonialsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/projects/': {
       id: '/_authenticated/admin/projects/'
       path: '/projects'
@@ -527,12 +626,22 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminContactRoute: typeof AuthenticatedAdminContactRoute
+  AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminSocialRoute: typeof AuthenticatedAdminSocialRoute
+  AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminProjectsIdRoute: typeof AuthenticatedAdminProjectsIdRoute
   AuthenticatedAdminProjectsIndexRoute: typeof AuthenticatedAdminProjectsIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminContactRoute: AuthenticatedAdminContactRoute,
+  AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminSocialRoute: AuthenticatedAdminSocialRoute,
+  AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminProjectsIdRoute: AuthenticatedAdminProjectsIdRoute,
   AuthenticatedAdminProjectsIndexRoute: AuthenticatedAdminProjectsIndexRoute,
