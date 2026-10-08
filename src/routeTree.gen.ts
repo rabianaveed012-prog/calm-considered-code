@@ -10,7 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as HeroPreviewRouteImport } from './routes/hero-preview'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as MediaSplatRouteImport } from './routes/media.$'
 import { Route as WorkAgrinovaRouteImport } from './routes/work.agrinova'
 import { Route as WorkArtifyRouteImport } from './routes/work.artify'
@@ -34,10 +37,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HeroPreviewRoute = HeroPreviewRouteImport.update({
   id: '/hero-preview',
   path: '/hero-preview',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const MediaSplatRoute = MediaSplatRouteImport.update({
   id: '/media/$',
@@ -127,7 +144,9 @@ const WorkTechdoseRoute = WorkTechdoseRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
@@ -148,7 +167,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
@@ -170,7 +191,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/hero-preview': typeof HeroPreviewRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/media/$': typeof MediaSplatRoute
   '/work/agrinova': typeof WorkAgrinovaRoute
   '/work/artify': typeof WorkArtifyRoute
@@ -193,7 +217,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/hero-preview'
+    | '/admin'
     | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
@@ -214,7 +240,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/hero-preview'
+    | '/admin'
     | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
@@ -235,7 +263,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/hero-preview'
+    | '/_authenticated/admin'
     | '/media/$'
     | '/work/agrinova'
     | '/work/artify'
@@ -257,6 +288,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   HeroPreviewRoute: typeof HeroPreviewRoute
   MediaSplatRoute: typeof MediaSplatRoute
   WorkAgrinovaRoute: typeof WorkAgrinovaRoute
@@ -286,12 +319,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hero-preview': {
       id: '/hero-preview'
       path: '/hero-preview'
       fullPath: '/hero-preview'
       preLoaderRoute: typeof HeroPreviewRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/media/$': {
       id: '/media/$'
@@ -415,8 +469,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   HeroPreviewRoute: HeroPreviewRoute,
   MediaSplatRoute: MediaSplatRoute,
   WorkAgrinovaRoute: WorkAgrinovaRoute,
