@@ -35,7 +35,7 @@ export type PublicTestimonial = {
 export type PublicContent = {
   projects: PublicProject[];
   testimonials: PublicTestimonial[];
-  settings: Record<string, Record<string, string>>;
+  settings: { socials?: Record<string, string>; contact?: Record<string, string> };
 } | null;
 
 // Public, read-only: only published + visible projects and enabled testimonials (enforced by RLS).
@@ -74,8 +74,10 @@ export const getPublicContent = createServerFn({ method: "GET" }).handler(
         console.error("public content error", p.error ?? t.error ?? s.error);
         return null;
       }
-      const settings: Record<string, Record<string, string>> = {};
-      for (const row of s.data ?? []) settings[row.key] = (row.value ?? {}) as Record<string, string>;
+      const settings: { socials?: Record<string, string>; contact?: Record<string, string> } = {};
+      for (const row of s.data ?? []) {
+        if (row.key === "socials" || row.key === "contact") settings[row.key] = (row.value ?? {}) as Record<string, string>;
+      }
       return {
         projects: (p.data ?? []) as unknown as PublicProject[],
         testimonials: t.data ?? [],
