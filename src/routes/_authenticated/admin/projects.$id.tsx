@@ -80,7 +80,7 @@ function ProjectEditor() {
 
   async function save(nextStatus: "draft" | "published") {
     const parsed = schema.safeParse(form);
-    if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Check the form");
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Check the form"); return; }
     setSaving(true);
     const row: TablesInsert<"projects"> = {
       ...form,
@@ -102,7 +102,7 @@ function ProjectEditor() {
       ({ error } = await supabase.from("projects").update(row).eq("id", id));
     }
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(nextStatus === "published" ? "Project published" : "Saved as draft");
     void qc.invalidateQueries({ queryKey: ["admin-projects"] });
     void qc.invalidateQueries({ queryKey: ["public-content"] });

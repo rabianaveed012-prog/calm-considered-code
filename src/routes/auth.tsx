@@ -67,7 +67,7 @@ function AuthPage() {
     if (mode === "signin") {
       const { error } = await supabase.auth.signInWithPassword(parsed.data);
       setBusy(false);
-      if (error) return setError("Incorrect email or password.");
+      if (error) { setError("Incorrect email or password."); return; }
       void navigate({ href: safeRedirect(redirect), replace: true });
     } else {
       const { error } = await supabase.auth.signUp({
@@ -75,7 +75,7 @@ function AuthPage() {
         options: { emailRedirectTo: `${window.location.origin}/admin` },
       });
       setBusy(false);
-      if (error) return setError(error.message);
+      if (error) { setError(error.message); return; }
       setNotice("Check your inbox to confirm your email, then sign in.");
       setMode("signin");
     }

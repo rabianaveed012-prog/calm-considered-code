@@ -57,13 +57,13 @@ function TestimonialsAdmin() {
   async function save() {
     if (!editing) return;
     const parsed = schema.safeParse(editing);
-    if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Check the form");
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Check the form"); return; }
     const { id, ...values } = editing;
     const payload = { ...values, ...parsed.data };
     const { error } = id
       ? await supabase.from("testimonials").update(payload).eq("id", id)
       : await supabase.from("testimonials").insert({ ...payload, sort_order: (data.at(-1)?.sort_order ?? 0) + 1 });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Testimonial saved");
     setEditing(null);
     refresh();

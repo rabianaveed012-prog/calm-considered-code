@@ -33,11 +33,11 @@ export function SettingsForm({ settingKey, title, description, fields, defaults,
 
   async function save() {
     const parsed = schema.safeParse(values);
-    if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Check the form");
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Check the form"); return; }
     setSaving(true);
     const { error } = await supabase.from("site_settings").upsert({ key: settingKey, value: parsed.data });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Saved — your site is updated");
     void qc.invalidateQueries({ queryKey: ["public-content"] });
   }

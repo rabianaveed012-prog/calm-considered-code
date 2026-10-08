@@ -18,11 +18,11 @@ function SettingsPage() {
 
   async function changePassword(e: React.FormEvent) {
     e.preventDefault();
-    if (next.length < 8) return toast.error("New password needs at least 8 characters.");
+    if (next.length < 8) { toast.error("New password needs at least 8 characters."); return; }
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password: next, current_password: current } as { password: string });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setCurrent("");
     setNext("");
     toast.success("Password updated");
