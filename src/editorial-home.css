@@ -1496,165 +1496,163 @@
   }
 }
 
-/* Single featured client quote and compact selectors. */
-.portfolio-home #testimonials.testimonials-featured > div {
-  display: block;
+/* Testimonials bento grid. */
+.portfolio-home #testimonials.testimonials-bento {
+  background: #f9fafb;
 }
-.quote-slider {
-  margin: 48px auto 0;
-  max-width: 1080px;
-  text-align: center;
-}
-.featured-quote-mark {
-  margin: 0 auto 28px;
-  color: var(--brand);
-  opacity: 0.3;
-}
-.featured-review {
-  min-height: 350px;
-}
-.portfolio-home #testimonials.testimonials-featured .featured-quote {
-  position: relative;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 72px;
-  font-size: clamp(28px, 2.6vw, 36px);
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: -0.025em;
-  text-align: center;
-  color: var(--foreground);
-  border: 0;
-}
-.featured-quote::before,
-.featured-quote::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 40px;
-  height: 1px;
-  background: var(--border);
-}
-.featured-quote::before {
-  left: 0;
-}
-.featured-quote::after {
-  right: 0;
-}
-.featured-client {
-  margin: 32px auto 0;
-}
-.featured-client-avatar {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 14px;
+.available-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
   border: 1px solid var(--border);
-  border-radius: 50%;
+  border-radius: 999px;
   background: var(--card);
-  color: var(--brand);
-  font-size: 15px;
+  color: var(--foreground);
+  font-size: 13px;
   font-weight: 600;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
 }
-.featured-client-name {
+.available-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgb(34 197 94 / 0.18);
+  animation: available-pulse 2.2s ease-in-out infinite;
+}
+@keyframes available-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgb(34 197 94 / 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgb(34 197 94 / 0.08);
+  }
+}
+.bento-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.bento-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.04);
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    border-color 300ms ease;
+}
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--brand) 35%, var(--border));
+  box-shadow: 0 16px 40px -16px rgb(15 23 42 / 0.14);
+}
+.bento-featured {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand) 7%, var(--card)),
+    var(--card)
+  );
+}
+@media (min-width: 640px) {
+  .bento-featured {
+    grid-column: span 2;
+  }
+}
+.bento-stars {
+  display: flex;
+  gap: 3px;
+  color: #f59e0b;
+}
+.bento-quote {
   margin: 0;
+  flex: 1;
   font-size: 15px;
-  font-weight: 700;
+  line-height: 1.7;
+  color: var(--foreground);
 }
-.featured-client-role {
-  margin: 6px 0 0;
-  color: var(--muted-foreground);
-  font-size: 12px;
-  line-height: 1.6;
+.bento-featured .bento-quote {
+  font-size: 17px;
 }
-.quote-slider-controls {
+.bento-client {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 36px;
+  gap: 12px;
 }
-.quote-selectors {
-  display: flex;
-  gap: 14px;
-  padding: 6px;
-  overflow-x: auto;
-  min-width: 0;
-}
-.quote-selectors button {
-  flex: 0 0 44px;
+.bento-avatar {
   width: 44px;
   height: 44px;
-  border: 1px solid var(--border);
+  flex: 0 0 44px;
   border-radius: 50%;
-  color: var(--muted-foreground);
-  background: transparent;
-  font-size: 12px;
-  font-weight: 600;
-  transition:
-    color 250ms ease,
-    border-color 250ms ease;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  background: var(--secondary);
 }
-.quote-selectors button[aria-pressed="true"] {
-  color: var(--brand);
-  border-color: var(--brand);
-  outline: 1px solid var(--brand);
-  outline-offset: 3px;
-}
-.quote-arrow {
+.bento-avatar-initials {
   display: grid;
   place-items: center;
-  flex: 0 0 44px;
-  width: 44px;
-  height: 44px;
-  color: var(--muted-foreground);
-  background: transparent;
-  border: 0;
-}
-.quote-arrow:hover,
-.quote-selectors button:hover {
   color: var(--brand);
+  font-size: 13px;
+  font-weight: 700;
 }
-.quote-slider button:focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 3px;
+.bento-client-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--foreground);
 }
-.quote-rotation {
-  margin-top: 16px;
-  min-height: 44px;
-  padding: 8px 12px;
+.bento-client-role {
+  margin: 2px 0 0;
+  font-size: 12px;
   color: var(--muted-foreground);
-  font-size: 11px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
-@media (max-width: 767px) {
-  .quote-slider {
-    margin-top: 32px;
-  }
-  .portfolio-home #testimonials.testimonials-featured .featured-quote {
-    font-size: clamp(20px, 5.5vw, 22px);
-    padding: 0 24px;
-    line-height: 1.6;
-  }
-  .featured-quote::before,
-  .featured-quote::after {
-    width: 14px;
-  }
-  .featured-review {
-    min-height: 380px;
-  }
-  .quote-slider-controls {
-    gap: 4px;
-  }
-  .quote-selectors {
-    gap: 10px;
-  }
+.bento-metric {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  background: var(--foreground);
+  border-color: var(--foreground);
+}
+.bento-metric-value {
+  margin: 0;
+  font-size: clamp(40px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--background);
+}
+.bento-metric-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--background) 65%, transparent);
 }
 @media (prefers-reduced-motion: reduce) {
-  .quote-selectors button {
+  .available-dot {
+    animation: none;
+  }
+  .bento-card {
     transition: none;
+  }
+  .bento-card:hover {
+    transform: none;
   }
 }
 
