@@ -35,6 +35,7 @@ import {
   Smartphone,
   PenTool,
   BookOpen,
+  Star,
   X,
 } from "lucide-react";
 import { SplitHero } from "@/components/SplitHero";
