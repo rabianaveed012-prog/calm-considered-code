@@ -1245,121 +1245,71 @@ function Testimonials() {
   const TESTIMONIALS = content
     ? content.testimonials.map((t) => ({ name: t.name, role: t.company ? `${t.role} • ${t.company}` : t.role, quote: t.quote, photo: resolveImage(t.photo_url) }))
     : TESTIMONIALS_STATIC;
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [reduced, setReduced] = useState(false);
-  const quoteRef = useRef<HTMLQuoteElement>(null);
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-  useEffect(() => {
-    if (paused || focused || reduced) return;
-    const timer = window.setInterval(
-      () => setActive((value) => (value + 1) % Math.max(TESTIMONIALS.length, 1)),
-      6000,
-    );
-    return () => window.clearInterval(timer);
-  }, [paused, focused, reduced, active]);
-  useEffect(() => {
-    if (reduced || !quoteRef.current?.animate) return;
-    const animation = quoteRef.current.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: 350,
-      easing: "ease",
-    });
-    return () => animation.cancel();
-  }, [active, reduced]);
-  const item = TESTIMONIALS[active] ?? TESTIMONIALS[0];
-  if (!item) return null;
   const initials = (name: string) =>
     name
       .split(" ")
       .map((part) => part[0])
       .join("")
       .slice(0, 2);
+  const stars = (
+    <div className="bento-stars" aria-label="Rated 5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} size={15} fill="currentColor" strokeWidth={0} aria-hidden="true" />
+      ))}
+    </div>
+  );
   return (
-    <section id="testimonials" className="testimonials-featured px-6 py-24 sm:py-28">
+    <section id="testimonials" className="testimonials-bento px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading
-          eyebrow="Testimonials"
-          title="What my clients say"
-          subtitle="Experiences shared by the clients and collaborators behind my work. Their trust inspires me to keep creating thoughtful digital experiences."
-          align="center"
-        />
-        <div
-          className="quote-slider"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Client testimonials"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setFocused(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
-          }}
-        >
-          <Quote className="featured-quote-mark" size={64} strokeWidth={1.2} aria-hidden="true" />
-          <div
-            className="featured-review"
-            aria-live={paused || focused || reduced ? "polite" : "off"}
-            aria-atomic="true"
-          >
-            <blockquote ref={quoteRef} className="featured-quote" id="featured-testimonial">
-              {item.quote}
-            </blockquote>
-            <div className="featured-client">
-              <span className="featured-client-avatar" aria-hidden="true">
-                {initials(item.name)}
-              </span>
-              <p className="featured-client-name">{item.name}</p>
-              <p className="featured-client-role">{item.role}</p>
-            </div>
-          </div>
-          <div className="quote-slider-controls">
-            <button
-              type="button"
-              className="quote-arrow"
-              aria-label="Previous testimonial"
-              onClick={() =>
-                setActive((value) => (value + TESTIMONIALS.length - 1) % TESTIMONIALS.length)
-              }
+        <div className="flex flex-col items-center text-center" data-reveal>
+          <span className="available-badge">
+            <span className="available-dot" aria-hidden="true" />
+            Available for work
+          </span>
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[44px]">
+            WHAT MY CLIENTS SAY
+          </h2>
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            Experiences shared by the clients and collaborators behind my work. Their trust
+            inspires me to keep creating thoughtful digital experiences.
+          </p>
+        </div>
+        <div className="bento-grid mt-12" data-reveal-group>
+          {TESTIMONIALS.map((t, index) => (
+            <article
+              key={t.name}
+              className={`bento-card${index === 1 ? " bento-featured" : ""}`}
             >
-              <ChevronLeft size={20} aria-hidden="true" />
-            </button>
-            <div className="quote-selectors" role="group" aria-label="Choose client testimonial">
-              {TESTIMONIALS.map((client, index) => (
-                <button
-                  type="button"
-                  key={client.name}
-                  aria-label={"Read testimonial from " + client.name}
-                  aria-pressed={index === active}
-                  aria-controls="featured-testimonial"
-                  onClick={() => setActive(index)}
-                >
-                  {initials(client.name)}
-                </button>
-              ))}
-            </div>
-            <button
-              type="button"
-              className="quote-arrow"
-              aria-label="Next testimonial"
-              onClick={() => setActive((value) => (value + 1) % TESTIMONIALS.length)}
-            >
-              <ChevronRight size={20} aria-hidden="true" />
-            </button>
+              {stars}
+              <blockquote className="bento-quote">{t.quote}</blockquote>
+              <div className="bento-client">
+                {t.photo ? (
+                  <img
+                    src={t.photo}
+                    alt={`Portrait of ${t.name}`}
+                    loading="lazy"
+                    className="bento-avatar"
+                  />
+                ) : (
+                  <span className="bento-avatar bento-avatar-initials" aria-hidden="true">
+                    {initials(t.name)}
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <p className="bento-client-name">{t.name}</p>
+                  <p className="bento-client-role">{t.role}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+          <div className="bento-card bento-metric">
+            <p className="bento-metric-value">98%</p>
+            <p className="bento-metric-label">Client Satisfaction Rate</p>
           </div>
-          <button
-            type="button"
-            className="quote-rotation"
-            onClick={() => setReduced((value) => !value)}
-          >
-            {reduced ? "Play slideshow" : "Pause slideshow"}
-          </button>
+          <div className="bento-card bento-metric">
+            <p className="bento-metric-value">200%</p>
+            <p className="bento-metric-label">Average Client Growth</p>
+          </div>
         </div>
       </div>
     </section>
