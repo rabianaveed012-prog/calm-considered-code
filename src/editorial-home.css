@@ -1496,20 +1496,24 @@
   }
 }
 
-/* Testimonials bento grid — light section on the dark site, so text colors are scoped. */
+/* Testimonials bento grid — dark theme matching the site palette. */
 .portfolio-home #testimonials.testimonials-bento {
-  background: #f9fafb;
+  background: color-mix(in oklab, var(--card) 45%, var(--background));
+}
+/* Single-column flow so the heading sits centered above a balanced grid. */
+.portfolio-home #testimonials.testimonials-bento > div {
+  display: block;
 }
 .testimonials-bento h2 {
-  color: #111827;
+  color: var(--foreground);
 }
 .testimonials-bento .available-badge {
-  border-color: #e5e7eb;
-  background: #ffffff;
-  color: #111827;
+  border-color: var(--border);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  color: var(--foreground);
 }
 .testimonials-bento p.text-muted-foreground {
-  color: #6b7280;
+  color: var(--muted-foreground);
 }
 .available-badge {
   display: inline-flex;
@@ -1561,36 +1565,26 @@
   flex-direction: column;
   gap: 18px;
   padding: 28px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 20px;
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgb(15 23 42 / 0.04);
+  background: var(--card);
+  box-shadow: none;
   transition:
     transform 300ms ease,
-    box-shadow 300ms ease,
     border-color 300ms ease;
 }
 .bento-card:hover {
   transform: translateY(-4px);
-  border-color: color-mix(in oklab, var(--brand) 35%, #e5e7eb);
-  box-shadow: 0 16px 40px -16px rgb(15 23 42 / 0.14);
+  border-color: color-mix(in oklab, var(--brand) 45%, var(--border));
 }
 .bento-featured {
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--brand) 8%, #ffffff),
-    #ffffff
-  );
-}
-@media (min-width: 640px) {
-  .bento-featured {
-    grid-column: span 2;
-  }
+  background: color-mix(in oklab, var(--brand) 9%, var(--card));
+  border-color: color-mix(in oklab, var(--brand) 30%, var(--border));
 }
 .bento-stars {
   display: flex;
   gap: 3px;
-  color: #f59e0b;
+  color: var(--brand);
 }
 .bento-quote {
   margin: 0;
@@ -1639,21 +1633,21 @@
   justify-content: center;
   text-align: center;
   gap: 6px;
-  background: var(--foreground);
-  border-color: var(--foreground);
+  background: var(--brand);
+  border-color: color-mix(in oklab, var(--brand) 85%, transparent);
 }
 .bento-metric-value {
   margin: 0;
   font-size: clamp(40px, 4vw, 52px);
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: var(--background);
+  color: oklch(0.16 0.01 48);
 }
 .bento-metric-label {
   margin: 0;
   font-size: 13px;
   font-weight: 500;
-  color: color-mix(in oklab, var(--background) 65%, transparent);
+  color: color-mix(in oklab, oklch(0.16 0.01 48) 72%, transparent);
 }
 @media (prefers-reduced-motion: reduce) {
   .available-dot {
