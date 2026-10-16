@@ -42,8 +42,13 @@ export type PublicContent = {
 export const getPublicContent = createServerFn({ method: "GET" }).handler(
   async (): Promise<PublicContent> => {
     try {
-      const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-      const supabase = createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+      const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
+      const url = process.env["SUPABASE_URL"];
+      if (!key || !url) {
+        console.warn("[backend] Credentials missing; serving built-in content.");
+        return null;
+      }
+      const supabase = createClient<Database>(url, key, {
         auth: { persistSession: false, autoRefreshToken: false },
         global: {
           fetch: (input, init) => {

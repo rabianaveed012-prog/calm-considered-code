@@ -11,7 +11,7 @@ import { publicContentQuery, DEFAULT_SOCIALS } from "@/lib/public-content";
 
 function useHeroSocials() {
   const { data } = useQuery(publicContentQuery);
-  const s = { ...DEFAULT_SOCIALS, ...(data?.settings.socials ?? {}) };
+  const s = { ...DEFAULT_SOCIALS, ...(data?.settings?.socials ?? {}) };
   return [
     { label: "LinkedIn", href: s.linkedin, icon: "linkedin" },
     { label: "Behance", href: s.behance, icon: "behance" },
