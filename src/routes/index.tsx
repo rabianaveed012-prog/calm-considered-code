@@ -89,7 +89,7 @@ const NAV = [
 
 function useSocials() {
   const { data } = useQuery(publicContentQuery);
-  const s = { ...DEFAULT_SOCIALS, ...(data?.settings.socials ?? {}) };
+  const s = { ...DEFAULT_SOCIALS, ...(data?.settings?.socials ?? {}) };
   return [
     { label: "LinkedIn", href: s.linkedin, icon: Linkedin },
     { label: "Upwork", href: s.upwork, icon: Briefcase },
@@ -99,7 +99,7 @@ function useSocials() {
 }
 function useContact() {
   const { data } = useQuery(publicContentQuery);
-  return { ...DEFAULT_CONTACT, ...(data?.settings.contact ?? {}) };
+  return { ...DEFAULT_CONTACT, ...(data?.settings?.contact ?? {}) };
 }
 
 
@@ -884,7 +884,7 @@ function Work() {
   const [selected, setSelected] = useState<WorkItem | null>(null);
   const [showAll, setShowAll] = useState(false);
   const staticAll = [...PROJECTS, ...LOGO_PROJECTS].sort((a, b) => Number(b.year) - Number(a.year));
-  const allProjects: WorkItem[] = content
+  const allProjects: WorkItem[] = content?.projects?.length
     ? content.projects.map((row) => ({
         key: row.id,
         title: row.title,
@@ -903,7 +903,7 @@ function Work() {
         imagePosition: row.image_position,
       }))
     : staticAll.map(staticItem);
-  const featured: WorkItem[] = content
+  const featured: WorkItem[] = content?.projects?.length
     ? content.projects
         .filter((row) => row.featured)
         .sort((a, b) => a.featured_order - b.featured_order)
@@ -1242,7 +1242,7 @@ function Services() {
 }
 function Testimonials() {
   const { data: content } = useQuery(publicContentQuery);
-  const TESTIMONIALS = content
+  const TESTIMONIALS = content?.testimonials?.length
     ? content.testimonials.map((t) => ({ name: t.name, role: t.company ? `${t.role} • ${t.company}` : t.role, quote: t.quote, photo: resolveImage(t.photo_url) }))
     : TESTIMONIALS_STATIC;
   const initials = (name: string) =>
