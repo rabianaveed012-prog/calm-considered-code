@@ -1,0 +1,9 @@
+/* Motion only: the resting layout, colors and content remain untouched. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .portfolio-home #work .work-project-image {
+    transition: translate 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .portfolio-home #work .work-project:hover .work-project-image {
+    translate: 0 -3px;
+  }
+}

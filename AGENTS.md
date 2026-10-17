@@ -13,3 +13,4 @@
 - Admin writes go straight from the browser client and are enforced by RLS + `has_role(…,'admin')`; the first account created is auto-granted admin. Why: server-side authorization without extra endpoints.
 - Uploaded images live in the private `media` bucket and are served via the `/media/$` route; built-in images are referenced as `asset:<key>` (see `src/lib/public-content.ts`). Why: public buckets are blocked in this workspace.
 - Server-call auth uses `src/lib/safe-auth-attacher.ts` (not the generated attacher), and backend reads return null when credentials are missing. Why: the public site must render built-in content even if backend keys are absent.
+- Portfolio motion stays in ScrollAnimations and its motion-only stylesheet, using native observers and Web Animations with visible resting states and reduced-motion cleanup. Why: preserve content, existing interactions and server rendering without additional animation dependencies.
