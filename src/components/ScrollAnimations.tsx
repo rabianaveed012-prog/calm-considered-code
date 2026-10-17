@@ -11,7 +11,6 @@ export function ScrollAnimations() {
       "main section h2",
       "#work .work-project-image",
       "#work .work-project-info",
-      "#process .process-step",
       "#services .service-accordion-row",
       "#about .about-stat",
       "#about h2 + p + p",
